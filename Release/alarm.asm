@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.9 #9959 (Linux)
+; Version 4.2.0 #13081 (Linux)
 ;--------------------------------------------------------
 	.module alarm
 	.optsdcc -mmcs51 --model-small
@@ -306,7 +306,7 @@ _PORT_P5_3	=	0x00cb
 _PORT_P5_4	=	0x00cc
 _PORT_P5_5	=	0x00cd
 _PORT_P5_6	=	0x00ce
-_PORT_P5_7	=	0x00cd
+_PORT_P5_7	=	0x00cf
 _INT_IE_EX0	=	0x00a8
 _INT_IE_ET0	=	0x00a9
 _INT_IE_EX1	=	0x00aa
@@ -343,7 +343,7 @@ _UART_TB8	=	0x009b
 _UART_REN	=	0x009c
 _UART_SM2	=	0x009d
 _UART_SM1	=	0x009e
-_UART_SM0	=	0x009e
+_UART_SM0	=	0x009f
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
@@ -356,10 +356,10 @@ _UART_SM0	=	0x009e
 _DS1302_DATA	=	0x0021
 _alarm_counter::
 	.ds 2
-_ISR_T2_cnt_1_85:
+_ISR_T2_cnt_65536_90:
 	.ds 1
 ;--------------------------------------------------------
-; overlayable items in internal ram 
+; overlayable items in internal ram
 ;--------------------------------------------------------
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
@@ -419,10 +419,10 @@ _alarms	=	0x0004
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ISR_T2'
 ;------------------------------------------------------------
-;cnt                       Allocated with name '_ISR_T2_cnt_1_85'
+;cnt                       Allocated with name '_ISR_T2_cnt_65536_90'
 ;------------------------------------------------------------
-;	../alarm.c:12: static uint8_t cnt = 15;
-	mov	_ISR_T2_cnt_1_85,#0x0f
+;	src/alarm.c:12: static uint8_t cnt = 15;
+	mov	_ISR_T2_cnt_65536_90,#0x0f
 ;--------------------------------------------------------
 ; Home
 ;--------------------------------------------------------
@@ -435,9 +435,9 @@ _alarms	=	0x0004
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ISR_T2'
 ;------------------------------------------------------------
-;cnt                       Allocated with name '_ISR_T2_cnt_1_85'
+;cnt                       Allocated with name '_ISR_T2_cnt_65536_90'
 ;------------------------------------------------------------
-;	../alarm.c:11: void ISR_T2() __interrupt(INT_T2) __using(0) {
+;	src/alarm.c:11: void ISR_T2() __interrupt(INT_T2) __using(0) {
 ;	-----------------------------------------
 ;	 function ISR_T2
 ;	-----------------------------------------
@@ -451,56 +451,67 @@ _ISR_T2:
 	ar1 = 0x01
 	ar0 = 0x00
 	push	acc
+	push	ar7
+	push	ar6
 	push	psw
-;	../alarm.c:13: INT_IE_EA = 0;	//Guard against display interrupt modifying state
+	mov	psw,#0x00
+;	src/alarm.c:13: INT_IE_EA = 0;	//Guard against display interrupt modifying state
 ;	assignBit
 	clr	_INT_IE_EA
-;	../alarm.c:14: if(cnt > 7 && (alarm_counter < ALARM_MAX_TIME))
-	mov	a,_ISR_T2_cnt_1_85
+;	src/alarm.c:14: if(cnt > 7 && (alarm_counter < ALARM_MAX_TIME))
+	mov	a,_ISR_T2_cnt_65536_90
 	add	a,#0xff - 0x07
 	jnc	00102$
+	mov	r6,_alarm_counter
+	mov	r7,(_alarm_counter + 1)
 	clr	c
-	mov	a,_alarm_counter
+	mov	a,r6
 	subb	a,#0x28
-	mov	a,(_alarm_counter + 1)
+	mov	a,r7
 	subb	a,#0x23
 	jnc	00102$
-;	../alarm.c:15: ALARM_BUZZER_DRIVE_ACTIVE();
+;	src/alarm.c:15: ALARM_BUZZER_DRIVE_ACTIVE();
 ;	assignBit
 	clr	_PORT_P1_5
 	sjmp	00103$
 00102$:
-;	../alarm.c:17: ALARM_BUZZER_DRIVE_INACTIVE();
+;	src/alarm.c:17: ALARM_BUZZER_DRIVE_INACTIVE();
 ;	assignBit
 	setb	_PORT_P1_5
 00103$:
-;	../alarm.c:18: INT_IE_EA = 1;
+;	src/alarm.c:18: INT_IE_EA = 1;
 ;	assignBit
 	setb	_INT_IE_EA
-;	../alarm.c:19: if((--cnt) == 0)
-	djnz	_ISR_T2_cnt_1_85,00106$
-;	../alarm.c:20: cnt = 15;
-	mov	_ISR_T2_cnt_1_85,#0x0f
+;	src/alarm.c:19: if((--cnt) == 0)
+	djnz	_ISR_T2_cnt_65536_90,00106$
+;	src/alarm.c:20: cnt = 15;
+	mov	_ISR_T2_cnt_65536_90,#0x0f
 00106$:
-;	../alarm.c:21: if(alarm_counter < ALARM_MAX_TIME)
+;	src/alarm.c:21: if(alarm_counter < ALARM_MAX_TIME)
+	mov	r6,_alarm_counter
+	mov	r7,(_alarm_counter + 1)
 	clr	c
-	mov	a,_alarm_counter
+	mov	a,r6
 	subb	a,#0x28
-	mov	a,(_alarm_counter + 1)
+	mov	a,r7
 	subb	a,#0x23
 	jnc	00109$
-;	../alarm.c:22: alarm_counter++;
+;	src/alarm.c:22: alarm_counter++;
+	mov	r6,_alarm_counter
+	mov	r7,(_alarm_counter + 1)
 	mov	a,#0x01
-	add	a,_alarm_counter
+	add	a,r6
 	mov	_alarm_counter,a
 	clr	a
-	addc	a,(_alarm_counter + 1)
+	addc	a,r7
 	mov	(_alarm_counter + 1),a
 00109$:
+;	src/alarm.c:23: }
 	pop	psw
+	pop	ar6
+	pop	ar7
 	pop	acc
 	reti
-;	eliminated unneeded mov psw,# (no regs used in bank)
 ;	eliminated unneeded push/pop dpl
 ;	eliminated unneeded push/pop dph
 ;	eliminated unneeded push/pop b

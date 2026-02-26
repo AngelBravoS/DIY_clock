@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module alarm
                                       6 	.optsdcc -mmcs51 --model-small
@@ -306,7 +306,7 @@
                            0000CC   306 _PORT_P5_4	=	0x00cc
                            0000CD   307 _PORT_P5_5	=	0x00cd
                            0000CE   308 _PORT_P5_6	=	0x00ce
-                           0000CD   309 _PORT_P5_7	=	0x00cd
+                           0000CF   309 _PORT_P5_7	=	0x00cf
                            0000A8   310 _INT_IE_EX0	=	0x00a8
                            0000A9   311 _INT_IE_ET0	=	0x00a9
                            0000AA   312 _INT_IE_EX1	=	0x00aa
@@ -343,7 +343,7 @@
                            00009C   343 _UART_REN	=	0x009c
                            00009D   344 _UART_SM2	=	0x009d
                            00009E   345 _UART_SM1	=	0x009e
-                           00009E   346 _UART_SM0	=	0x009e
+                           00009F   346 _UART_SM0	=	0x009f
                                     347 ;--------------------------------------------------------
                                     348 ; overlayable register banks
                                     349 ;--------------------------------------------------------
@@ -354,12 +354,12 @@
                                     354 ;--------------------------------------------------------
                                     355 	.area DSEG    (DATA)
                            000021   356 _DS1302_DATA	=	0x0021
-      000034                        357 _alarm_counter::
-      000034                        358 	.ds 2
-      000036                        359 _ISR_T2_cnt_1_85:
-      000036                        360 	.ds 1
+      00003B                        357 _alarm_counter::
+      00003B                        358 	.ds 2
+      00003D                        359 _ISR_T2_cnt_65536_90:
+      00003D                        360 	.ds 1
                                     361 ;--------------------------------------------------------
-                                    362 ; overlayable items in internal ram 
+                                    362 ; overlayable items in internal ram
                                     363 ;--------------------------------------------------------
                                     364 ;--------------------------------------------------------
                                     365 ; indirectly addressable internal ram data
@@ -419,10 +419,10 @@
                                     419 ;------------------------------------------------------------
                                     420 ;Allocation info for local variables in function 'ISR_T2'
                                     421 ;------------------------------------------------------------
-                                    422 ;cnt                       Allocated with name '_ISR_T2_cnt_1_85'
+                                    422 ;cnt                       Allocated with name '_ISR_T2_cnt_65536_90'
                                     423 ;------------------------------------------------------------
-                                    424 ;	../alarm.c:12: static uint8_t cnt = 15;
-      0000C4 75 36 0F         [24]  425 	mov	_ISR_T2_cnt_1_85,#0x0f
+                                    424 ;	src/alarm.c:12: static uint8_t cnt = 15;
+      0000C4 75 3D 0F         [24]  425 	mov	_ISR_T2_cnt_65536_90,#0x0f
                                     426 ;--------------------------------------------------------
                                     427 ; Home
                                     428 ;--------------------------------------------------------
@@ -435,13 +435,13 @@
                                     435 ;------------------------------------------------------------
                                     436 ;Allocation info for local variables in function 'ISR_T2'
                                     437 ;------------------------------------------------------------
-                                    438 ;cnt                       Allocated with name '_ISR_T2_cnt_1_85'
+                                    438 ;cnt                       Allocated with name '_ISR_T2_cnt_65536_90'
                                     439 ;------------------------------------------------------------
-                                    440 ;	../alarm.c:11: void ISR_T2() __interrupt(INT_T2) __using(0) {
+                                    440 ;	src/alarm.c:11: void ISR_T2() __interrupt(INT_T2) __using(0) {
                                     441 ;	-----------------------------------------
                                     442 ;	 function ISR_T2
                                     443 ;	-----------------------------------------
-      00049E                        444 _ISR_T2:
+      0005EF                        444 _ISR_T2:
                            000007   445 	ar7 = 0x07
                            000006   446 	ar6 = 0x06
                            000005   447 	ar5 = 0x05
@@ -450,61 +450,72 @@
                            000002   450 	ar2 = 0x02
                            000001   451 	ar1 = 0x01
                            000000   452 	ar0 = 0x00
-      00049E C0 E0            [24]  453 	push	acc
-      0004A0 C0 D0            [24]  454 	push	psw
-                                    455 ;	../alarm.c:13: INT_IE_EA = 0;	//Guard against display interrupt modifying state
-                                    456 ;	assignBit
-      0004A2 C2 AF            [12]  457 	clr	_INT_IE_EA
-                                    458 ;	../alarm.c:14: if(cnt > 7 && (alarm_counter < ALARM_MAX_TIME))
-      0004A4 E5 36            [12]  459 	mov	a,_ISR_T2_cnt_1_85
-      0004A6 24 F8            [12]  460 	add	a,#0xff - 0x07
-      0004A8 50 0F            [24]  461 	jnc	00102$
-      0004AA C3               [12]  462 	clr	c
-      0004AB E5 34            [12]  463 	mov	a,_alarm_counter
-      0004AD 94 28            [12]  464 	subb	a,#0x28
-      0004AF E5 35            [12]  465 	mov	a,(_alarm_counter + 1)
-      0004B1 94 23            [12]  466 	subb	a,#0x23
-      0004B3 50 04            [24]  467 	jnc	00102$
-                                    468 ;	../alarm.c:15: ALARM_BUZZER_DRIVE_ACTIVE();
-                                    469 ;	assignBit
-      0004B5 C2 95            [12]  470 	clr	_PORT_P1_5
-      0004B7 80 02            [24]  471 	sjmp	00103$
-      0004B9                        472 00102$:
-                                    473 ;	../alarm.c:17: ALARM_BUZZER_DRIVE_INACTIVE();
+      0005EF C0 E0            [24]  453 	push	acc
+      0005F1 C0 07            [24]  454 	push	ar7
+      0005F3 C0 06            [24]  455 	push	ar6
+      0005F5 C0 D0            [24]  456 	push	psw
+      0005F7 75 D0 00         [24]  457 	mov	psw,#0x00
+                                    458 ;	src/alarm.c:13: INT_IE_EA = 0;	//Guard against display interrupt modifying state
+                                    459 ;	assignBit
+      0005FA C2 AF            [12]  460 	clr	_INT_IE_EA
+                                    461 ;	src/alarm.c:14: if(cnt > 7 && (alarm_counter < ALARM_MAX_TIME))
+      0005FC E5 3D            [12]  462 	mov	a,_ISR_T2_cnt_65536_90
+      0005FE 24 F8            [12]  463 	add	a,#0xff - 0x07
+      000600 50 11            [24]  464 	jnc	00102$
+      000602 AE 3B            [24]  465 	mov	r6,_alarm_counter
+      000604 AF 3C            [24]  466 	mov	r7,(_alarm_counter + 1)
+      000606 C3               [12]  467 	clr	c
+      000607 EE               [12]  468 	mov	a,r6
+      000608 94 28            [12]  469 	subb	a,#0x28
+      00060A EF               [12]  470 	mov	a,r7
+      00060B 94 23            [12]  471 	subb	a,#0x23
+      00060D 50 04            [24]  472 	jnc	00102$
+                                    473 ;	src/alarm.c:15: ALARM_BUZZER_DRIVE_ACTIVE();
                                     474 ;	assignBit
-      0004B9 D2 95            [12]  475 	setb	_PORT_P1_5
-      0004BB                        476 00103$:
-                                    477 ;	../alarm.c:18: INT_IE_EA = 1;
-                                    478 ;	assignBit
-      0004BB D2 AF            [12]  479 	setb	_INT_IE_EA
-                                    480 ;	../alarm.c:19: if((--cnt) == 0)
-      0004BD D5 36 03         [24]  481 	djnz	_ISR_T2_cnt_1_85,00106$
-                                    482 ;	../alarm.c:20: cnt = 15;
-      0004C0 75 36 0F         [24]  483 	mov	_ISR_T2_cnt_1_85,#0x0f
-      0004C3                        484 00106$:
-                                    485 ;	../alarm.c:21: if(alarm_counter < ALARM_MAX_TIME)
-      0004C3 C3               [12]  486 	clr	c
-      0004C4 E5 34            [12]  487 	mov	a,_alarm_counter
-      0004C6 94 28            [12]  488 	subb	a,#0x28
-      0004C8 E5 35            [12]  489 	mov	a,(_alarm_counter + 1)
-      0004CA 94 23            [12]  490 	subb	a,#0x23
-      0004CC 50 0B            [24]  491 	jnc	00109$
-                                    492 ;	../alarm.c:22: alarm_counter++;
-      0004CE 74 01            [12]  493 	mov	a,#0x01
-      0004D0 25 34            [12]  494 	add	a,_alarm_counter
-      0004D2 F5 34            [12]  495 	mov	_alarm_counter,a
-      0004D4 E4               [12]  496 	clr	a
-      0004D5 35 35            [12]  497 	addc	a,(_alarm_counter + 1)
-      0004D7 F5 35            [12]  498 	mov	(_alarm_counter + 1),a
-      0004D9                        499 00109$:
-      0004D9 D0 D0            [24]  500 	pop	psw
-      0004DB D0 E0            [24]  501 	pop	acc
-      0004DD 32               [24]  502 	reti
-                                    503 ;	eliminated unneeded mov psw,# (no regs used in bank)
-                                    504 ;	eliminated unneeded push/pop dpl
-                                    505 ;	eliminated unneeded push/pop dph
-                                    506 ;	eliminated unneeded push/pop b
-                                    507 	.area CSEG    (CODE)
-                                    508 	.area CONST   (CODE)
-                                    509 	.area XINIT   (CODE)
-                                    510 	.area CABS    (ABS,CODE)
+      00060F C2 95            [12]  475 	clr	_PORT_P1_5
+      000611 80 02            [24]  476 	sjmp	00103$
+      000613                        477 00102$:
+                                    478 ;	src/alarm.c:17: ALARM_BUZZER_DRIVE_INACTIVE();
+                                    479 ;	assignBit
+      000613 D2 95            [12]  480 	setb	_PORT_P1_5
+      000615                        481 00103$:
+                                    482 ;	src/alarm.c:18: INT_IE_EA = 1;
+                                    483 ;	assignBit
+      000615 D2 AF            [12]  484 	setb	_INT_IE_EA
+                                    485 ;	src/alarm.c:19: if((--cnt) == 0)
+      000617 D5 3D 03         [24]  486 	djnz	_ISR_T2_cnt_65536_90,00106$
+                                    487 ;	src/alarm.c:20: cnt = 15;
+      00061A 75 3D 0F         [24]  488 	mov	_ISR_T2_cnt_65536_90,#0x0f
+      00061D                        489 00106$:
+                                    490 ;	src/alarm.c:21: if(alarm_counter < ALARM_MAX_TIME)
+      00061D AE 3B            [24]  491 	mov	r6,_alarm_counter
+      00061F AF 3C            [24]  492 	mov	r7,(_alarm_counter + 1)
+      000621 C3               [12]  493 	clr	c
+      000622 EE               [12]  494 	mov	a,r6
+      000623 94 28            [12]  495 	subb	a,#0x28
+      000625 EF               [12]  496 	mov	a,r7
+      000626 94 23            [12]  497 	subb	a,#0x23
+      000628 50 0D            [24]  498 	jnc	00109$
+                                    499 ;	src/alarm.c:22: alarm_counter++;
+      00062A AE 3B            [24]  500 	mov	r6,_alarm_counter
+      00062C AF 3C            [24]  501 	mov	r7,(_alarm_counter + 1)
+      00062E 74 01            [12]  502 	mov	a,#0x01
+      000630 2E               [12]  503 	add	a,r6
+      000631 F5 3B            [12]  504 	mov	_alarm_counter,a
+      000633 E4               [12]  505 	clr	a
+      000634 3F               [12]  506 	addc	a,r7
+      000635 F5 3C            [12]  507 	mov	(_alarm_counter + 1),a
+      000637                        508 00109$:
+                                    509 ;	src/alarm.c:23: }
+      000637 D0 D0            [24]  510 	pop	psw
+      000639 D0 06            [24]  511 	pop	ar6
+      00063B D0 07            [24]  512 	pop	ar7
+      00063D D0 E0            [24]  513 	pop	acc
+      00063F 32               [24]  514 	reti
+                                    515 ;	eliminated unneeded push/pop dpl
+                                    516 ;	eliminated unneeded push/pop dph
+                                    517 ;	eliminated unneeded push/pop b
+                                    518 	.area CSEG    (CODE)
+                                    519 	.area CONST   (CODE)
+                                    520 	.area XINIT   (CODE)
+                                    521 	.area CABS    (ABS,CODE)

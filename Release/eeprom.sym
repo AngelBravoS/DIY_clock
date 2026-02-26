@@ -338,7 +338,7 @@ Symbol Table
     _PORT_P5_4                                                  =  0000CC G
     _PORT_P5_5                                                  =  0000CD G
     _PORT_P5_6                                                  =  0000CE G
-    _PORT_P5_7                                                  =  0000CD G
+    _PORT_P5_7                                                  =  0000CF G
     _PSW                                                        =  0000D0 G
     _RS0                                                        =  0000D3 G
     _RS1                                                        =  0000D4 G
@@ -367,16 +367,16 @@ Symbol Table
     _UART_SADEN                                                 =  0000B9 G
     _UART_SBUF                                                  =  000099 G
     _UART_SCON                                                  =  000098 G
-    _UART_SM0                                                   =  00009E G
+    _UART_SM0                                                   =  00009F G
     _UART_SM1                                                   =  00009E G
     _UART_SM2                                                   =  00009D G
     _UART_TB8                                                   =  00009B G
     _UART_TI                                                    =  000099 G
- 17 _eeprom_end                                                    00003F GR
+ 17 _eeprom_end                                                    000042 GR
  17 _eeprom_erase                                                  000004 GR
- 17 _eeprom_read                                                   000029 GR
+ 17 _eeprom_read                                                   00002C GR
  17 _eeprom_start                                                  000000 GR
- 17 _eeprom_write                                                  000013 GR
+ 17 _eeprom_write                                                  000016 GR
   6 _eeprom_write_PARM_2                                           000000 GR
     a                                                           =  0000E0 L
     a.0                                                         =  0000E0 L
@@ -607,7 +607,7 @@ Area Table
   14 GSINIT5                                    size      0   flags   20
   15 GSINIT                                     size      0   flags   20
   16 GSFINAL                                    size      0   flags   20
-  17 CSEG                                       size     43   flags   20
+  17 CSEG                                       size     46   flags   20
   18 CONST                                      size      0   flags   20
   19 XINIT                                      size      0   flags   20
   1A CABS                                       size      0   flags   28

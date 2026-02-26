@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module adc
                                       6 	.optsdcc -mmcs51 --model-small
@@ -313,7 +313,7 @@
                            0000CC   313 _PORT_P5_4	=	0x00cc
                            0000CD   314 _PORT_P5_5	=	0x00cd
                            0000CE   315 _PORT_P5_6	=	0x00ce
-                           0000CD   316 _PORT_P5_7	=	0x00cd
+                           0000CF   316 _PORT_P5_7	=	0x00cf
                            0000A8   317 _INT_IE_EX0	=	0x00a8
                            0000A9   318 _INT_IE_ET0	=	0x00a9
                            0000AA   319 _INT_IE_EX1	=	0x00aa
@@ -350,7 +350,7 @@
                            00009C   350 _UART_REN	=	0x009c
                            00009D   351 _UART_SM2	=	0x009d
                            00009E   352 _UART_SM1	=	0x009e
-                           00009E   353 _UART_SM0	=	0x009e
+                           00009F   353 _UART_SM0	=	0x009f
                                     354 ;--------------------------------------------------------
                                     355 ; overlayable register banks
                                     356 ;--------------------------------------------------------
@@ -383,614 +383,604 @@
       000002                        383 	.ds 2
       000004                        384 _adc_calibrate_LDR_PARM_2:
       000004                        385 	.ds 2
-      000006                        386 _adc_calibrate_LDR_ldr_min_1_154:
+      000006                        386 _adc_calibrate_LDR_ldr_min_65536_159:
       000006                        387 	.ds 2
-      000008                        388 _adc_calibrate_LDR_gradient_1_155:
+      000008                        388 _adc_calibrate_LDR_gradient_65536_160:
       000008                        389 	.ds 4
-      00000C                        390 _adc_calibrate_LDR_intercept_1_155:
+      00000C                        390 _adc_calibrate_LDR_intercept_65536_160:
       00000C                        391 	.ds 4
-                                    392 ;--------------------------------------------------------
-                                    393 ; overlayable items in internal ram 
+      000010                        392 _adc_calibrate_LDR_i_65536_160:
+      000010                        393 	.ds 2
                                     394 ;--------------------------------------------------------
-                                    395 ;--------------------------------------------------------
-                                    396 ; indirectly addressable internal ram data
+                                    395 ; overlayable items in internal ram
+                                    396 ;--------------------------------------------------------
                                     397 ;--------------------------------------------------------
-                                    398 	.area ISEG    (DATA)
+                                    398 ; indirectly addressable internal ram data
                                     399 ;--------------------------------------------------------
-                                    400 ; absolute internal ram data
+                                    400 	.area ISEG    (DATA)
                                     401 ;--------------------------------------------------------
-                                    402 	.area IABS    (ABS,DATA)
-                                    403 	.area IABS    (ABS,DATA)
-                                    404 ;--------------------------------------------------------
-                                    405 ; bit data
+                                    402 ; absolute internal ram data
+                                    403 ;--------------------------------------------------------
+                                    404 	.area IABS    (ABS,DATA)
+                                    405 	.area IABS    (ABS,DATA)
                                     406 ;--------------------------------------------------------
-                                    407 	.area BSEG    (BIT)
-                           000008   408 _DS1302_DATA_0	=	0x0008
-                           000009   409 _DS1302_DATA_1	=	0x0009
-                           00000A   410 _DS1302_DATA_2	=	0x000a
-                           00000B   411 _DS1302_DATA_3	=	0x000b
-                           00000C   412 _DS1302_DATA_4	=	0x000c
-                           00000D   413 _DS1302_DATA_5	=	0x000d
-                           00000E   414 _DS1302_DATA_6	=	0x000e
-                           00000F   415 _DS1302_DATA_7	=	0x000f
-                           00001F   416 _display_autobrightness	=	0x001f
-                                    417 ;--------------------------------------------------------
-                                    418 ; paged external ram data
+                                    407 ; bit data
+                                    408 ;--------------------------------------------------------
+                                    409 	.area BSEG    (BIT)
+                           000008   410 _DS1302_DATA_0	=	0x0008
+                           000009   411 _DS1302_DATA_1	=	0x0009
+                           00000A   412 _DS1302_DATA_2	=	0x000a
+                           00000B   413 _DS1302_DATA_3	=	0x000b
+                           00000C   414 _DS1302_DATA_4	=	0x000c
+                           00000D   415 _DS1302_DATA_5	=	0x000d
+                           00000E   416 _DS1302_DATA_6	=	0x000e
+                           00000F   417 _DS1302_DATA_7	=	0x000f
+                           00001F   418 _display_autobrightness	=	0x001f
                                     419 ;--------------------------------------------------------
-                                    420 	.area PSEG    (PAG,XDATA)
+                                    420 ; paged external ram data
                                     421 ;--------------------------------------------------------
-                                    422 ; external ram data
+                                    422 	.area PSEG    (PAG,XDATA)
                                     423 ;--------------------------------------------------------
-                                    424 	.area XSEG    (XDATA)
+                                    424 ; external ram data
                                     425 ;--------------------------------------------------------
-                                    426 ; absolute external ram data
+                                    426 	.area XSEG    (XDATA)
                                     427 ;--------------------------------------------------------
-                                    428 	.area XABS    (ABS,XDATA)
+                                    428 ; absolute external ram data
                                     429 ;--------------------------------------------------------
-                                    430 ; external initialized ram data
+                                    430 	.area XABS    (ABS,XDATA)
                                     431 ;--------------------------------------------------------
-                                    432 	.area XISEG   (XDATA)
-                                    433 	.area HOME    (CODE)
-                                    434 	.area GSINIT0 (CODE)
-                                    435 	.area GSINIT1 (CODE)
-                                    436 	.area GSINIT2 (CODE)
-                                    437 	.area GSINIT3 (CODE)
-                                    438 	.area GSINIT4 (CODE)
-                                    439 	.area GSINIT5 (CODE)
-                                    440 	.area GSINIT  (CODE)
-                                    441 	.area GSFINAL (CODE)
-                                    442 	.area CSEG    (CODE)
-                                    443 ;--------------------------------------------------------
-                                    444 ; global & static initialisations
+                                    432 ; external initialized ram data
+                                    433 ;--------------------------------------------------------
+                                    434 	.area XISEG   (XDATA)
+                                    435 	.area HOME    (CODE)
+                                    436 	.area GSINIT0 (CODE)
+                                    437 	.area GSINIT1 (CODE)
+                                    438 	.area GSINIT2 (CODE)
+                                    439 	.area GSINIT3 (CODE)
+                                    440 	.area GSINIT4 (CODE)
+                                    441 	.area GSINIT5 (CODE)
+                                    442 	.area GSINIT  (CODE)
+                                    443 	.area GSFINAL (CODE)
+                                    444 	.area CSEG    (CODE)
                                     445 ;--------------------------------------------------------
-                                    446 	.area HOME    (CODE)
-                                    447 	.area GSINIT  (CODE)
-                                    448 	.area GSFINAL (CODE)
+                                    446 ; global & static initialisations
+                                    447 ;--------------------------------------------------------
+                                    448 	.area HOME    (CODE)
                                     449 	.area GSINIT  (CODE)
-                                    450 ;--------------------------------------------------------
-                                    451 ; Home
+                                    450 	.area GSFINAL (CODE)
+                                    451 	.area GSINIT  (CODE)
                                     452 ;--------------------------------------------------------
-                                    453 	.area HOME    (CODE)
-                                    454 	.area HOME    (CODE)
-                                    455 ;--------------------------------------------------------
-                                    456 ; code
+                                    453 ; Home
+                                    454 ;--------------------------------------------------------
+                                    455 	.area HOME    (CODE)
+                                    456 	.area HOME    (CODE)
                                     457 ;--------------------------------------------------------
-                                    458 	.area CSEG    (CODE)
-                                    459 ;------------------------------------------------------------
-                                    460 ;Allocation info for local variables in function 'adc_calibrate_LDR'
+                                    458 ; code
+                                    459 ;--------------------------------------------------------
+                                    460 	.area CSEG    (CODE)
                                     461 ;------------------------------------------------------------
-                                    462 ;ldr_max                   Allocated with name '_adc_calibrate_LDR_PARM_2'
-                                    463 ;ldr_min                   Allocated with name '_adc_calibrate_LDR_ldr_min_1_154'
-                                    464 ;gradient                  Allocated with name '_adc_calibrate_LDR_gradient_1_155'
-                                    465 ;intercept                 Allocated with name '_adc_calibrate_LDR_intercept_1_155'
-                                    466 ;i                         Allocated to registers r0 r1 
-                                    467 ;------------------------------------------------------------
-                                    468 ;	../adc.c:13: void adc_calibrate_LDR(uint16_t ldr_min,uint16_t ldr_max) {
-                                    469 ;	-----------------------------------------
-                                    470 ;	 function adc_calibrate_LDR
+                                    462 ;Allocation info for local variables in function 'adc_calibrate_LDR'
+                                    463 ;------------------------------------------------------------
+                                    464 ;ldr_max                   Allocated with name '_adc_calibrate_LDR_PARM_2'
+                                    465 ;ldr_min                   Allocated with name '_adc_calibrate_LDR_ldr_min_65536_159'
+                                    466 ;gradient                  Allocated with name '_adc_calibrate_LDR_gradient_65536_160'
+                                    467 ;intercept                 Allocated with name '_adc_calibrate_LDR_intercept_65536_160'
+                                    468 ;i                         Allocated with name '_adc_calibrate_LDR_i_65536_160'
+                                    469 ;------------------------------------------------------------
+                                    470 ;	src/adc.c:13: void adc_calibrate_LDR(uint16_t ldr_min,uint16_t ldr_max) {
                                     471 ;	-----------------------------------------
-      000000                        472 _adc_calibrate_LDR:
-                           000007   473 	ar7 = 0x07
-                           000006   474 	ar6 = 0x06
-                           000005   475 	ar5 = 0x05
-                           000004   476 	ar4 = 0x04
-                           000003   477 	ar3 = 0x03
-                           000002   478 	ar2 = 0x02
-                           000001   479 	ar1 = 0x01
-                           000000   480 	ar0 = 0x00
-      000000 85 82*06         [24]  481 	mov	_adc_calibrate_LDR_ldr_min_1_154,dpl
-      000003 85 83*07         [24]  482 	mov	(_adc_calibrate_LDR_ldr_min_1_154 + 1),dph
-                                    483 ;	../adc.c:14: float gradient = (((float)(DISPLAY_COUNTS_RANGE))/((-1.00f)*(float)(ldr_max - ldr_min)));
-      000006 E5*04            [12]  484 	mov	a,_adc_calibrate_LDR_PARM_2
-      000008 C3               [12]  485 	clr	c
-      000009 95*06            [12]  486 	subb	a,_adc_calibrate_LDR_ldr_min_1_154
-      00000B F5 82            [12]  487 	mov	dpl,a
-      00000D E5*05            [12]  488 	mov	a,(_adc_calibrate_LDR_PARM_2 + 1)
-      00000F 95*07            [12]  489 	subb	a,(_adc_calibrate_LDR_ldr_min_1_154 + 1)
-      000011 F5 83            [12]  490 	mov	dph,a
-      000013 12r00r00         [24]  491 	lcall	___uint2fs
-      000016 AA 82            [24]  492 	mov	r2,dpl
-      000018 AB 83            [24]  493 	mov	r3,dph
-      00001A AC F0            [24]  494 	mov	r4,b
-      00001C B2 E7            [12]  495 	cpl	acc.7
-      00001E FD               [12]  496 	mov	r5,a
-      00001F C0 02            [24]  497 	push	ar2
-      000021 C0 03            [24]  498 	push	ar3
-      000023 C0 04            [24]  499 	push	ar4
-      000025 C0 05            [24]  500 	push	ar5
-      000027 90 D4 00         [24]  501 	mov	dptr,#0xd400
-      00002A 75 F0 68         [24]  502 	mov	b,#0x68
-      00002D 74 47            [12]  503 	mov	a,#0x47
-      00002F 12r00r00         [24]  504 	lcall	___fsdiv
-      000032 85 82*08         [24]  505 	mov	_adc_calibrate_LDR_gradient_1_155,dpl
-      000035 85 83*09         [24]  506 	mov	(_adc_calibrate_LDR_gradient_1_155 + 1),dph
-      000038 85 F0*0A         [24]  507 	mov	(_adc_calibrate_LDR_gradient_1_155 + 2),b
-      00003B F5*0B            [12]  508 	mov	(_adc_calibrate_LDR_gradient_1_155 + 3),a
-      00003D E5 81            [12]  509 	mov	a,sp
-      00003F 24 FC            [12]  510 	add	a,#0xfc
-      000041 F5 81            [12]  511 	mov	sp,a
-                                    512 ;	../adc.c:15: float intercept = ((float)DISPLAY_COUNTS_MAX - gradient*((float)ldr_min));
-      000043 85*06 82         [24]  513 	mov	dpl,_adc_calibrate_LDR_ldr_min_1_154
-      000046 85*07 83         [24]  514 	mov	dph,(_adc_calibrate_LDR_ldr_min_1_154 + 1)
-      000049 12r00r00         [24]  515 	lcall	___uint2fs
-      00004C A8 82            [24]  516 	mov	r0,dpl
-      00004E A9 83            [24]  517 	mov	r1,dph
-      000050 AC F0            [24]  518 	mov	r4,b
-      000052 FD               [12]  519 	mov	r5,a
-      000053 C0 00            [24]  520 	push	ar0
-      000055 C0 01            [24]  521 	push	ar1
-      000057 C0 04            [24]  522 	push	ar4
-      000059 C0 05            [24]  523 	push	ar5
-      00005B 85*08 82         [24]  524 	mov	dpl,_adc_calibrate_LDR_gradient_1_155
-      00005E 85*09 83         [24]  525 	mov	dph,(_adc_calibrate_LDR_gradient_1_155 + 1)
-      000061 85*0A F0         [24]  526 	mov	b,(_adc_calibrate_LDR_gradient_1_155 + 2)
-      000064 E5*0B            [12]  527 	mov	a,(_adc_calibrate_LDR_gradient_1_155 + 3)
-      000066 12r00r00         [24]  528 	lcall	___fsmul
-      000069 AA 82            [24]  529 	mov	r2,dpl
-      00006B AB 83            [24]  530 	mov	r3,dph
-      00006D AC F0            [24]  531 	mov	r4,b
-      00006F FD               [12]  532 	mov	r5,a
-      000070 E5 81            [12]  533 	mov	a,sp
-      000072 24 FC            [12]  534 	add	a,#0xfc
-      000074 F5 81            [12]  535 	mov	sp,a
-      000076 C0 02            [24]  536 	push	ar2
-      000078 C0 03            [24]  537 	push	ar3
-      00007A C0 04            [24]  538 	push	ar4
-      00007C C0 05            [24]  539 	push	ar5
-      00007E 90 00 00         [24]  540 	mov	dptr,#0x0000
-      000081 75 F0 6A         [24]  541 	mov	b,#0x6a
-      000084 74 47            [12]  542 	mov	a,#0x47
-      000086 12r00r00         [24]  543 	lcall	___fssub
-      000089 85 82*0C         [24]  544 	mov	_adc_calibrate_LDR_intercept_1_155,dpl
-      00008C 85 83*0D         [24]  545 	mov	(_adc_calibrate_LDR_intercept_1_155 + 1),dph
-      00008F 85 F0*0E         [24]  546 	mov	(_adc_calibrate_LDR_intercept_1_155 + 2),b
-      000092 F5*0F            [12]  547 	mov	(_adc_calibrate_LDR_intercept_1_155 + 3),a
-      000094 E5 81            [12]  548 	mov	a,sp
-      000096 24 FC            [12]  549 	add	a,#0xfc
-      000098 F5 81            [12]  550 	mov	sp,a
-                                    551 ;	../adc.c:18: eeprom_start();
-      00009A 12r00r00         [24]  552 	lcall	_eeprom_start
-                                    553 ;	../adc.c:19: eeprom_erase(0x00);	//Erase EEPROM sectors holding LDR lookup table
-      00009D 75 82 00         [24]  554 	mov	dpl,#0x00
-      0000A0 12r00r00         [24]  555 	lcall	_eeprom_erase
-                                    556 ;	../adc.c:20: eeprom_erase(0x02);	//Erase EEPROM sectors holding LDR lookup table
-      0000A3 75 82 02         [24]  557 	mov	dpl,#0x02
-      0000A6 12r00r00         [24]  558 	lcall	_eeprom_erase
-                                    559 ;	../adc.c:21: eeprom_erase(0x04);	//Erase EEPROM sectors holding LDR lookup table
-      0000A9 75 82 04         [24]  560 	mov	dpl,#0x04
-      0000AC 12r00r00         [24]  561 	lcall	_eeprom_erase
-                                    562 ;	../adc.c:22: eeprom_erase(0x08);	//Erase EEPROM sectors holding LDR lookup table
-      0000AF 75 82 08         [24]  563 	mov	dpl,#0x08
-      0000B2 12r00r00         [24]  564 	lcall	_eeprom_erase
-                                    565 ;	../adc.c:23: for(i=0;i<1024;i++){
-      0000B5 78 00            [12]  566 	mov	r0,#0x00
-      0000B7 79 00            [12]  567 	mov	r1,#0x00
-      0000B9                        568 00108$:
-                                    569 ;	../adc.c:24: if((i >= ldr_min) && (i <= ldr_max)){
-      0000B9 C3               [12]  570 	clr	c
-      0000BA E8               [12]  571 	mov	a,r0
-      0000BB 95*06            [12]  572 	subb	a,_adc_calibrate_LDR_ldr_min_1_154
-      0000BD E9               [12]  573 	mov	a,r1
-      0000BE 95*07            [12]  574 	subb	a,(_adc_calibrate_LDR_ldr_min_1_154 + 1)
-      0000C0 50 03            [24]  575 	jnc	00127$
-      0000C2 02r01rB7         [24]  576 	ljmp	00102$
-      0000C5                        577 00127$:
-      0000C5 C3               [12]  578 	clr	c
-      0000C6 E5*04            [12]  579 	mov	a,_adc_calibrate_LDR_PARM_2
-      0000C8 98               [12]  580 	subb	a,r0
-      0000C9 E5*05            [12]  581 	mov	a,(_adc_calibrate_LDR_PARM_2 + 1)
-      0000CB 99               [12]  582 	subb	a,r1
-      0000CC 50 03            [24]  583 	jnc	00128$
-      0000CE 02r01rB7         [24]  584 	ljmp	00102$
-      0000D1                        585 00128$:
-                                    586 ;	../adc.c:25: eeprom_write(2*i,((uint16_t)((gradient*(float)(i)) + intercept)) & 0x00ff);
-      0000D1 E8               [12]  587 	mov	a,r0
-      0000D2 28               [12]  588 	add	a,r0
-      0000D3 FC               [12]  589 	mov	r4,a
-      0000D4 E9               [12]  590 	mov	a,r1
-      0000D5 33               [12]  591 	rlc	a
-      0000D6 FD               [12]  592 	mov	r5,a
-      0000D7 88 82            [24]  593 	mov	dpl,r0
-      0000D9 89 83            [24]  594 	mov	dph,r1
-      0000DB C0 05            [24]  595 	push	ar5
-      0000DD C0 04            [24]  596 	push	ar4
-      0000DF C0 01            [24]  597 	push	ar1
-      0000E1 C0 00            [24]  598 	push	ar0
-      0000E3 12r00r00         [24]  599 	lcall	___uint2fs
-      0000E6 AA 82            [24]  600 	mov	r2,dpl
-      0000E8 AB 83            [24]  601 	mov	r3,dph
-      0000EA AE F0            [24]  602 	mov	r6,b
-      0000EC FF               [12]  603 	mov	r7,a
-      0000ED C0 02            [24]  604 	push	ar2
-      0000EF C0 03            [24]  605 	push	ar3
-      0000F1 C0 06            [24]  606 	push	ar6
-      0000F3 C0 07            [24]  607 	push	ar7
-      0000F5 85*08 82         [24]  608 	mov	dpl,_adc_calibrate_LDR_gradient_1_155
-      0000F8 85*09 83         [24]  609 	mov	dph,(_adc_calibrate_LDR_gradient_1_155 + 1)
-      0000FB 85*0A F0         [24]  610 	mov	b,(_adc_calibrate_LDR_gradient_1_155 + 2)
-      0000FE E5*0B            [12]  611 	mov	a,(_adc_calibrate_LDR_gradient_1_155 + 3)
-      000100 12r00r00         [24]  612 	lcall	___fsmul
-      000103 AA 82            [24]  613 	mov	r2,dpl
-      000105 AB 83            [24]  614 	mov	r3,dph
-      000107 AE F0            [24]  615 	mov	r6,b
-      000109 FF               [12]  616 	mov	r7,a
-      00010A E5 81            [12]  617 	mov	a,sp
-      00010C 24 FC            [12]  618 	add	a,#0xfc
-      00010E F5 81            [12]  619 	mov	sp,a
-      000110 C0*0C            [24]  620 	push	_adc_calibrate_LDR_intercept_1_155
-      000112 C0*0D            [24]  621 	push	(_adc_calibrate_LDR_intercept_1_155 + 1)
-      000114 C0*0E            [24]  622 	push	(_adc_calibrate_LDR_intercept_1_155 + 2)
-      000116 C0*0F            [24]  623 	push	(_adc_calibrate_LDR_intercept_1_155 + 3)
-      000118 8A 82            [24]  624 	mov	dpl,r2
-      00011A 8B 83            [24]  625 	mov	dph,r3
-      00011C 8E F0            [24]  626 	mov	b,r6
-      00011E EF               [12]  627 	mov	a,r7
-      00011F 12r00r00         [24]  628 	lcall	___fsadd
-      000122 AA 82            [24]  629 	mov	r2,dpl
-      000124 AB 83            [24]  630 	mov	r3,dph
-      000126 AE F0            [24]  631 	mov	r6,b
-      000128 FF               [12]  632 	mov	r7,a
-      000129 E5 81            [12]  633 	mov	a,sp
-      00012B 24 FC            [12]  634 	add	a,#0xfc
-      00012D F5 81            [12]  635 	mov	sp,a
-      00012F D0 00            [24]  636 	pop	ar0
-      000131 D0 01            [24]  637 	pop	ar1
-      000133 D0 04            [24]  638 	pop	ar4
-      000135 D0 05            [24]  639 	pop	ar5
-      000137 8A 82            [24]  640 	mov	dpl,r2
-      000139 8B 83            [24]  641 	mov	dph,r3
-      00013B 8E F0            [24]  642 	mov	b,r6
-      00013D EF               [12]  643 	mov	a,r7
-      00013E C0 07            [24]  644 	push	ar7
-      000140 C0 06            [24]  645 	push	ar6
-      000142 C0 05            [24]  646 	push	ar5
-      000144 C0 04            [24]  647 	push	ar4
-      000146 C0 03            [24]  648 	push	ar3
-      000148 C0 02            [24]  649 	push	ar2
-      00014A C0 01            [24]  650 	push	ar1
-      00014C C0 00            [24]  651 	push	ar0
-      00014E 12r00r00         [24]  652 	lcall	___fs2uint
-      000151 85 82*00         [24]  653 	mov	_eeprom_write_PARM_2,dpl
-      000154 D0 00            [24]  654 	pop	ar0
-      000156 D0 01            [24]  655 	pop	ar1
-      000158 D0 02            [24]  656 	pop	ar2
-      00015A D0 03            [24]  657 	pop	ar3
-      00015C D0 04            [24]  658 	pop	ar4
-      00015E D0 05            [24]  659 	pop	ar5
-      000160 8C 82            [24]  660 	mov	dpl,r4
-      000162 8D 83            [24]  661 	mov	dph,r5
-      000164 C0 05            [24]  662 	push	ar5
-      000166 C0 04            [24]  663 	push	ar4
-      000168 C0 03            [24]  664 	push	ar3
-      00016A C0 02            [24]  665 	push	ar2
-      00016C C0 01            [24]  666 	push	ar1
-      00016E C0 00            [24]  667 	push	ar0
-      000170 12r00r00         [24]  668 	lcall	_eeprom_write
-      000173 D0 00            [24]  669 	pop	ar0
-      000175 D0 01            [24]  670 	pop	ar1
-      000177 D0 02            [24]  671 	pop	ar2
-      000179 D0 03            [24]  672 	pop	ar3
-      00017B D0 04            [24]  673 	pop	ar4
-      00017D D0 05            [24]  674 	pop	ar5
-      00017F D0 06            [24]  675 	pop	ar6
-      000181 D0 07            [24]  676 	pop	ar7
-                                    677 ;	../adc.c:26: eeprom_write((2*i)+1,((uint16_t)((gradient*(float)(i)) + intercept)) >> 8);
-      000183 0C               [12]  678 	inc	r4
-      000184 BC 00 01         [24]  679 	cjne	r4,#0x00,00129$
-      000187 0D               [12]  680 	inc	r5
-      000188                        681 00129$:
-      000188 8A 82            [24]  682 	mov	dpl,r2
-      00018A 8B 83            [24]  683 	mov	dph,r3
-      00018C 8E F0            [24]  684 	mov	b,r6
-      00018E EF               [12]  685 	mov	a,r7
-      00018F C0 05            [24]  686 	push	ar5
-      000191 C0 04            [24]  687 	push	ar4
-      000193 C0 01            [24]  688 	push	ar1
-      000195 C0 00            [24]  689 	push	ar0
-      000197 12r00r00         [24]  690 	lcall	___fs2uint
-      00019A AF 83            [24]  691 	mov	r7,dph
-      00019C D0 00            [24]  692 	pop	ar0
-      00019E D0 01            [24]  693 	pop	ar1
-      0001A0 D0 04            [24]  694 	pop	ar4
-      0001A2 D0 05            [24]  695 	pop	ar5
-      0001A4 8F*00            [24]  696 	mov	_eeprom_write_PARM_2,r7
-      0001A6 8C 82            [24]  697 	mov	dpl,r4
-      0001A8 8D 83            [24]  698 	mov	dph,r5
-      0001AA C0 01            [24]  699 	push	ar1
-      0001AC C0 00            [24]  700 	push	ar0
-      0001AE 12r00r00         [24]  701 	lcall	_eeprom_write
-      0001B1 D0 00            [24]  702 	pop	ar0
-      0001B3 D0 01            [24]  703 	pop	ar1
-                                    704 ;	../adc.c:27: continue;
-      0001B5 80 71            [24]  705 	sjmp	00106$
-      0001B7                        706 00102$:
-                                    707 ;	../adc.c:29: if(i < ldr_min){
-      0001B7 C3               [12]  708 	clr	c
-      0001B8 E8               [12]  709 	mov	a,r0
-      0001B9 95*06            [12]  710 	subb	a,_adc_calibrate_LDR_ldr_min_1_154
-      0001BB E9               [12]  711 	mov	a,r1
-      0001BC 95*07            [12]  712 	subb	a,(_adc_calibrate_LDR_ldr_min_1_154 + 1)
-      0001BE 50 35            [24]  713 	jnc	00105$
-                                    714 ;	../adc.c:30: eeprom_write((2*i),DISPLAY_COUNTS_MAX & 0x00ff);
-      0001C0 E8               [12]  715 	mov	a,r0
-      0001C1 28               [12]  716 	add	a,r0
-      0001C2 FE               [12]  717 	mov	r6,a
-      0001C3 E9               [12]  718 	mov	a,r1
-      0001C4 33               [12]  719 	rlc	a
-      0001C5 FF               [12]  720 	mov	r7,a
-      0001C6 75*00 00         [24]  721 	mov	_eeprom_write_PARM_2,#0x00
-      0001C9 8E 82            [24]  722 	mov	dpl,r6
-      0001CB 8F 83            [24]  723 	mov	dph,r7
-      0001CD C0 07            [24]  724 	push	ar7
-      0001CF C0 06            [24]  725 	push	ar6
-      0001D1 C0 01            [24]  726 	push	ar1
-      0001D3 C0 00            [24]  727 	push	ar0
-      0001D5 12r00r00         [24]  728 	lcall	_eeprom_write
-      0001D8 D0 00            [24]  729 	pop	ar0
-      0001DA D0 01            [24]  730 	pop	ar1
-      0001DC D0 06            [24]  731 	pop	ar6
-      0001DE D0 07            [24]  732 	pop	ar7
-                                    733 ;	../adc.c:31: eeprom_write((2*i)+1,DISPLAY_COUNTS_MAX >> 8);
-      0001E0 8E 82            [24]  734 	mov	dpl,r6
-      0001E2 8F 83            [24]  735 	mov	dph,r7
-      0001E4 A3               [24]  736 	inc	dptr
-      0001E5 75*00 EA         [24]  737 	mov	_eeprom_write_PARM_2,#0xea
-      0001E8 C0 01            [24]  738 	push	ar1
-      0001EA C0 00            [24]  739 	push	ar0
-      0001EC 12r00r00         [24]  740 	lcall	_eeprom_write
-      0001EF D0 00            [24]  741 	pop	ar0
-      0001F1 D0 01            [24]  742 	pop	ar1
-                                    743 ;	../adc.c:32: continue;
-      0001F3 80 33            [24]  744 	sjmp	00106$
-      0001F5                        745 00105$:
-                                    746 ;	../adc.c:34: eeprom_write((2*i),DISPLAY_COUNTS_MIN & 0x00ff);
-      0001F5 E8               [12]  747 	mov	a,r0
-      0001F6 28               [12]  748 	add	a,r0
-      0001F7 FE               [12]  749 	mov	r6,a
-      0001F8 E9               [12]  750 	mov	a,r1
-      0001F9 33               [12]  751 	rlc	a
-      0001FA FF               [12]  752 	mov	r7,a
-      0001FB 75*00 2C         [24]  753 	mov	_eeprom_write_PARM_2,#0x2c
-      0001FE 8E 82            [24]  754 	mov	dpl,r6
-      000200 8F 83            [24]  755 	mov	dph,r7
-      000202 C0 07            [24]  756 	push	ar7
-      000204 C0 06            [24]  757 	push	ar6
-      000206 C0 01            [24]  758 	push	ar1
-      000208 C0 00            [24]  759 	push	ar0
-      00020A 12r00r00         [24]  760 	lcall	_eeprom_write
-      00020D D0 00            [24]  761 	pop	ar0
-      00020F D0 01            [24]  762 	pop	ar1
-      000211 D0 06            [24]  763 	pop	ar6
-      000213 D0 07            [24]  764 	pop	ar7
-                                    765 ;	../adc.c:35: eeprom_write((2*i)+1,DISPLAY_COUNTS_MIN >> 8);
-      000215 8E 82            [24]  766 	mov	dpl,r6
-      000217 8F 83            [24]  767 	mov	dph,r7
-      000219 A3               [24]  768 	inc	dptr
-      00021A 75*00 01         [24]  769 	mov	_eeprom_write_PARM_2,#0x01
-      00021D C0 01            [24]  770 	push	ar1
-      00021F C0 00            [24]  771 	push	ar0
-      000221 12r00r00         [24]  772 	lcall	_eeprom_write
-      000224 D0 00            [24]  773 	pop	ar0
-      000226 D0 01            [24]  774 	pop	ar1
-      000228                        775 00106$:
-                                    776 ;	../adc.c:23: for(i=0;i<1024;i++){
-      000228 08               [12]  777 	inc	r0
-      000229 B8 00 01         [24]  778 	cjne	r0,#0x00,00131$
-      00022C 09               [12]  779 	inc	r1
-      00022D                        780 00131$:
-      00022D 74 FC            [12]  781 	mov	a,#0x100 - 0x04
-      00022F 29               [12]  782 	add	a,r1
-      000230 40 03            [24]  783 	jc	00132$
-      000232 02r00rB9         [24]  784 	ljmp	00108$
-      000235                        785 00132$:
-                                    786 ;	../adc.c:37: eeprom_end();
-      000235 02r00r00         [24]  787 	ljmp	_eeprom_end
-                                    788 ;------------------------------------------------------------
-                                    789 ;Allocation info for local variables in function 'ISR_ADC'
-                                    790 ;------------------------------------------------------------
-                                    791 ;display_counts_buffer     Allocated to registers r6 r7 
-                                    792 ;------------------------------------------------------------
-                                    793 ;	../adc.c:57: void ISR_ADC(void) __interrupt(INT_ADC) __using(3) {
-                                    794 ;	-----------------------------------------
-                                    795 ;	 function ISR_ADC
-                                    796 ;	-----------------------------------------
-      000238                        797 _ISR_ADC:
-                           00001F   798 	ar7 = 0x1f
-                           00001E   799 	ar6 = 0x1e
-                           00001D   800 	ar5 = 0x1d
-                           00001C   801 	ar4 = 0x1c
-                           00001B   802 	ar3 = 0x1b
-                           00001A   803 	ar2 = 0x1a
-                           000019   804 	ar1 = 0x19
-                           000018   805 	ar0 = 0x18
-      000238 C0*00            [24]  806 	push	bits
-      00023A C0 E0            [24]  807 	push	acc
-      00023C C0 F0            [24]  808 	push	b
-      00023E C0 82            [24]  809 	push	dpl
-      000240 C0 83            [24]  810 	push	dph
-      000242 C0 07            [24]  811 	push	(0+7)
-      000244 C0 06            [24]  812 	push	(0+6)
-      000246 C0 05            [24]  813 	push	(0+5)
-      000248 C0 04            [24]  814 	push	(0+4)
-      00024A C0 03            [24]  815 	push	(0+3)
-      00024C C0 02            [24]  816 	push	(0+2)
-      00024E C0 01            [24]  817 	push	(0+1)
-      000250 C0 00            [24]  818 	push	(0+0)
-      000252 C0 D0            [24]  819 	push	psw
-      000254 75 D0 18         [24]  820 	mov	psw,#0x18
-                                    821 ;	../adc.c:59: ADC_CONTR ^= 0x10; //Clear the ADC flag
-      000257 63 BC 10         [24]  822 	xrl	_ADC_CONTR,#0x10
-                                    823 ;	../adc.c:61: if(ADC_CONTR == ADC_SETUP_THERMISTOR){
-      00025A 74 E7            [12]  824 	mov	a,#0xe7
-      00025C B5 BC 09         [24]  825 	cjne	a,_ADC_CONTR,00104$
-                                    826 ;	../adc.c:62: adc_thermistor_reading = ADC_RES;
-      00025F 85 BE*02         [24]  827 	mov	_adc_thermistor_reading,((_ADC_RES >> 0) & 0xFF)
-      000262 85 BD*03         [24]  828 	mov	(_adc_thermistor_reading + 1),((_ADC_RES >> 8) & 0xFF)
-      000265 02r03r80         [24]  829 	ljmp	00106$
-      000268                        830 00104$:
-                                    831 ;	../adc.c:64: adc_ldr_reading = ADC_RES;
-      000268 85 BE*00         [24]  832 	mov	_adc_ldr_reading,((_ADC_RES >> 0) & 0xFF)
-      00026B 85 BD*01         [24]  833 	mov	(_adc_ldr_reading + 1),((_ADC_RES >> 8) & 0xFF)
-                                    834 ;	../adc.c:65: if(display_autobrightness) {
-      00026E 20 1F 03         [24]  835 	jb	_display_autobrightness,00116$
-      000271 02r03r80         [24]  836 	ljmp	00106$
-      000274                        837 00116$:
-                                    838 ;	../adc.c:67: display_counts_buffer = (((float)EEPROM_PWM_FROM_LDR_TABLE[adc_ldr_reading]/100.0) + ((99.00) *((float)display_counts/100.0)));
-      000274 E5*00            [12]  839 	mov	a,_adc_ldr_reading
-      000276 25 E0            [12]  840 	add	a,acc
-      000278 FE               [12]  841 	mov	r6,a
-      000279 E5*01            [12]  842 	mov	a,(_adc_ldr_reading + 1)
-      00027B 33               [12]  843 	rlc	a
-      00027C FF               [12]  844 	mov	r7,a
-      00027D 8E 82            [24]  845 	mov	dpl,r6
-      00027F 74s00            [12]  846 	mov	a,#(_EEPROM_PWM_FROM_LDR_TABLE >> 8)
-      000281 2F               [12]  847 	add	a,r7
-      000282 F5 83            [12]  848 	mov	dph,a
-      000284 E4               [12]  849 	clr	a
-      000285 93               [24]  850 	movc	a,@a+dptr
-      000286 FE               [12]  851 	mov	r6,a
-      000287 A3               [24]  852 	inc	dptr
-      000288 E4               [12]  853 	clr	a
-      000289 93               [24]  854 	movc	a,@a+dptr
-      00028A FF               [12]  855 	mov	r7,a
-      00028B 8E 82            [24]  856 	mov	dpl,r6
-      00028D 8F 83            [24]  857 	mov	dph,r7
-      00028F 75 D0 00         [24]  858 	mov	psw,#0x00
-      000292 12r00r00         [24]  859 	lcall	___uint2fs
-      000295 75 D0 18         [24]  860 	mov	psw,#0x18
-      000298 AC 82            [24]  861 	mov	r4,dpl
-      00029A AD 83            [24]  862 	mov	r5,dph
-      00029C AE F0            [24]  863 	mov	r6,b
-      00029E FF               [12]  864 	mov	r7,a
-      00029F E4               [12]  865 	clr	a
-      0002A0 C0 E0            [24]  866 	push	acc
-      0002A2 C0 E0            [24]  867 	push	acc
-      0002A4 74 C8            [12]  868 	mov	a,#0xc8
-      0002A6 C0 E0            [24]  869 	push	acc
-      0002A8 74 42            [12]  870 	mov	a,#0x42
-      0002AA C0 E0            [24]  871 	push	acc
-      0002AC 8C 82            [24]  872 	mov	dpl,r4
-      0002AE 8D 83            [24]  873 	mov	dph,r5
-      0002B0 8E F0            [24]  874 	mov	b,r6
-      0002B2 EF               [12]  875 	mov	a,r7
-      0002B3 75 D0 00         [24]  876 	mov	psw,#0x00
-      0002B6 12r00r00         [24]  877 	lcall	___fsdiv
-      0002B9 75 D0 18         [24]  878 	mov	psw,#0x18
-      0002BC AC 82            [24]  879 	mov	r4,dpl
-      0002BE AD 83            [24]  880 	mov	r5,dph
-      0002C0 AE F0            [24]  881 	mov	r6,b
-      0002C2 FF               [12]  882 	mov	r7,a
-      0002C3 E5 81            [12]  883 	mov	a,sp
-      0002C5 24 FC            [12]  884 	add	a,#0xfc
-      0002C7 F5 81            [12]  885 	mov	sp,a
-      0002C9 85*00 82         [24]  886 	mov	dpl,_display_counts
-      0002CC 85*01 83         [24]  887 	mov	dph,(_display_counts + 1)
-      0002CF C0 1F            [24]  888 	push	ar7
-      0002D1 C0 1E            [24]  889 	push	ar6
-      0002D3 C0 1D            [24]  890 	push	ar5
-      0002D5 C0 1C            [24]  891 	push	ar4
-      0002D7 75 D0 00         [24]  892 	mov	psw,#0x00
-      0002DA 12r00r00         [24]  893 	lcall	___uint2fs
-      0002DD 75 D0 18         [24]  894 	mov	psw,#0x18
-      0002E0 A8 82            [24]  895 	mov	r0,dpl
-      0002E2 A9 83            [24]  896 	mov	r1,dph
-      0002E4 AA F0            [24]  897 	mov	r2,b
-      0002E6 FB               [12]  898 	mov	r3,a
-      0002E7 E4               [12]  899 	clr	a
-      0002E8 C0 E0            [24]  900 	push	acc
-      0002EA C0 E0            [24]  901 	push	acc
-      0002EC 74 C8            [12]  902 	mov	a,#0xc8
-      0002EE C0 E0            [24]  903 	push	acc
-      0002F0 74 42            [12]  904 	mov	a,#0x42
-      0002F2 C0 E0            [24]  905 	push	acc
-      0002F4 88 82            [24]  906 	mov	dpl,r0
-      0002F6 89 83            [24]  907 	mov	dph,r1
-      0002F8 8A F0            [24]  908 	mov	b,r2
-      0002FA EB               [12]  909 	mov	a,r3
-      0002FB 75 D0 00         [24]  910 	mov	psw,#0x00
-      0002FE 12r00r00         [24]  911 	lcall	___fsdiv
-      000301 75 D0 18         [24]  912 	mov	psw,#0x18
-      000304 A8 82            [24]  913 	mov	r0,dpl
-      000306 A9 83            [24]  914 	mov	r1,dph
-      000308 AA F0            [24]  915 	mov	r2,b
-      00030A FB               [12]  916 	mov	r3,a
-      00030B E5 81            [12]  917 	mov	a,sp
-      00030D 24 FC            [12]  918 	add	a,#0xfc
-      00030F F5 81            [12]  919 	mov	sp,a
-      000311 C0 18            [24]  920 	push	ar0
-      000313 C0 19            [24]  921 	push	ar1
-      000315 C0 1A            [24]  922 	push	ar2
-      000317 C0 1B            [24]  923 	push	ar3
-      000319 90 00 00         [24]  924 	mov	dptr,#0x0000
-      00031C 75 F0 C6         [24]  925 	mov	b,#0xc6
-      00031F 74 42            [12]  926 	mov	a,#0x42
-      000321 75 D0 00         [24]  927 	mov	psw,#0x00
-      000324 12r00r00         [24]  928 	lcall	___fsmul
-      000327 75 D0 18         [24]  929 	mov	psw,#0x18
-      00032A A8 82            [24]  930 	mov	r0,dpl
-      00032C A9 83            [24]  931 	mov	r1,dph
-      00032E AA F0            [24]  932 	mov	r2,b
-      000330 FB               [12]  933 	mov	r3,a
-      000331 E5 81            [12]  934 	mov	a,sp
-      000333 24 FC            [12]  935 	add	a,#0xfc
-      000335 F5 81            [12]  936 	mov	sp,a
-      000337 D0 1C            [24]  937 	pop	ar4
-      000339 D0 1D            [24]  938 	pop	ar5
-      00033B D0 1E            [24]  939 	pop	ar6
-      00033D D0 1F            [24]  940 	pop	ar7
-      00033F C0 18            [24]  941 	push	ar0
-      000341 C0 19            [24]  942 	push	ar1
-      000343 C0 1A            [24]  943 	push	ar2
-      000345 C0 1B            [24]  944 	push	ar3
-      000347 8C 82            [24]  945 	mov	dpl,r4
-      000349 8D 83            [24]  946 	mov	dph,r5
-      00034B 8E F0            [24]  947 	mov	b,r6
-      00034D EF               [12]  948 	mov	a,r7
-      00034E 75 D0 00         [24]  949 	mov	psw,#0x00
-      000351 12r00r00         [24]  950 	lcall	___fsadd
-      000354 75 D0 18         [24]  951 	mov	psw,#0x18
-      000357 AC 82            [24]  952 	mov	r4,dpl
-      000359 AD 83            [24]  953 	mov	r5,dph
-      00035B AE F0            [24]  954 	mov	r6,b
-      00035D FF               [12]  955 	mov	r7,a
-      00035E E5 81            [12]  956 	mov	a,sp
-      000360 24 FC            [12]  957 	add	a,#0xfc
-      000362 F5 81            [12]  958 	mov	sp,a
-      000364 8C 82            [24]  959 	mov	dpl,r4
-      000366 8D 83            [24]  960 	mov	dph,r5
-      000368 8E F0            [24]  961 	mov	b,r6
-      00036A EF               [12]  962 	mov	a,r7
-      00036B 75 D0 00         [24]  963 	mov	psw,#0x00
-      00036E 12r00r00         [24]  964 	lcall	___fs2uint
-      000371 75 D0 18         [24]  965 	mov	psw,#0x18
-      000374 AE 82            [24]  966 	mov	r6,dpl
-      000376 AF 83            [24]  967 	mov	r7,dph
-                                    968 ;	../adc.c:68: INT_IP_PPCA = 0; //Block PCA interrupt from stacking on top of ADC ISR
-                                    969 ;	assignBit
-      000378 C2 BF            [12]  970 	clr	_INT_IP_PPCA
-                                    971 ;	../adc.c:69: display_counts = display_counts_buffer;
-      00037A 8E*00            [24]  972 	mov	_display_counts,r6
-      00037C 8F*01            [24]  973 	mov	(_display_counts + 1),r7
-                                    974 ;	../adc.c:70: INT_IP_PPCA = 1; //Re-enable PCA interrupt high priority
-                                    975 ;	assignBit
-      00037E D2 BF            [12]  976 	setb	_INT_IP_PPCA
-      000380                        977 00106$:
-      000380 D0 D0            [24]  978 	pop	psw
-      000382 D0 00            [24]  979 	pop	(0+0)
-      000384 D0 01            [24]  980 	pop	(0+1)
-      000386 D0 02            [24]  981 	pop	(0+2)
-      000388 D0 03            [24]  982 	pop	(0+3)
-      00038A D0 04            [24]  983 	pop	(0+4)
-      00038C D0 05            [24]  984 	pop	(0+5)
-      00038E D0 06            [24]  985 	pop	(0+6)
-      000390 D0 07            [24]  986 	pop	(0+7)
-      000392 D0 83            [24]  987 	pop	dph
-      000394 D0 82            [24]  988 	pop	dpl
-      000396 D0 F0            [24]  989 	pop	b
-      000398 D0 E0            [24]  990 	pop	acc
-      00039A D0*00            [24]  991 	pop	bits
-      00039C 32               [24]  992 	reti
-                                    993 	.area CSEG    (CODE)
-                                    994 	.area CONST   (CODE)
-                                    995 	.area XINIT   (CODE)
-                                    996 	.area CABS    (ABS,CODE)
+                                    472 ;	 function adc_calibrate_LDR
+                                    473 ;	-----------------------------------------
+      000000                        474 _adc_calibrate_LDR:
+                           000007   475 	ar7 = 0x07
+                           000006   476 	ar6 = 0x06
+                           000005   477 	ar5 = 0x05
+                           000004   478 	ar4 = 0x04
+                           000003   479 	ar3 = 0x03
+                           000002   480 	ar2 = 0x02
+                           000001   481 	ar1 = 0x01
+                           000000   482 	ar0 = 0x00
+      000000 85 82*06         [24]  483 	mov	_adc_calibrate_LDR_ldr_min_65536_159,dpl
+      000003 85 83*07         [24]  484 	mov	(_adc_calibrate_LDR_ldr_min_65536_159 + 1),dph
+                                    485 ;	src/adc.c:14: float gradient = (((float)(DISPLAY_COUNTS_RANGE))/((-1.00f)*(float)(ldr_max - ldr_min)));
+      000006 E5*04            [12]  486 	mov	a,_adc_calibrate_LDR_PARM_2
+      000008 C3               [12]  487 	clr	c
+      000009 95*06            [12]  488 	subb	a,_adc_calibrate_LDR_ldr_min_65536_159
+      00000B F5 82            [12]  489 	mov	dpl,a
+      00000D E5*05            [12]  490 	mov	a,(_adc_calibrate_LDR_PARM_2 + 1)
+      00000F 95*07            [12]  491 	subb	a,(_adc_calibrate_LDR_ldr_min_65536_159 + 1)
+      000011 F5 83            [12]  492 	mov	dph,a
+      000013 12r00r00         [24]  493 	lcall	___uint2fs
+      000016 AA 82            [24]  494 	mov	r2,dpl
+      000018 AB 83            [24]  495 	mov	r3,dph
+      00001A AC F0            [24]  496 	mov	r4,b
+      00001C B2 E7            [12]  497 	cpl	acc.7
+      00001E FD               [12]  498 	mov	r5,a
+      00001F C0 02            [24]  499 	push	ar2
+      000021 C0 03            [24]  500 	push	ar3
+      000023 C0 04            [24]  501 	push	ar4
+      000025 C0 05            [24]  502 	push	ar5
+      000027 90 D4 00         [24]  503 	mov	dptr,#0xd400
+      00002A 75 F0 68         [24]  504 	mov	b,#0x68
+      00002D 74 47            [12]  505 	mov	a,#0x47
+      00002F 12r00r00         [24]  506 	lcall	___fsdiv
+      000032 85 82*08         [24]  507 	mov	_adc_calibrate_LDR_gradient_65536_160,dpl
+      000035 85 83*09         [24]  508 	mov	(_adc_calibrate_LDR_gradient_65536_160 + 1),dph
+      000038 85 F0*0A         [24]  509 	mov	(_adc_calibrate_LDR_gradient_65536_160 + 2),b
+      00003B F5*0B            [12]  510 	mov	(_adc_calibrate_LDR_gradient_65536_160 + 3),a
+      00003D E5 81            [12]  511 	mov	a,sp
+      00003F 24 FC            [12]  512 	add	a,#0xfc
+      000041 F5 81            [12]  513 	mov	sp,a
+                                    514 ;	src/adc.c:15: float intercept = ((float)DISPLAY_COUNTS_MAX - gradient*((float)ldr_min));
+      000043 85*06 82         [24]  515 	mov	dpl,_adc_calibrate_LDR_ldr_min_65536_159
+      000046 85*07 83         [24]  516 	mov	dph,(_adc_calibrate_LDR_ldr_min_65536_159 + 1)
+      000049 12r00r00         [24]  517 	lcall	___uint2fs
+      00004C A8 82            [24]  518 	mov	r0,dpl
+      00004E A9 83            [24]  519 	mov	r1,dph
+      000050 AC F0            [24]  520 	mov	r4,b
+      000052 FD               [12]  521 	mov	r5,a
+      000053 C0 00            [24]  522 	push	ar0
+      000055 C0 01            [24]  523 	push	ar1
+      000057 C0 04            [24]  524 	push	ar4
+      000059 C0 05            [24]  525 	push	ar5
+      00005B 85*08 82         [24]  526 	mov	dpl,_adc_calibrate_LDR_gradient_65536_160
+      00005E 85*09 83         [24]  527 	mov	dph,(_adc_calibrate_LDR_gradient_65536_160 + 1)
+      000061 85*0A F0         [24]  528 	mov	b,(_adc_calibrate_LDR_gradient_65536_160 + 2)
+      000064 E5*0B            [12]  529 	mov	a,(_adc_calibrate_LDR_gradient_65536_160 + 3)
+      000066 12r00r00         [24]  530 	lcall	___fsmul
+      000069 AA 82            [24]  531 	mov	r2,dpl
+      00006B AB 83            [24]  532 	mov	r3,dph
+      00006D AC F0            [24]  533 	mov	r4,b
+      00006F FD               [12]  534 	mov	r5,a
+      000070 E5 81            [12]  535 	mov	a,sp
+      000072 24 FC            [12]  536 	add	a,#0xfc
+      000074 F5 81            [12]  537 	mov	sp,a
+      000076 C0 02            [24]  538 	push	ar2
+      000078 C0 03            [24]  539 	push	ar3
+      00007A C0 04            [24]  540 	push	ar4
+      00007C C0 05            [24]  541 	push	ar5
+      00007E 90 00 00         [24]  542 	mov	dptr,#0x0000
+      000081 75 F0 6A         [24]  543 	mov	b,#0x6a
+      000084 74 47            [12]  544 	mov	a,#0x47
+      000086 12r00r00         [24]  545 	lcall	___fssub
+      000089 85 82*0C         [24]  546 	mov	_adc_calibrate_LDR_intercept_65536_160,dpl
+      00008C 85 83*0D         [24]  547 	mov	(_adc_calibrate_LDR_intercept_65536_160 + 1),dph
+      00008F 85 F0*0E         [24]  548 	mov	(_adc_calibrate_LDR_intercept_65536_160 + 2),b
+      000092 F5*0F            [12]  549 	mov	(_adc_calibrate_LDR_intercept_65536_160 + 3),a
+      000094 E5 81            [12]  550 	mov	a,sp
+      000096 24 FC            [12]  551 	add	a,#0xfc
+      000098 F5 81            [12]  552 	mov	sp,a
+                                    553 ;	src/adc.c:18: eeprom_start();
+      00009A 12r00r00         [24]  554 	lcall	_eeprom_start
+                                    555 ;	src/adc.c:19: eeprom_erase(0x00);	//Erase EEPROM sectors holding LDR lookup table
+      00009D 75 82 00         [24]  556 	mov	dpl,#0x00
+      0000A0 12r00r00         [24]  557 	lcall	_eeprom_erase
+                                    558 ;	src/adc.c:20: eeprom_erase(0x02);	//Erase EEPROM sectors holding LDR lookup table
+      0000A3 75 82 02         [24]  559 	mov	dpl,#0x02
+      0000A6 12r00r00         [24]  560 	lcall	_eeprom_erase
+                                    561 ;	src/adc.c:21: eeprom_erase(0x04);	//Erase EEPROM sectors holding LDR lookup table
+      0000A9 75 82 04         [24]  562 	mov	dpl,#0x04
+      0000AC 12r00r00         [24]  563 	lcall	_eeprom_erase
+                                    564 ;	src/adc.c:22: eeprom_erase(0x08);	//Erase EEPROM sectors holding LDR lookup table
+      0000AF 75 82 08         [24]  565 	mov	dpl,#0x08
+      0000B2 12r00r00         [24]  566 	lcall	_eeprom_erase
+                                    567 ;	src/adc.c:23: for(i=0;i<1024;i++){
+      0000B5 E4               [12]  568 	clr	a
+      0000B6 F5*10            [12]  569 	mov	_adc_calibrate_LDR_i_65536_160,a
+      0000B8 F5*11            [12]  570 	mov	(_adc_calibrate_LDR_i_65536_160 + 1),a
+      0000BA                        571 00108$:
+                                    572 ;	src/adc.c:24: if((i >= ldr_min) && (i <= ldr_max)){
+      0000BA C3               [12]  573 	clr	c
+      0000BB E5*10            [12]  574 	mov	a,_adc_calibrate_LDR_i_65536_160
+      0000BD 95*06            [12]  575 	subb	a,_adc_calibrate_LDR_ldr_min_65536_159
+      0000BF E5*11            [12]  576 	mov	a,(_adc_calibrate_LDR_i_65536_160 + 1)
+      0000C1 95*07            [12]  577 	subb	a,(_adc_calibrate_LDR_ldr_min_65536_159 + 1)
+      0000C3 50 03            [24]  578 	jnc	00132$
+      0000C5 02r01rA6         [24]  579 	ljmp	00102$
+      0000C8                        580 00132$:
+      0000C8 C3               [12]  581 	clr	c
+      0000C9 E5*04            [12]  582 	mov	a,_adc_calibrate_LDR_PARM_2
+      0000CB 95*10            [12]  583 	subb	a,_adc_calibrate_LDR_i_65536_160
+      0000CD E5*05            [12]  584 	mov	a,(_adc_calibrate_LDR_PARM_2 + 1)
+      0000CF 95*11            [12]  585 	subb	a,(_adc_calibrate_LDR_i_65536_160 + 1)
+      0000D1 50 03            [24]  586 	jnc	00133$
+      0000D3 02r01rA6         [24]  587 	ljmp	00102$
+      0000D6                        588 00133$:
+                                    589 ;	src/adc.c:25: eeprom_write(2*i,((uint16_t)((gradient*(float)(i)) + intercept)) & 0x00ff);
+      0000D6 AC*10            [24]  590 	mov	r4,_adc_calibrate_LDR_i_65536_160
+      0000D8 AD*11            [24]  591 	mov	r5,(_adc_calibrate_LDR_i_65536_160 + 1)
+      0000DA EC               [12]  592 	mov	a,r4
+      0000DB 2C               [12]  593 	add	a,r4
+      0000DC FC               [12]  594 	mov	r4,a
+      0000DD ED               [12]  595 	mov	a,r5
+      0000DE 33               [12]  596 	rlc	a
+      0000DF FD               [12]  597 	mov	r5,a
+      0000E0 8C 02            [24]  598 	mov	ar2,r4
+      0000E2 8D 03            [24]  599 	mov	ar3,r5
+      0000E4 85*10 82         [24]  600 	mov	dpl,_adc_calibrate_LDR_i_65536_160
+      0000E7 85*11 83         [24]  601 	mov	dph,(_adc_calibrate_LDR_i_65536_160 + 1)
+      0000EA C0 05            [24]  602 	push	ar5
+      0000EC C0 04            [24]  603 	push	ar4
+      0000EE C0 03            [24]  604 	push	ar3
+      0000F0 C0 02            [24]  605 	push	ar2
+      0000F2 12r00r00         [24]  606 	lcall	___uint2fs
+      0000F5 A8 82            [24]  607 	mov	r0,dpl
+      0000F7 A9 83            [24]  608 	mov	r1,dph
+      0000F9 AE F0            [24]  609 	mov	r6,b
+      0000FB FF               [12]  610 	mov	r7,a
+      0000FC C0 00            [24]  611 	push	ar0
+      0000FE C0 01            [24]  612 	push	ar1
+      000100 C0 06            [24]  613 	push	ar6
+      000102 C0 07            [24]  614 	push	ar7
+      000104 85*08 82         [24]  615 	mov	dpl,_adc_calibrate_LDR_gradient_65536_160
+      000107 85*09 83         [24]  616 	mov	dph,(_adc_calibrate_LDR_gradient_65536_160 + 1)
+      00010A 85*0A F0         [24]  617 	mov	b,(_adc_calibrate_LDR_gradient_65536_160 + 2)
+      00010D E5*0B            [12]  618 	mov	a,(_adc_calibrate_LDR_gradient_65536_160 + 3)
+      00010F 12r00r00         [24]  619 	lcall	___fsmul
+      000112 A8 82            [24]  620 	mov	r0,dpl
+      000114 A9 83            [24]  621 	mov	r1,dph
+      000116 AE F0            [24]  622 	mov	r6,b
+      000118 FF               [12]  623 	mov	r7,a
+      000119 E5 81            [12]  624 	mov	a,sp
+      00011B 24 FC            [12]  625 	add	a,#0xfc
+      00011D F5 81            [12]  626 	mov	sp,a
+      00011F C0*0C            [24]  627 	push	_adc_calibrate_LDR_intercept_65536_160
+      000121 C0*0D            [24]  628 	push	(_adc_calibrate_LDR_intercept_65536_160 + 1)
+      000123 C0*0E            [24]  629 	push	(_adc_calibrate_LDR_intercept_65536_160 + 2)
+      000125 C0*0F            [24]  630 	push	(_adc_calibrate_LDR_intercept_65536_160 + 3)
+      000127 88 82            [24]  631 	mov	dpl,r0
+      000129 89 83            [24]  632 	mov	dph,r1
+      00012B 8E F0            [24]  633 	mov	b,r6
+      00012D EF               [12]  634 	mov	a,r7
+      00012E 12r00r00         [24]  635 	lcall	___fsadd
+      000131 A8 82            [24]  636 	mov	r0,dpl
+      000133 A9 83            [24]  637 	mov	r1,dph
+      000135 AE F0            [24]  638 	mov	r6,b
+      000137 FF               [12]  639 	mov	r7,a
+      000138 E5 81            [12]  640 	mov	a,sp
+      00013A 24 FC            [12]  641 	add	a,#0xfc
+      00013C F5 81            [12]  642 	mov	sp,a
+      00013E D0 02            [24]  643 	pop	ar2
+      000140 D0 03            [24]  644 	pop	ar3
+      000142 D0 04            [24]  645 	pop	ar4
+      000144 D0 05            [24]  646 	pop	ar5
+      000146 88 82            [24]  647 	mov	dpl,r0
+      000148 89 83            [24]  648 	mov	dph,r1
+      00014A 8E F0            [24]  649 	mov	b,r6
+      00014C EF               [12]  650 	mov	a,r7
+      00014D C0 07            [24]  651 	push	ar7
+      00014F C0 06            [24]  652 	push	ar6
+      000151 C0 05            [24]  653 	push	ar5
+      000153 C0 04            [24]  654 	push	ar4
+      000155 C0 03            [24]  655 	push	ar3
+      000157 C0 02            [24]  656 	push	ar2
+      000159 C0 01            [24]  657 	push	ar1
+      00015B C0 00            [24]  658 	push	ar0
+      00015D 12r00r00         [24]  659 	lcall	___fs2uint
+      000160 85 82*00         [24]  660 	mov	_eeprom_write_PARM_2,dpl
+      000163 D0 00            [24]  661 	pop	ar0
+      000165 D0 01            [24]  662 	pop	ar1
+      000167 D0 02            [24]  663 	pop	ar2
+      000169 D0 03            [24]  664 	pop	ar3
+      00016B 8A 82            [24]  665 	mov	dpl,r2
+      00016D 8B 83            [24]  666 	mov	dph,r3
+      00016F C0 01            [24]  667 	push	ar1
+      000171 C0 00            [24]  668 	push	ar0
+      000173 12r00r00         [24]  669 	lcall	_eeprom_write
+      000176 D0 00            [24]  670 	pop	ar0
+      000178 D0 01            [24]  671 	pop	ar1
+      00017A D0 04            [24]  672 	pop	ar4
+      00017C D0 05            [24]  673 	pop	ar5
+      00017E D0 06            [24]  674 	pop	ar6
+      000180 D0 07            [24]  675 	pop	ar7
+                                    676 ;	src/adc.c:26: eeprom_write((2*i)+1,((uint16_t)((gradient*(float)(i)) + intercept)) >> 8);
+      000182 0C               [12]  677 	inc	r4
+      000183 BC 00 01         [24]  678 	cjne	r4,#0x00,00134$
+      000186 0D               [12]  679 	inc	r5
+      000187                        680 00134$:
+      000187 88 82            [24]  681 	mov	dpl,r0
+      000189 89 83            [24]  682 	mov	dph,r1
+      00018B 8E F0            [24]  683 	mov	b,r6
+      00018D EF               [12]  684 	mov	a,r7
+      00018E C0 05            [24]  685 	push	ar5
+      000190 C0 04            [24]  686 	push	ar4
+      000192 12r00r00         [24]  687 	lcall	___fs2uint
+      000195 AF 83            [24]  688 	mov	r7,dph
+      000197 D0 04            [24]  689 	pop	ar4
+      000199 D0 05            [24]  690 	pop	ar5
+      00019B 8F*00            [24]  691 	mov	_eeprom_write_PARM_2,r7
+      00019D 8C 82            [24]  692 	mov	dpl,r4
+      00019F 8D 83            [24]  693 	mov	dph,r5
+      0001A1 12r00r00         [24]  694 	lcall	_eeprom_write
+                                    695 ;	src/adc.c:27: continue;
+      0001A4 80 63            [24]  696 	sjmp	00106$
+      0001A6                        697 00102$:
+                                    698 ;	src/adc.c:29: if(i < ldr_min){
+      0001A6 C3               [12]  699 	clr	c
+      0001A7 E5*10            [12]  700 	mov	a,_adc_calibrate_LDR_i_65536_160
+      0001A9 95*06            [12]  701 	subb	a,_adc_calibrate_LDR_ldr_min_65536_159
+      0001AB E5*11            [12]  702 	mov	a,(_adc_calibrate_LDR_i_65536_160 + 1)
+      0001AD 95*07            [12]  703 	subb	a,(_adc_calibrate_LDR_ldr_min_65536_159 + 1)
+      0001AF 50 2D            [24]  704 	jnc	00105$
+                                    705 ;	src/adc.c:30: eeprom_write((2*i),DISPLAY_COUNTS_MAX & 0x00ff);
+      0001B1 A8*10            [24]  706 	mov	r0,_adc_calibrate_LDR_i_65536_160
+      0001B3 A9*11            [24]  707 	mov	r1,(_adc_calibrate_LDR_i_65536_160 + 1)
+      0001B5 E8               [12]  708 	mov	a,r0
+      0001B6 28               [12]  709 	add	a,r0
+      0001B7 F8               [12]  710 	mov	r0,a
+      0001B8 E9               [12]  711 	mov	a,r1
+      0001B9 33               [12]  712 	rlc	a
+      0001BA F9               [12]  713 	mov	r1,a
+      0001BB 88 82            [24]  714 	mov	dpl,r0
+      0001BD 89 83            [24]  715 	mov	dph,r1
+      0001BF 75*00 00         [24]  716 	mov	_eeprom_write_PARM_2,#0x00
+      0001C2 C0 01            [24]  717 	push	ar1
+      0001C4 C0 00            [24]  718 	push	ar0
+      0001C6 12r00r00         [24]  719 	lcall	_eeprom_write
+      0001C9 D0 00            [24]  720 	pop	ar0
+      0001CB D0 01            [24]  721 	pop	ar1
+                                    722 ;	src/adc.c:31: eeprom_write((2*i)+1,DISPLAY_COUNTS_MAX >> 8);
+      0001CD 08               [12]  723 	inc	r0
+      0001CE B8 00 01         [24]  724 	cjne	r0,#0x00,00136$
+      0001D1 09               [12]  725 	inc	r1
+      0001D2                        726 00136$:
+      0001D2 88 82            [24]  727 	mov	dpl,r0
+      0001D4 89 83            [24]  728 	mov	dph,r1
+      0001D6 75*00 EA         [24]  729 	mov	_eeprom_write_PARM_2,#0xea
+      0001D9 12r00r00         [24]  730 	lcall	_eeprom_write
+                                    731 ;	src/adc.c:32: continue;
+      0001DC 80 2B            [24]  732 	sjmp	00106$
+      0001DE                        733 00105$:
+                                    734 ;	src/adc.c:34: eeprom_write((2*i),DISPLAY_COUNTS_MIN & 0x00ff);
+      0001DE A8*10            [24]  735 	mov	r0,_adc_calibrate_LDR_i_65536_160
+      0001E0 A9*11            [24]  736 	mov	r1,(_adc_calibrate_LDR_i_65536_160 + 1)
+      0001E2 E8               [12]  737 	mov	a,r0
+      0001E3 28               [12]  738 	add	a,r0
+      0001E4 F8               [12]  739 	mov	r0,a
+      0001E5 E9               [12]  740 	mov	a,r1
+      0001E6 33               [12]  741 	rlc	a
+      0001E7 F9               [12]  742 	mov	r1,a
+      0001E8 88 82            [24]  743 	mov	dpl,r0
+      0001EA 89 83            [24]  744 	mov	dph,r1
+      0001EC 75*00 2C         [24]  745 	mov	_eeprom_write_PARM_2,#0x2c
+      0001EF C0 01            [24]  746 	push	ar1
+      0001F1 C0 00            [24]  747 	push	ar0
+      0001F3 12r00r00         [24]  748 	lcall	_eeprom_write
+      0001F6 D0 00            [24]  749 	pop	ar0
+      0001F8 D0 01            [24]  750 	pop	ar1
+                                    751 ;	src/adc.c:35: eeprom_write((2*i)+1,DISPLAY_COUNTS_MIN >> 8);
+      0001FA 08               [12]  752 	inc	r0
+      0001FB B8 00 01         [24]  753 	cjne	r0,#0x00,00137$
+      0001FE 09               [12]  754 	inc	r1
+      0001FF                        755 00137$:
+      0001FF 88 82            [24]  756 	mov	dpl,r0
+      000201 89 83            [24]  757 	mov	dph,r1
+      000203 75*00 01         [24]  758 	mov	_eeprom_write_PARM_2,#0x01
+      000206 12r00r00         [24]  759 	lcall	_eeprom_write
+      000209                        760 00106$:
+                                    761 ;	src/adc.c:23: for(i=0;i<1024;i++){
+      000209 05*10            [12]  762 	inc	_adc_calibrate_LDR_i_65536_160
+      00020B E4               [12]  763 	clr	a
+      00020C B5*10 02         [24]  764 	cjne	a,_adc_calibrate_LDR_i_65536_160,00138$
+      00020F 05*11            [12]  765 	inc	(_adc_calibrate_LDR_i_65536_160 + 1)
+      000211                        766 00138$:
+      000211 A8*10            [24]  767 	mov	r0,_adc_calibrate_LDR_i_65536_160
+      000213 A9*11            [24]  768 	mov	r1,(_adc_calibrate_LDR_i_65536_160 + 1)
+      000215 74 FC            [12]  769 	mov	a,#0x100 - 0x04
+      000217 29               [12]  770 	add	a,r1
+      000218 40 03            [24]  771 	jc	00139$
+      00021A 02r00rBA         [24]  772 	ljmp	00108$
+      00021D                        773 00139$:
+                                    774 ;	src/adc.c:37: eeprom_end();
+                                    775 ;	src/adc.c:38: }
+      00021D 02r00r00         [24]  776 	ljmp	_eeprom_end
+                                    777 ;------------------------------------------------------------
+                                    778 ;Allocation info for local variables in function 'ISR_ADC'
+                                    779 ;------------------------------------------------------------
+                                    780 ;display_counts_buffer     Allocated to registers r6 r7 
+                                    781 ;------------------------------------------------------------
+                                    782 ;	src/adc.c:57: void ISR_ADC(void) __interrupt(INT_ADC) __using(3) {
+                                    783 ;	-----------------------------------------
+                                    784 ;	 function ISR_ADC
+                                    785 ;	-----------------------------------------
+      000220                        786 _ISR_ADC:
+                           00001F   787 	ar7 = 0x1f
+                           00001E   788 	ar6 = 0x1e
+                           00001D   789 	ar5 = 0x1d
+                           00001C   790 	ar4 = 0x1c
+                           00001B   791 	ar3 = 0x1b
+                           00001A   792 	ar2 = 0x1a
+                           000019   793 	ar1 = 0x19
+                           000018   794 	ar0 = 0x18
+      000220 C0*00            [24]  795 	push	bits
+      000222 C0 E0            [24]  796 	push	acc
+      000224 C0 F0            [24]  797 	push	b
+      000226 C0 82            [24]  798 	push	dpl
+      000228 C0 83            [24]  799 	push	dph
+      00022A C0 07            [24]  800 	push	(0+7)
+      00022C C0 06            [24]  801 	push	(0+6)
+      00022E C0 05            [24]  802 	push	(0+5)
+      000230 C0 04            [24]  803 	push	(0+4)
+      000232 C0 03            [24]  804 	push	(0+3)
+      000234 C0 02            [24]  805 	push	(0+2)
+      000236 C0 01            [24]  806 	push	(0+1)
+      000238 C0 00            [24]  807 	push	(0+0)
+      00023A C0 D0            [24]  808 	push	psw
+      00023C 75 D0 18         [24]  809 	mov	psw,#0x18
+                                    810 ;	src/adc.c:59: ADC_CONTR ^= 0x10; //Clear the ADC flag
+      00023F 63 BC 10         [24]  811 	xrl	_ADC_CONTR,#0x10
+                                    812 ;	src/adc.c:61: if(ADC_CONTR == ADC_SETUP_THERMISTOR){
+      000242 74 E7            [12]  813 	mov	a,#0xe7
+      000244 B5 BC 09         [24]  814 	cjne	a,_ADC_CONTR,00104$
+                                    815 ;	src/adc.c:62: adc_thermistor_reading = ADC_RES;
+      000247 85 BE*02         [24]  816 	mov	_adc_thermistor_reading,((_ADC_RES >> 0) & 0xFF)
+      00024A 85 BD*03         [24]  817 	mov	(_adc_thermistor_reading + 1),((_ADC_RES >> 8) & 0xFF)
+      00024D 02r03r68         [24]  818 	ljmp	00106$
+      000250                        819 00104$:
+                                    820 ;	src/adc.c:64: adc_ldr_reading = ADC_RES;
+      000250 85 BE*00         [24]  821 	mov	_adc_ldr_reading,((_ADC_RES >> 0) & 0xFF)
+      000253 85 BD*01         [24]  822 	mov	(_adc_ldr_reading + 1),((_ADC_RES >> 8) & 0xFF)
+                                    823 ;	src/adc.c:65: if(display_autobrightness) {
+      000256 20 1F 03         [24]  824 	jb	_display_autobrightness,00118$
+      000259 02r03r68         [24]  825 	ljmp	00106$
+      00025C                        826 00118$:
+                                    827 ;	src/adc.c:67: display_counts_buffer = (((float)EEPROM_PWM_FROM_LDR_TABLE[adc_ldr_reading]/100.0) + ((99.00) *((float)display_counts/100.0)));
+      00025C E5*00            [12]  828 	mov	a,_adc_ldr_reading
+      00025E 25 E0            [12]  829 	add	a,acc
+      000260 FE               [12]  830 	mov	r6,a
+      000261 E5*01            [12]  831 	mov	a,(_adc_ldr_reading + 1)
+      000263 33               [12]  832 	rlc	a
+      000264 FF               [12]  833 	mov	r7,a
+      000265 8E 82            [24]  834 	mov	dpl,r6
+      000267 74s00            [12]  835 	mov	a,#(_EEPROM_PWM_FROM_LDR_TABLE >> 8)
+      000269 2F               [12]  836 	add	a,r7
+      00026A F5 83            [12]  837 	mov	dph,a
+      00026C E4               [12]  838 	clr	a
+      00026D 93               [24]  839 	movc	a,@a+dptr
+      00026E FE               [12]  840 	mov	r6,a
+      00026F A3               [24]  841 	inc	dptr
+      000270 E4               [12]  842 	clr	a
+      000271 93               [24]  843 	movc	a,@a+dptr
+      000272 FF               [12]  844 	mov	r7,a
+      000273 8E 82            [24]  845 	mov	dpl,r6
+      000275 8F 83            [24]  846 	mov	dph,r7
+      000277 75 D0 00         [24]  847 	mov	psw,#0x00
+      00027A 12r00r00         [24]  848 	lcall	___uint2fs
+      00027D 75 D0 18         [24]  849 	mov	psw,#0x18
+      000280 AC 82            [24]  850 	mov	r4,dpl
+      000282 AD 83            [24]  851 	mov	r5,dph
+      000284 AE F0            [24]  852 	mov	r6,b
+      000286 FF               [12]  853 	mov	r7,a
+      000287 E4               [12]  854 	clr	a
+      000288 C0 E0            [24]  855 	push	acc
+      00028A C0 E0            [24]  856 	push	acc
+      00028C 74 C8            [12]  857 	mov	a,#0xc8
+      00028E C0 E0            [24]  858 	push	acc
+      000290 74 42            [12]  859 	mov	a,#0x42
+      000292 C0 E0            [24]  860 	push	acc
+      000294 8C 82            [24]  861 	mov	dpl,r4
+      000296 8D 83            [24]  862 	mov	dph,r5
+      000298 8E F0            [24]  863 	mov	b,r6
+      00029A EF               [12]  864 	mov	a,r7
+      00029B 75 D0 00         [24]  865 	mov	psw,#0x00
+      00029E 12r00r00         [24]  866 	lcall	___fsdiv
+      0002A1 75 D0 18         [24]  867 	mov	psw,#0x18
+      0002A4 AC 82            [24]  868 	mov	r4,dpl
+      0002A6 AD 83            [24]  869 	mov	r5,dph
+      0002A8 AE F0            [24]  870 	mov	r6,b
+      0002AA FF               [12]  871 	mov	r7,a
+      0002AB E5 81            [12]  872 	mov	a,sp
+      0002AD 24 FC            [12]  873 	add	a,#0xfc
+      0002AF F5 81            [12]  874 	mov	sp,a
+      0002B1 85*00 82         [24]  875 	mov	dpl,_display_counts
+      0002B4 85*01 83         [24]  876 	mov	dph,(_display_counts + 1)
+      0002B7 C0 1F            [24]  877 	push	ar7
+      0002B9 C0 1E            [24]  878 	push	ar6
+      0002BB C0 1D            [24]  879 	push	ar5
+      0002BD C0 1C            [24]  880 	push	ar4
+      0002BF 75 D0 00         [24]  881 	mov	psw,#0x00
+      0002C2 12r00r00         [24]  882 	lcall	___uint2fs
+      0002C5 75 D0 18         [24]  883 	mov	psw,#0x18
+      0002C8 A8 82            [24]  884 	mov	r0,dpl
+      0002CA A9 83            [24]  885 	mov	r1,dph
+      0002CC AA F0            [24]  886 	mov	r2,b
+      0002CE FB               [12]  887 	mov	r3,a
+      0002CF E4               [12]  888 	clr	a
+      0002D0 C0 E0            [24]  889 	push	acc
+      0002D2 C0 E0            [24]  890 	push	acc
+      0002D4 74 C8            [12]  891 	mov	a,#0xc8
+      0002D6 C0 E0            [24]  892 	push	acc
+      0002D8 74 42            [12]  893 	mov	a,#0x42
+      0002DA C0 E0            [24]  894 	push	acc
+      0002DC 88 82            [24]  895 	mov	dpl,r0
+      0002DE 89 83            [24]  896 	mov	dph,r1
+      0002E0 8A F0            [24]  897 	mov	b,r2
+      0002E2 EB               [12]  898 	mov	a,r3
+      0002E3 75 D0 00         [24]  899 	mov	psw,#0x00
+      0002E6 12r00r00         [24]  900 	lcall	___fsdiv
+      0002E9 75 D0 18         [24]  901 	mov	psw,#0x18
+      0002EC A8 82            [24]  902 	mov	r0,dpl
+      0002EE A9 83            [24]  903 	mov	r1,dph
+      0002F0 AA F0            [24]  904 	mov	r2,b
+      0002F2 FB               [12]  905 	mov	r3,a
+      0002F3 E5 81            [12]  906 	mov	a,sp
+      0002F5 24 FC            [12]  907 	add	a,#0xfc
+      0002F7 F5 81            [12]  908 	mov	sp,a
+      0002F9 C0 18            [24]  909 	push	ar0
+      0002FB C0 19            [24]  910 	push	ar1
+      0002FD C0 1A            [24]  911 	push	ar2
+      0002FF C0 1B            [24]  912 	push	ar3
+      000301 90 00 00         [24]  913 	mov	dptr,#0x0000
+      000304 75 F0 C6         [24]  914 	mov	b,#0xc6
+      000307 74 42            [12]  915 	mov	a,#0x42
+      000309 75 D0 00         [24]  916 	mov	psw,#0x00
+      00030C 12r00r00         [24]  917 	lcall	___fsmul
+      00030F 75 D0 18         [24]  918 	mov	psw,#0x18
+      000312 A8 82            [24]  919 	mov	r0,dpl
+      000314 A9 83            [24]  920 	mov	r1,dph
+      000316 AA F0            [24]  921 	mov	r2,b
+      000318 FB               [12]  922 	mov	r3,a
+      000319 E5 81            [12]  923 	mov	a,sp
+      00031B 24 FC            [12]  924 	add	a,#0xfc
+      00031D F5 81            [12]  925 	mov	sp,a
+      00031F D0 1C            [24]  926 	pop	ar4
+      000321 D0 1D            [24]  927 	pop	ar5
+      000323 D0 1E            [24]  928 	pop	ar6
+      000325 D0 1F            [24]  929 	pop	ar7
+      000327 C0 18            [24]  930 	push	ar0
+      000329 C0 19            [24]  931 	push	ar1
+      00032B C0 1A            [24]  932 	push	ar2
+      00032D C0 1B            [24]  933 	push	ar3
+      00032F 8C 82            [24]  934 	mov	dpl,r4
+      000331 8D 83            [24]  935 	mov	dph,r5
+      000333 8E F0            [24]  936 	mov	b,r6
+      000335 EF               [12]  937 	mov	a,r7
+      000336 75 D0 00         [24]  938 	mov	psw,#0x00
+      000339 12r00r00         [24]  939 	lcall	___fsadd
+      00033C 75 D0 18         [24]  940 	mov	psw,#0x18
+      00033F AC 82            [24]  941 	mov	r4,dpl
+      000341 AD 83            [24]  942 	mov	r5,dph
+      000343 AE F0            [24]  943 	mov	r6,b
+      000345 FF               [12]  944 	mov	r7,a
+      000346 E5 81            [12]  945 	mov	a,sp
+      000348 24 FC            [12]  946 	add	a,#0xfc
+      00034A F5 81            [12]  947 	mov	sp,a
+      00034C 8C 82            [24]  948 	mov	dpl,r4
+      00034E 8D 83            [24]  949 	mov	dph,r5
+      000350 8E F0            [24]  950 	mov	b,r6
+      000352 EF               [12]  951 	mov	a,r7
+      000353 75 D0 00         [24]  952 	mov	psw,#0x00
+      000356 12r00r00         [24]  953 	lcall	___fs2uint
+      000359 75 D0 18         [24]  954 	mov	psw,#0x18
+      00035C AE 82            [24]  955 	mov	r6,dpl
+      00035E AF 83            [24]  956 	mov	r7,dph
+                                    957 ;	src/adc.c:68: INT_IP_PPCA = 0; //Block PCA interrupt from stacking on top of ADC ISR
+                                    958 ;	assignBit
+      000360 C2 BF            [12]  959 	clr	_INT_IP_PPCA
+                                    960 ;	src/adc.c:69: display_counts = display_counts_buffer;
+      000362 8E*00            [24]  961 	mov	_display_counts,r6
+      000364 8F*01            [24]  962 	mov	(_display_counts + 1),r7
+                                    963 ;	src/adc.c:70: INT_IP_PPCA = 1; //Re-enable PCA interrupt high priority
+                                    964 ;	assignBit
+      000366 D2 BF            [12]  965 	setb	_INT_IP_PPCA
+      000368                        966 00106$:
+                                    967 ;	src/adc.c:73: }
+      000368 D0 D0            [24]  968 	pop	psw
+      00036A D0 00            [24]  969 	pop	(0+0)
+      00036C D0 01            [24]  970 	pop	(0+1)
+      00036E D0 02            [24]  971 	pop	(0+2)
+      000370 D0 03            [24]  972 	pop	(0+3)
+      000372 D0 04            [24]  973 	pop	(0+4)
+      000374 D0 05            [24]  974 	pop	(0+5)
+      000376 D0 06            [24]  975 	pop	(0+6)
+      000378 D0 07            [24]  976 	pop	(0+7)
+      00037A D0 83            [24]  977 	pop	dph
+      00037C D0 82            [24]  978 	pop	dpl
+      00037E D0 F0            [24]  979 	pop	b
+      000380 D0 E0            [24]  980 	pop	acc
+      000382 D0*00            [24]  981 	pop	bits
+      000384 32               [24]  982 	reti
+                                    983 	.area CSEG    (CODE)
+                                    984 	.area CONST   (CODE)
+                                    985 	.area XINIT   (CODE)
+                                    986 	.area CABS    (ABS,CODE)

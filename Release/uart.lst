@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module uart
                                       6 	.optsdcc -mmcs51 --model-small
@@ -295,7 +295,7 @@
                            0000CC   295 _PORT_P5_4	=	0x00cc
                            0000CD   296 _PORT_P5_5	=	0x00cd
                            0000CE   297 _PORT_P5_6	=	0x00ce
-                           0000CD   298 _PORT_P5_7	=	0x00cd
+                           0000CF   298 _PORT_P5_7	=	0x00cf
                            0000A8   299 _INT_IE_EX0	=	0x00a8
                            0000A9   300 _INT_IE_ET0	=	0x00a9
                            0000AA   301 _INT_IE_EX1	=	0x00aa
@@ -332,7 +332,7 @@
                            00009C   332 _UART_REN	=	0x009c
                            00009D   333 _UART_SM2	=	0x009d
                            00009E   334 _UART_SM1	=	0x009e
-                           00009E   335 _UART_SM0	=	0x009e
+                           00009F   335 _UART_SM0	=	0x009f
                                     336 ;--------------------------------------------------------
                                     337 ; overlayable register banks
                                     338 ;--------------------------------------------------------
@@ -343,7 +343,7 @@
                                     343 ;--------------------------------------------------------
                                     344 	.area DSEG    (DATA)
                                     345 ;--------------------------------------------------------
-                                    346 ; overlayable items in internal ram 
+                                    346 ; overlayable items in internal ram
                                     347 ;--------------------------------------------------------
                                     348 	.area	OSEG    (OVR,DATA)
                                     349 ;--------------------------------------------------------
@@ -406,7 +406,7 @@
                                     406 ;------------------------------------------------------------
                                     407 ;c                         Allocated to registers 
                                     408 ;------------------------------------------------------------
-                                    409 ;	../uart.c:10: void putchar(uint8_t c) {
+                                    409 ;	src/uart.c:10: void putchar(uint8_t c) {
                                     410 ;	-----------------------------------------
                                     411 ;	 function putchar
                                     412 ;	-----------------------------------------
@@ -420,15 +420,16 @@
                            000001   420 	ar1 = 0x01
                            000000   421 	ar0 = 0x00
       000000 85 82 99         [24]  422 	mov	_UART_SBUF,dpl
-                                    423 ;	../uart.c:12: while(!UART_TI); // Wait for transmission to complete
+                                    423 ;	src/uart.c:12: while(!UART_TI); // Wait for transmission to complete
       000003                        424 00101$:
-                                    425 ;	../uart.c:13: UART_TI = 0;	 // Clear transmit flag
+                                    425 ;	src/uart.c:13: UART_TI = 0;	 // Clear transmit flag
                                     426 ;	assignBit
-      000003 10 99 02         [24]  427 	jbc	_UART_TI,00112$
+      000003 10 99 02         [24]  427 	jbc	_UART_TI,00114$
       000006 80 FB            [24]  428 	sjmp	00101$
-      000008                        429 00112$:
-      000008 22               [24]  430 	ret
-                                    431 	.area CSEG    (CODE)
-                                    432 	.area CONST   (CODE)
-                                    433 	.area XINIT   (CODE)
-                                    434 	.area CABS    (ABS,CODE)
+      000008                        429 00114$:
+                                    430 ;	src/uart.c:14: }
+      000008 22               [24]  431 	ret
+                                    432 	.area CSEG    (CODE)
+                                    433 	.area CONST   (CODE)
+                                    434 	.area XINIT   (CODE)
+                                    435 	.area CABS    (ABS,CODE)

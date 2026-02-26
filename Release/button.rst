@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module button
                                       6 	.optsdcc -mmcs51 --model-small
@@ -309,7 +309,7 @@
                            0000CC   309 _PORT_P5_4	=	0x00cc
                            0000CD   310 _PORT_P5_5	=	0x00cd
                            0000CE   311 _PORT_P5_6	=	0x00ce
-                           0000CD   312 _PORT_P5_7	=	0x00cd
+                           0000CF   312 _PORT_P5_7	=	0x00cf
                            0000A8   313 _INT_IE_EX0	=	0x00a8
                            0000A9   314 _INT_IE_ET0	=	0x00a9
                            0000AA   315 _INT_IE_EX1	=	0x00aa
@@ -346,7 +346,7 @@
                            00009C   346 _UART_REN	=	0x009c
                            00009D   347 _UART_SM2	=	0x009d
                            00009E   348 _UART_SM1	=	0x009e
-                           00009E   349 _UART_SM0	=	0x009e
+                           00009F   349 _UART_SM0	=	0x009f
                                     350 ;--------------------------------------------------------
                                     351 ; overlayable register banks
                                     352 ;--------------------------------------------------------
@@ -356,17 +356,17 @@
                                     356 ; internal ram data
                                     357 ;--------------------------------------------------------
                                     358 	.area DSEG    (DATA)
-      000037                        359 _BUTTON_MENU_STATE::
-      000037                        360 	.ds 1
-      000038                        361 _BUTTON_SELECT_STATE::
-      000038                        362 	.ds 1
-      000039                        363 _BUTTON_MENU_CNT::
-      000039                        364 	.ds 1
-      00003A                        365 _BUTTON_SELECT_CNT::
-      00003A                        366 	.ds 1
+      00003E                        359 _BUTTON_MENU_STATE::
+      00003E                        360 	.ds 1
+      00003F                        361 _BUTTON_SELECT_STATE::
+      00003F                        362 	.ds 1
+      000040                        363 _BUTTON_MENU_CNT::
+      000040                        364 	.ds 1
+      000041                        365 _BUTTON_SELECT_CNT::
+      000041                        366 	.ds 1
                            000022   367 _BUTTON_DATA	=	0x0022
                                     368 ;--------------------------------------------------------
-                                    369 ; overlayable items in internal ram 
+                                    369 ; overlayable items in internal ram
                                     370 ;--------------------------------------------------------
                                     371 	.area	OSEG    (OVR,DATA)
                                     372 	.area	OSEG    (OVR,DATA)
@@ -438,11 +438,11 @@
                                     438 ;------------------------------------------------------------
                                     439 ;s                         Allocated to registers r7 
                                     440 ;------------------------------------------------------------
-                                    441 ;	../button.c:11: enum button_states button_read_and_clear_select() {
+                                    441 ;	src/button.c:11: enum button_states button_read_and_clear_select() {
                                     442 ;	-----------------------------------------
                                     443 ;	 function button_read_and_clear_select
                                     444 ;	-----------------------------------------
-      0004DE                        445 _button_read_and_clear_select:
+      000640                        445 _button_read_and_clear_select:
                            000007   446 	ar7 = 0x07
                            000006   447 	ar6 = 0x06
                            000005   448 	ar5 = 0x05
@@ -451,112 +451,114 @@
                            000002   451 	ar2 = 0x02
                            000001   452 	ar1 = 0x01
                            000000   453 	ar0 = 0x00
-                                    454 ;	../button.c:13: INT_IE_ET0 = 0; //Disable timer 0 interrupt so we don't get half bit sets
+                                    454 ;	src/button.c:13: INT_IE_ET0 = 0; //Disable timer 0 interrupt so we don't get half bit sets
                                     455 ;	assignBit
-      0004DE C2 A9            [12]  456 	clr	_INT_IE_ET0
-                                    457 ;	../button.c:14: if(!(BUTTON_DATA >> 0x05)){
-      0004E0 E5 22            [12]  458 	mov	a,_BUTTON_DATA
-      0004E2 C4               [12]  459 	swap	a
-      0004E3 03               [12]  460 	rr	a
-      0004E4 54 07            [12]  461 	anl	a,#0x07
-      0004E6 FF               [12]  462 	mov	r7,a
-      0004E7 70 06            [24]  463 	jnz	00102$
-                                    464 ;	../button.c:15: INT_IE_ET0 = 1;
+      000640 C2 A9            [12]  456 	clr	_INT_IE_ET0
+                                    457 ;	src/button.c:14: if(!(BUTTON_DATA >> 0x05)){
+      000642 E5 22            [12]  458 	mov	a,_BUTTON_DATA
+      000644 C4               [12]  459 	swap	a
+      000645 03               [12]  460 	rr	a
+      000646 54 07            [12]  461 	anl	a,#0x07
+      000648 FF               [12]  462 	mov	r7,a
+      000649 70 06            [24]  463 	jnz	00102$
+                                    464 ;	src/button.c:15: INT_IE_ET0 = 1;
                                     465 ;	assignBit
-      0004E9 D2 A9            [12]  466 	setb	_INT_IE_ET0
-                                    467 ;	../button.c:16: return BUTTON_NONE;
-      0004EB 75 82 03         [24]  468 	mov	dpl,#0x03
-      0004EE 22               [24]  469 	ret
-      0004EF                        470 00102$:
-                                    471 ;	../button.c:18: if(BUTTON_DATA_SELECT_HELD_DOWN){
-      0004EF 30 17 06         [24]  472 	jnb	_BUTTON_DATA_SELECT_HELD_DOWN,00104$
-                                    473 ;	../button.c:19: INT_IE_ET0 = 1;
+      00064B D2 A9            [12]  466 	setb	_INT_IE_ET0
+                                    467 ;	src/button.c:16: return BUTTON_NONE;
+      00064D 75 82 03         [24]  468 	mov	dpl,#0x03
+      000650 22               [24]  469 	ret
+      000651                        470 00102$:
+                                    471 ;	src/button.c:18: if(BUTTON_DATA_SELECT_HELD_DOWN){
+      000651 30 17 06         [24]  472 	jnb	_BUTTON_DATA_SELECT_HELD_DOWN,00104$
+                                    473 ;	src/button.c:19: INT_IE_ET0 = 1;
                                     474 ;	assignBit
-      0004F2 D2 A9            [12]  475 	setb	_INT_IE_ET0
-                                    476 ;	../button.c:20: return BUTTON_HELD_DOWN;
-      0004F4 75 82 02         [24]  477 	mov	dpl,#0x02
-      0004F7 22               [24]  478 	ret
-      0004F8                        479 00104$:
-                                    480 ;	../button.c:22: if(BUTTON_DATA_SELECT_RELEASED_NORMAL){
-                                    481 ;	../button.c:23: BUTTON_DATA_SELECT_RELEASED_NORMAL = 0;
+      000654 D2 A9            [12]  475 	setb	_INT_IE_ET0
+                                    476 ;	src/button.c:20: return BUTTON_HELD_DOWN;
+      000656 75 82 02         [24]  477 	mov	dpl,#0x02
+      000659 22               [24]  478 	ret
+      00065A                        479 00104$:
+                                    480 ;	src/button.c:22: if(BUTTON_DATA_SELECT_RELEASED_NORMAL){
+                                    481 ;	src/button.c:23: BUTTON_DATA_SELECT_RELEASED_NORMAL = 0;
                                     482 ;	assignBit
-      0004F8 10 15 02         [24]  483 	jbc	_BUTTON_DATA_SELECT_RELEASED_NORMAL,00121$
-      0004FB 80 04            [24]  484 	sjmp	00106$
-      0004FD                        485 00121$:
-                                    486 ;	../button.c:24: s = BUTTON_PRESSED;
-      0004FD 7F 00            [12]  487 	mov	r7,#0x00
-      0004FF 80 04            [24]  488 	sjmp	00107$
-      000501                        489 00106$:
-                                    490 ;	../button.c:26: BUTTON_DATA_SELECT_RELEASED_LONGP = 0;
+      00065A 10 15 02         [24]  483 	jbc	_BUTTON_DATA_SELECT_RELEASED_NORMAL,00124$
+      00065D 80 04            [24]  484 	sjmp	00106$
+      00065F                        485 00124$:
+                                    486 ;	src/button.c:24: s = BUTTON_PRESSED;
+      00065F 7F 00            [12]  487 	mov	r7,#0x00
+      000661 80 04            [24]  488 	sjmp	00107$
+      000663                        489 00106$:
+                                    490 ;	src/button.c:26: BUTTON_DATA_SELECT_RELEASED_LONGP = 0;
                                     491 ;	assignBit
-      000501 C2 16            [12]  492 	clr	_BUTTON_DATA_SELECT_RELEASED_LONGP
-                                    493 ;	../button.c:27: s = BUTTON_LONG_PRESSED;
-      000503 7F 01            [12]  494 	mov	r7,#0x01
-      000505                        495 00107$:
-                                    496 ;	../button.c:29: INT_IE_ET0 = 1; //Enable timer 0 interrupt
+      000663 C2 16            [12]  492 	clr	_BUTTON_DATA_SELECT_RELEASED_LONGP
+                                    493 ;	src/button.c:27: s = BUTTON_LONG_PRESSED;
+      000665 7F 01            [12]  494 	mov	r7,#0x01
+      000667                        495 00107$:
+                                    496 ;	src/button.c:29: INT_IE_ET0 = 1; //Enable timer 0 interrupt
                                     497 ;	assignBit
-      000505 D2 A9            [12]  498 	setb	_INT_IE_ET0
-                                    499 ;	../button.c:30: return s;
-      000507 8F 82            [24]  500 	mov	dpl,r7
-      000509 22               [24]  501 	ret
-                                    502 ;------------------------------------------------------------
-                                    503 ;Allocation info for local variables in function 'button_read_and_clear_menu'
-                                    504 ;------------------------------------------------------------
-                                    505 ;s                         Allocated to registers r7 
-                                    506 ;------------------------------------------------------------
-                                    507 ;	../button.c:33: enum button_states button_read_and_clear_menu() {
-                                    508 ;	-----------------------------------------
-                                    509 ;	 function button_read_and_clear_menu
-                                    510 ;	-----------------------------------------
-      00050A                        511 _button_read_and_clear_menu:
-                                    512 ;	../button.c:35: INT_IE_ET0 = 0; //Disable timer 0 interrupt so we don't get half bit sets
-                                    513 ;	assignBit
-      00050A C2 A9            [12]  514 	clr	_INT_IE_ET0
-                                    515 ;	../button.c:36: if(!(BUTTON_DATA & 0x0e)){
-      00050C E5 22            [12]  516 	mov	a,_BUTTON_DATA
-      00050E 54 0E            [12]  517 	anl	a,#0x0e
-      000510 60 02            [24]  518 	jz	00120$
-      000512 80 06            [24]  519 	sjmp	00102$
-      000514                        520 00120$:
-                                    521 ;	../button.c:37: INT_IE_ET0 = 1;
-                                    522 ;	assignBit
-      000514 D2 A9            [12]  523 	setb	_INT_IE_ET0
-                                    524 ;	../button.c:38: return BUTTON_NONE;
-      000516 75 82 03         [24]  525 	mov	dpl,#0x03
-      000519 22               [24]  526 	ret
-      00051A                        527 00102$:
-                                    528 ;	../button.c:40: if(BUTTON_DATA_MENU_HELD_DOWN){
-      00051A 30 13 06         [24]  529 	jnb	_BUTTON_DATA_MENU_HELD_DOWN,00104$
-                                    530 ;	../button.c:41: INT_IE_ET0 = 1;
-                                    531 ;	assignBit
-      00051D D2 A9            [12]  532 	setb	_INT_IE_ET0
-                                    533 ;	../button.c:42: return BUTTON_HELD_DOWN;
-      00051F 75 82 02         [24]  534 	mov	dpl,#0x02
-      000522 22               [24]  535 	ret
-      000523                        536 00104$:
-                                    537 ;	../button.c:44: if(BUTTON_DATA_MENU_RELEASED_NORMAL){
-                                    538 ;	../button.c:45: BUTTON_DATA_MENU_RELEASED_NORMAL = 0;
-                                    539 ;	assignBit
-      000523 10 11 02         [24]  540 	jbc	_BUTTON_DATA_MENU_RELEASED_NORMAL,00122$
-      000526 80 04            [24]  541 	sjmp	00106$
-      000528                        542 00122$:
-                                    543 ;	../button.c:46: s = BUTTON_PRESSED;
-      000528 7F 00            [12]  544 	mov	r7,#0x00
-      00052A 80 04            [24]  545 	sjmp	00107$
-      00052C                        546 00106$:
-                                    547 ;	../button.c:48: BUTTON_DATA_MENU_RELEASED_LONGP = 0;
-                                    548 ;	assignBit
-      00052C C2 12            [12]  549 	clr	_BUTTON_DATA_MENU_RELEASED_LONGP
-                                    550 ;	../button.c:49: s = BUTTON_LONG_PRESSED;
-      00052E 7F 01            [12]  551 	mov	r7,#0x01
-      000530                        552 00107$:
-                                    553 ;	../button.c:51: INT_IE_ET0 = 1; //Enable timer 0 interrupt
-                                    554 ;	assignBit
-      000530 D2 A9            [12]  555 	setb	_INT_IE_ET0
-                                    556 ;	../button.c:52: return s;
-      000532 8F 82            [24]  557 	mov	dpl,r7
-      000534 22               [24]  558 	ret
-                                    559 	.area CSEG    (CODE)
-                                    560 	.area CONST   (CODE)
-                                    561 	.area XINIT   (CODE)
-                                    562 	.area CABS    (ABS,CODE)
+      000667 D2 A9            [12]  498 	setb	_INT_IE_ET0
+                                    499 ;	src/button.c:30: return s;
+      000669 8F 82            [24]  500 	mov	dpl,r7
+                                    501 ;	src/button.c:31: }
+      00066B 22               [24]  502 	ret
+                                    503 ;------------------------------------------------------------
+                                    504 ;Allocation info for local variables in function 'button_read_and_clear_menu'
+                                    505 ;------------------------------------------------------------
+                                    506 ;s                         Allocated to registers r7 
+                                    507 ;------------------------------------------------------------
+                                    508 ;	src/button.c:33: enum button_states button_read_and_clear_menu() {
+                                    509 ;	-----------------------------------------
+                                    510 ;	 function button_read_and_clear_menu
+                                    511 ;	-----------------------------------------
+      00066C                        512 _button_read_and_clear_menu:
+                                    513 ;	src/button.c:35: INT_IE_ET0 = 0; //Disable timer 0 interrupt so we don't get half bit sets
+                                    514 ;	assignBit
+      00066C C2 A9            [12]  515 	clr	_INT_IE_ET0
+                                    516 ;	src/button.c:36: if(!(BUTTON_DATA & 0x0e)){
+      00066E E5 22            [12]  517 	mov	a,_BUTTON_DATA
+      000670 54 0E            [12]  518 	anl	a,#0x0e
+      000672 60 02            [24]  519 	jz	00123$
+      000674 80 06            [24]  520 	sjmp	00102$
+      000676                        521 00123$:
+                                    522 ;	src/button.c:37: INT_IE_ET0 = 1;
+                                    523 ;	assignBit
+      000676 D2 A9            [12]  524 	setb	_INT_IE_ET0
+                                    525 ;	src/button.c:38: return BUTTON_NONE;
+      000678 75 82 03         [24]  526 	mov	dpl,#0x03
+      00067B 22               [24]  527 	ret
+      00067C                        528 00102$:
+                                    529 ;	src/button.c:40: if(BUTTON_DATA_MENU_HELD_DOWN){
+      00067C 30 13 06         [24]  530 	jnb	_BUTTON_DATA_MENU_HELD_DOWN,00104$
+                                    531 ;	src/button.c:41: INT_IE_ET0 = 1;
+                                    532 ;	assignBit
+      00067F D2 A9            [12]  533 	setb	_INT_IE_ET0
+                                    534 ;	src/button.c:42: return BUTTON_HELD_DOWN;
+      000681 75 82 02         [24]  535 	mov	dpl,#0x02
+      000684 22               [24]  536 	ret
+      000685                        537 00104$:
+                                    538 ;	src/button.c:44: if(BUTTON_DATA_MENU_RELEASED_NORMAL){
+                                    539 ;	src/button.c:45: BUTTON_DATA_MENU_RELEASED_NORMAL = 0;
+                                    540 ;	assignBit
+      000685 10 11 02         [24]  541 	jbc	_BUTTON_DATA_MENU_RELEASED_NORMAL,00125$
+      000688 80 04            [24]  542 	sjmp	00106$
+      00068A                        543 00125$:
+                                    544 ;	src/button.c:46: s = BUTTON_PRESSED;
+      00068A 7F 00            [12]  545 	mov	r7,#0x00
+      00068C 80 04            [24]  546 	sjmp	00107$
+      00068E                        547 00106$:
+                                    548 ;	src/button.c:48: BUTTON_DATA_MENU_RELEASED_LONGP = 0;
+                                    549 ;	assignBit
+      00068E C2 12            [12]  550 	clr	_BUTTON_DATA_MENU_RELEASED_LONGP
+                                    551 ;	src/button.c:49: s = BUTTON_LONG_PRESSED;
+      000690 7F 01            [12]  552 	mov	r7,#0x01
+      000692                        553 00107$:
+                                    554 ;	src/button.c:51: INT_IE_ET0 = 1; //Enable timer 0 interrupt
+                                    555 ;	assignBit
+      000692 D2 A9            [12]  556 	setb	_INT_IE_ET0
+                                    557 ;	src/button.c:52: return s;
+      000694 8F 82            [24]  558 	mov	dpl,r7
+                                    559 ;	src/button.c:53: }
+      000696 22               [24]  560 	ret
+                                    561 	.area CSEG    (CODE)
+                                    562 	.area CONST   (CODE)
+                                    563 	.area XINIT   (CODE)
+                                    564 	.area CABS    (ABS,CODE)

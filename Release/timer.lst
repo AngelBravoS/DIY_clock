@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module timer
                                       6 	.optsdcc -mmcs51 --model-small
@@ -316,7 +316,7 @@
                            0000CC   316 _PORT_P5_4	=	0x00cc
                            0000CD   317 _PORT_P5_5	=	0x00cd
                            0000CE   318 _PORT_P5_6	=	0x00ce
-                           0000CD   319 _PORT_P5_7	=	0x00cd
+                           0000CF   319 _PORT_P5_7	=	0x00cf
                            0000A8   320 _INT_IE_EX0	=	0x00a8
                            0000A9   321 _INT_IE_ET0	=	0x00a9
                            0000AA   322 _INT_IE_EX1	=	0x00aa
@@ -353,7 +353,7 @@
                            00009C   353 _UART_REN	=	0x009c
                            00009D   354 _UART_SM2	=	0x009d
                            00009E   355 _UART_SM1	=	0x009e
-                           00009E   356 _UART_SM0	=	0x009e
+                           00009F   356 _UART_SM0	=	0x009f
                                     357 ;--------------------------------------------------------
                                     358 ; overlayable register banks
                                     359 ;--------------------------------------------------------
@@ -370,7 +370,7 @@
       000000                        370 _ticks_10ms::
       000000                        371 	.ds 2
                                     372 ;--------------------------------------------------------
-                                    373 ; overlayable items in internal ram 
+                                    373 ; overlayable items in internal ram
                                     374 ;--------------------------------------------------------
                                     375 	.area	OSEG    (OVR,DATA)
                                     376 ;--------------------------------------------------------
@@ -436,7 +436,7 @@
                                     436 	.area GSINIT  (CODE)
                                     437 	.area GSFINAL (CODE)
                                     438 	.area GSINIT  (CODE)
-                                    439 ;	../timer.c:20: volatile uint16_t ticks_10ms = 0x0000;
+                                    439 ;	src/timer.c:20: volatile uint16_t ticks_10ms = 0x0000;
       000000 E4               [12]  440 	clr	a
       000001 F5*00            [12]  441 	mov	_ticks_10ms,a
       000003 F5*01            [12]  442 	mov	(_ticks_10ms + 1),a
@@ -452,7 +452,7 @@
                                     452 ;------------------------------------------------------------
                                     453 ;Allocation info for local variables in function 'ISR_T0'
                                     454 ;------------------------------------------------------------
-                                    455 ;	../timer.c:22: void ISR_T0(void) __interrupt(INT_T0) __using(2) {
+                                    455 ;	src/timer.c:22: void ISR_T0(void) __interrupt(INT_T0) __using(2) {
                                     456 ;	-----------------------------------------
                                     457 ;	 function ISR_T0
                                     458 ;	-----------------------------------------
@@ -468,204 +468,219 @@
       000000 C0 E0            [24]  468 	push	acc
       000002 C0 D0            [24]  469 	push	psw
       000004 75 D0 10         [24]  470 	mov	psw,#0x10
-                                    471 ;	../timer.c:31: ticks_10ms++;	  //Increment 10ms tick count
-      000007 74 01            [12]  472 	mov	a,#0x01
-      000009 25*00            [12]  473 	add	a,_ticks_10ms
-      00000B F5*00            [12]  474 	mov	_ticks_10ms,a
-      00000D E4               [12]  475 	clr	a
-      00000E 35*01            [12]  476 	addc	a,(_ticks_10ms + 1)
-      000010 F5*01            [12]  477 	mov	(_ticks_10ms + 1),a
-                                    478 ;	../timer.c:39: if(ADC_CONTR == ADC_SETUP_THERMISTOR) //If we have triggered the thermistor last time
-      000012 74 E7            [12]  479 	mov	a,#0xe7
-      000014 B5 BC 0B         [24]  480 	cjne	a,_ADC_CONTR,00102$
-                                    481 ;	/home/shenghao/workspace/TESTMCS51/adc.h:68: ADC_RES = 0x0000;				//Clear the ADC result
-      000017 E4               [12]  482 	clr	a
-      000018 F5 BE            [12]  483 	mov	((_ADC_RES >> 0) & 0xFF),a
-      00001A F5 BD            [12]  484 	mov	((_ADC_RES >> 8) & 0xFF),a
-                                    485 ;	/home/shenghao/workspace/TESTMCS51/adc.h:69: ADC_CONTR = ADC_SETUP_LDR;		//Must set source bits first before triggering
-      00001C 75 BC E6         [24]  486 	mov	_ADC_CONTR,#0xe6
-                                    487 ;	/home/shenghao/workspace/TESTMCS51/adc.h:70: ADC_CONTR = ADC_TRIGGER_LDR;
-      00001F 75 BC EE         [24]  488 	mov	_ADC_CONTR,#0xee
-                                    489 ;	../timer.c:40: adc_trigger_ldr();				  //Trigger the LDR now
-      000022                        490 00102$:
-                                    491 ;	../timer.c:41: if(ADC_CONTR == ADC_SETUP_LDR)		  //If we have triggered the LDR last time
-      000022 74 E6            [12]  492 	mov	a,#0xe6
-      000024 B5 BC 0B         [24]  493 	cjne	a,_ADC_CONTR,00104$
-                                    494 ;	/home/shenghao/workspace/TESTMCS51/adc.h:77: ADC_RES = 0x0000;				//Clear the ADC result
-      000027 E4               [12]  495 	clr	a
-      000028 F5 BE            [12]  496 	mov	((_ADC_RES >> 0) & 0xFF),a
-      00002A F5 BD            [12]  497 	mov	((_ADC_RES >> 8) & 0xFF),a
-                                    498 ;	/home/shenghao/workspace/TESTMCS51/adc.h:78: ADC_CONTR = ADC_SETUP_THERMISTOR;	//Must set source bits first before triggering
-      00002C 75 BC E7         [24]  499 	mov	_ADC_CONTR,#0xe7
-                                    500 ;	/home/shenghao/workspace/TESTMCS51/adc.h:79: ADC_CONTR = ADC_TRIGGER_THERMISTOR;
-      00002F 75 BC EF         [24]  501 	mov	_ADC_CONTR,#0xef
-                                    502 ;	../timer.c:42: adc_trigger_thermistor();		  //Trigger the thermistor now
-      000032                        503 00104$:
-                                    504 ;	../timer.c:57: BUTTON_MENU_STATE = ((BUTTON_MENU_STATE << 1) | BUTTON_MENU);		//Write new menu button state
-      000032 E5*00            [12]  505 	mov	a,_BUTTON_MENU_STATE
-      000034 25 E0            [12]  506 	add	a,acc
-      000036 FF               [12]  507 	mov	r7,a
-      000037 A2 B1            [12]  508 	mov	c,_PORT_P3_1
-      000039 E4               [12]  509 	clr	a
-      00003A 33               [12]  510 	rlc	a
-      00003B 4F               [12]  511 	orl	a,r7
-      00003C F5*00            [12]  512 	mov	_BUTTON_MENU_STATE,a
-                                    513 ;	../timer.c:58: BUTTON_SELECT_STATE = ((BUTTON_SELECT_STATE << 1) | BUTTON_SELECT); //Write new select button state
-      00003E E5*00            [12]  514 	mov	a,_BUTTON_SELECT_STATE
-      000040 25 E0            [12]  515 	add	a,acc
-      000042 FF               [12]  516 	mov	r7,a
-      000043 A2 B0            [12]  517 	mov	c,_PORT_P3_0
-      000045 E4               [12]  518 	clr	a
-      000046 33               [12]  519 	rlc	a
-      000047 FE               [12]  520 	mov	r6,a
-      000048 4F               [12]  521 	orl	a,r7
-      000049 F5*00            [12]  522 	mov	_BUTTON_SELECT_STATE,a
-                                    523 ;	../timer.c:61: if((BUTTON_MENU_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_PRESSED){
-      00004B 74 87            [12]  524 	mov	a,#0x87
-      00004D 55*00            [12]  525 	anl	a,_BUTTON_MENU_STATE
-      00004F FF               [12]  526 	mov	r7,a
-      000050 BF 80 0B         [24]  527 	cjne	r7,#0x80,00106$
-                                    528 ;	../timer.c:62: BUTTON_DATA_MENU_PRESSED = 0x01;			//Set new state
-                                    529 ;	assignBit
-      000053 D2 10            [12]  530 	setb	_BUTTON_DATA_MENU_PRESSED
-                                    531 ;	../timer.c:63: BUTTON_DATA &= 0xf1;						//Clear other bits
-      000055 53 22 F1         [24]  532 	anl	_BUTTON_DATA,#0xf1
-                                    533 ;	../timer.c:64: BUTTON_MENU_CNT = 0x00;						//Reset counter
-      000058 75*00 00         [24]  534 	mov	_BUTTON_MENU_CNT,#0x00
-                                    535 ;	../timer.c:65: BUTTON_MENU_STATE = 0x00;
-      00005B 75*00 00         [24]  536 	mov	_BUTTON_MENU_STATE,#0x00
-      00005E                        537 00106$:
-                                    538 ;	../timer.c:67: if((BUTTON_SELECT_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_PRESSED){
-      00005E 74 87            [12]  539 	mov	a,#0x87
-      000060 55*00            [12]  540 	anl	a,_BUTTON_SELECT_STATE
-      000062 FF               [12]  541 	mov	r7,a
-      000063 BF 80 0B         [24]  542 	cjne	r7,#0x80,00108$
-                                    543 ;	../timer.c:68: BUTTON_DATA_SELECT_PRESSED = 0x01;			//Set new state
-                                    544 ;	assignBit
-      000066 D2 14            [12]  545 	setb	_BUTTON_DATA_SELECT_PRESSED
-                                    546 ;	../timer.c:69: BUTTON_DATA &= 0x1f;						//Clear other bits
-      000068 53 22 1F         [24]  547 	anl	_BUTTON_DATA,#0x1f
-                                    548 ;	../timer.c:70: BUTTON_SELECT_CNT = 0x00;					//Reset counter
-      00006B 75*00 00         [24]  549 	mov	_BUTTON_SELECT_CNT,#0x00
-                                    550 ;	../timer.c:71: BUTTON_SELECT_STATE = 0x00;
-      00006E 75*00 00         [24]  551 	mov	_BUTTON_SELECT_STATE,#0x00
-      000071                        552 00108$:
-                                    553 ;	../timer.c:76: if((BUTTON_MENU_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_RELEASED){
-      000071 74 87            [12]  554 	mov	a,#0x87
-      000073 55*00            [12]  555 	anl	a,_BUTTON_MENU_STATE
-      000075 FF               [12]  556 	mov	r7,a
-      000076 BF 07 17         [24]  557 	cjne	r7,#0x07,00116$
-                                    558 ;	../timer.c:77: if(BUTTON_DATA_MENU_HELD_DOWN) {
-                                    559 ;	../timer.c:78: BUTTON_DATA_MENU_HELD_DOWN = 0;
-                                    560 ;	assignBit
-      000079 10 13 0C         [24]  561 	jbc	_BUTTON_DATA_MENU_HELD_DOWN,00114$
-                                    562 ;	../timer.c:80: if(BUTTON_MENU_CNT > BUTTON_LONG_PRESS_COUNT){
-      00007C E5*00            [12]  563 	mov	a,_BUTTON_MENU_CNT
-      00007E 24 DF            [12]  564 	add	a,#0xff - 0x20
-      000080 50 04            [24]  565 	jnc	00110$
-                                    566 ;	../timer.c:81: BUTTON_DATA_MENU_RELEASED_LONGP = 1;
-                                    567 ;	assignBit
-      000082 D2 12            [12]  568 	setb	_BUTTON_DATA_MENU_RELEASED_LONGP
-      000084 80 02            [24]  569 	sjmp	00114$
-      000086                        570 00110$:
-                                    571 ;	../timer.c:83: BUTTON_DATA_MENU_RELEASED_NORMAL = 1;
-                                    572 ;	assignBit
-      000086 D2 11            [12]  573 	setb	_BUTTON_DATA_MENU_RELEASED_NORMAL
-      000088                        574 00114$:
-                                    575 ;	../timer.c:86: BUTTON_DATA_MENU_PRESSED = 0;
+                                    471 ;	src/timer.c:31: ticks_10ms++;	  //Increment 10ms tick count
+      000007 AE*00            [24]  472 	mov	r6,_ticks_10ms
+      000009 AF*01            [24]  473 	mov	r7,(_ticks_10ms + 1)
+      00000B 74 01            [12]  474 	mov	a,#0x01
+      00000D 2E               [12]  475 	add	a,r6
+      00000E F5*00            [12]  476 	mov	_ticks_10ms,a
+      000010 E4               [12]  477 	clr	a
+      000011 3F               [12]  478 	addc	a,r7
+      000012 F5*01            [12]  479 	mov	(_ticks_10ms + 1),a
+                                    480 ;	src/timer.c:39: if(ADC_CONTR == ADC_SETUP_THERMISTOR) //If we have triggered the thermistor last time
+      000014 74 E7            [12]  481 	mov	a,#0xe7
+      000016 B5 BC 0B         [24]  482 	cjne	a,_ADC_CONTR,00102$
+                                    483 ;	include/adc.h:68: ADC_RES = 0x0000;				//Clear the ADC result
+      000019 E4               [12]  484 	clr	a
+      00001A F5 BE            [12]  485 	mov	((_ADC_RES >> 0) & 0xFF),a
+      00001C F5 BD            [12]  486 	mov	((_ADC_RES >> 8) & 0xFF),a
+                                    487 ;	include/adc.h:69: ADC_CONTR = ADC_SETUP_LDR;		//Must set source bits first before triggering
+      00001E 75 BC E6         [24]  488 	mov	_ADC_CONTR,#0xe6
+                                    489 ;	include/adc.h:70: ADC_CONTR = ADC_TRIGGER_LDR;
+      000021 75 BC EE         [24]  490 	mov	_ADC_CONTR,#0xee
+                                    491 ;	src/timer.c:40: adc_trigger_ldr();				  //Trigger the LDR now
+      000024                        492 00102$:
+                                    493 ;	src/timer.c:41: if(ADC_CONTR == ADC_SETUP_LDR)		  //If we have triggered the LDR last time
+      000024 74 E6            [12]  494 	mov	a,#0xe6
+      000026 B5 BC 0B         [24]  495 	cjne	a,_ADC_CONTR,00104$
+                                    496 ;	include/adc.h:77: ADC_RES = 0x0000;				//Clear the ADC result
+      000029 E4               [12]  497 	clr	a
+      00002A F5 BE            [12]  498 	mov	((_ADC_RES >> 0) & 0xFF),a
+      00002C F5 BD            [12]  499 	mov	((_ADC_RES >> 8) & 0xFF),a
+                                    500 ;	include/adc.h:78: ADC_CONTR = ADC_SETUP_THERMISTOR;	//Must set source bits first before triggering
+      00002E 75 BC E7         [24]  501 	mov	_ADC_CONTR,#0xe7
+                                    502 ;	include/adc.h:79: ADC_CONTR = ADC_TRIGGER_THERMISTOR;
+      000031 75 BC EF         [24]  503 	mov	_ADC_CONTR,#0xef
+                                    504 ;	src/timer.c:42: adc_trigger_thermistor();		  //Trigger the thermistor now
+      000034                        505 00104$:
+                                    506 ;	src/timer.c:57: BUTTON_MENU_STATE = ((BUTTON_MENU_STATE << 1) | BUTTON_MENU);		//Write new menu button state
+      000034 E5*00            [12]  507 	mov	a,_BUTTON_MENU_STATE
+      000036 25 E0            [12]  508 	add	a,acc
+      000038 FF               [12]  509 	mov	r7,a
+      000039 A2 B1            [12]  510 	mov	c,_PORT_P3_1
+      00003B E4               [12]  511 	clr	a
+      00003C 33               [12]  512 	rlc	a
+      00003D 4F               [12]  513 	orl	a,r7
+      00003E F5*00            [12]  514 	mov	_BUTTON_MENU_STATE,a
+                                    515 ;	src/timer.c:58: BUTTON_SELECT_STATE = ((BUTTON_SELECT_STATE << 1) | BUTTON_SELECT); //Write new select button state
+      000040 E5*00            [12]  516 	mov	a,_BUTTON_SELECT_STATE
+      000042 25 E0            [12]  517 	add	a,acc
+      000044 FF               [12]  518 	mov	r7,a
+      000045 A2 B0            [12]  519 	mov	c,_PORT_P3_0
+      000047 E4               [12]  520 	clr	a
+      000048 33               [12]  521 	rlc	a
+      000049 4F               [12]  522 	orl	a,r7
+      00004A F5*00            [12]  523 	mov	_BUTTON_SELECT_STATE,a
+                                    524 ;	src/timer.c:61: if((BUTTON_MENU_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_PRESSED){
+      00004C AE*00            [24]  525 	mov	r6,_BUTTON_MENU_STATE
+      00004E 53 16 87         [24]  526 	anl	ar6,#0x87
+      000051 7F 00            [12]  527 	mov	r7,#0x00
+      000053 BE 80 0E         [24]  528 	cjne	r6,#0x80,00106$
+      000056 BF 00 0B         [24]  529 	cjne	r7,#0x00,00106$
+                                    530 ;	src/timer.c:62: BUTTON_DATA_MENU_PRESSED = 0x01;			//Set new state
+                                    531 ;	assignBit
+      000059 D2 10            [12]  532 	setb	_BUTTON_DATA_MENU_PRESSED
+                                    533 ;	src/timer.c:63: BUTTON_DATA &= 0xf1;						//Clear other bits
+      00005B 53 22 F1         [24]  534 	anl	_BUTTON_DATA,#0xf1
+                                    535 ;	src/timer.c:64: BUTTON_MENU_CNT = 0x00;						//Reset counter
+      00005E 75*00 00         [24]  536 	mov	_BUTTON_MENU_CNT,#0x00
+                                    537 ;	src/timer.c:65: BUTTON_MENU_STATE = 0x00;
+      000061 75*00 00         [24]  538 	mov	_BUTTON_MENU_STATE,#0x00
+      000064                        539 00106$:
+                                    540 ;	src/timer.c:67: if((BUTTON_SELECT_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_PRESSED){
+      000064 AE*00            [24]  541 	mov	r6,_BUTTON_SELECT_STATE
+      000066 53 16 87         [24]  542 	anl	ar6,#0x87
+      000069 7F 00            [12]  543 	mov	r7,#0x00
+      00006B BE 80 0E         [24]  544 	cjne	r6,#0x80,00108$
+      00006E BF 00 0B         [24]  545 	cjne	r7,#0x00,00108$
+                                    546 ;	src/timer.c:68: BUTTON_DATA_SELECT_PRESSED = 0x01;			//Set new state
+                                    547 ;	assignBit
+      000071 D2 14            [12]  548 	setb	_BUTTON_DATA_SELECT_PRESSED
+                                    549 ;	src/timer.c:69: BUTTON_DATA &= 0x1f;						//Clear other bits
+      000073 53 22 1F         [24]  550 	anl	_BUTTON_DATA,#0x1f
+                                    551 ;	src/timer.c:70: BUTTON_SELECT_CNT = 0x00;					//Reset counter
+      000076 75*00 00         [24]  552 	mov	_BUTTON_SELECT_CNT,#0x00
+                                    553 ;	src/timer.c:71: BUTTON_SELECT_STATE = 0x00;
+      000079 75*00 00         [24]  554 	mov	_BUTTON_SELECT_STATE,#0x00
+      00007C                        555 00108$:
+                                    556 ;	src/timer.c:76: if((BUTTON_MENU_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_RELEASED){
+      00007C AE*00            [24]  557 	mov	r6,_BUTTON_MENU_STATE
+      00007E 53 16 87         [24]  558 	anl	ar6,#0x87
+      000081 7F 00            [12]  559 	mov	r7,#0x00
+      000083 BE 07 1A         [24]  560 	cjne	r6,#0x07,00116$
+      000086 BF 00 17         [24]  561 	cjne	r7,#0x00,00116$
+                                    562 ;	src/timer.c:77: if(BUTTON_DATA_MENU_HELD_DOWN) {
+                                    563 ;	src/timer.c:78: BUTTON_DATA_MENU_HELD_DOWN = 0;
+                                    564 ;	assignBit
+      000089 10 13 0C         [24]  565 	jbc	_BUTTON_DATA_MENU_HELD_DOWN,00114$
+                                    566 ;	src/timer.c:80: if(BUTTON_MENU_CNT > BUTTON_LONG_PRESS_COUNT){
+      00008C E5*00            [12]  567 	mov	a,_BUTTON_MENU_CNT
+      00008E 24 DF            [12]  568 	add	a,#0xff - 0x20
+      000090 50 04            [24]  569 	jnc	00110$
+                                    570 ;	src/timer.c:81: BUTTON_DATA_MENU_RELEASED_LONGP = 1;
+                                    571 ;	assignBit
+      000092 D2 12            [12]  572 	setb	_BUTTON_DATA_MENU_RELEASED_LONGP
+      000094 80 02            [24]  573 	sjmp	00114$
+      000096                        574 00110$:
+                                    575 ;	src/timer.c:83: BUTTON_DATA_MENU_RELEASED_NORMAL = 1;
                                     576 ;	assignBit
-      000088 C2 10            [12]  577 	clr	_BUTTON_DATA_MENU_PRESSED
-                                    578 ;	../timer.c:87: BUTTON_MENU_CNT = 0;
-      00008A 75*00 00         [24]  579 	mov	_BUTTON_MENU_CNT,#0x00
-                                    580 ;	../timer.c:88: BUTTON_MENU_STATE = 0xff;
-      00008D 75*00 FF         [24]  581 	mov	_BUTTON_MENU_STATE,#0xff
-      000090                        582 00116$:
-                                    583 ;	../timer.c:90: if((BUTTON_SELECT_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_RELEASED){
-      000090 74 87            [12]  584 	mov	a,#0x87
-      000092 55*00            [12]  585 	anl	a,_BUTTON_SELECT_STATE
-      000094 FF               [12]  586 	mov	r7,a
-      000095 BF 07 17         [24]  587 	cjne	r7,#0x07,00124$
-                                    588 ;	../timer.c:91: if(BUTTON_DATA_SELECT_HELD_DOWN) {
-                                    589 ;	../timer.c:92: BUTTON_DATA_SELECT_HELD_DOWN = 0;
-                                    590 ;	assignBit
-      000098 10 17 0C         [24]  591 	jbc	_BUTTON_DATA_SELECT_HELD_DOWN,00122$
-                                    592 ;	../timer.c:94: if(BUTTON_SELECT_CNT > BUTTON_LONG_PRESS_COUNT){
-      00009B E5*00            [12]  593 	mov	a,_BUTTON_SELECT_CNT
-      00009D 24 DF            [12]  594 	add	a,#0xff - 0x20
-      00009F 50 04            [24]  595 	jnc	00118$
-                                    596 ;	../timer.c:95: BUTTON_DATA_SELECT_RELEASED_LONGP = 1;
-                                    597 ;	assignBit
-      0000A1 D2 16            [12]  598 	setb	_BUTTON_DATA_SELECT_RELEASED_LONGP
-      0000A3 80 02            [24]  599 	sjmp	00122$
-      0000A5                        600 00118$:
-                                    601 ;	../timer.c:97: BUTTON_DATA_SELECT_RELEASED_NORMAL = 1;
+      000096 D2 11            [12]  577 	setb	_BUTTON_DATA_MENU_RELEASED_NORMAL
+      000098                        578 00114$:
+                                    579 ;	src/timer.c:86: BUTTON_DATA_MENU_PRESSED = 0;
+                                    580 ;	assignBit
+      000098 C2 10            [12]  581 	clr	_BUTTON_DATA_MENU_PRESSED
+                                    582 ;	src/timer.c:87: BUTTON_MENU_CNT = 0;
+      00009A 75*00 00         [24]  583 	mov	_BUTTON_MENU_CNT,#0x00
+                                    584 ;	src/timer.c:88: BUTTON_MENU_STATE = 0xff;
+      00009D 75*00 FF         [24]  585 	mov	_BUTTON_MENU_STATE,#0xff
+      0000A0                        586 00116$:
+                                    587 ;	src/timer.c:90: if((BUTTON_SELECT_STATE & BUTTON_DEBOUNCE_MASK) == BUTTON_DEBOUNCE_PATTERN_RELEASED){
+      0000A0 AE*00            [24]  588 	mov	r6,_BUTTON_SELECT_STATE
+      0000A2 53 16 87         [24]  589 	anl	ar6,#0x87
+      0000A5 7F 00            [12]  590 	mov	r7,#0x00
+      0000A7 BE 07 1A         [24]  591 	cjne	r6,#0x07,00124$
+      0000AA BF 00 17         [24]  592 	cjne	r7,#0x00,00124$
+                                    593 ;	src/timer.c:91: if(BUTTON_DATA_SELECT_HELD_DOWN) {
+                                    594 ;	src/timer.c:92: BUTTON_DATA_SELECT_HELD_DOWN = 0;
+                                    595 ;	assignBit
+      0000AD 10 17 0C         [24]  596 	jbc	_BUTTON_DATA_SELECT_HELD_DOWN,00122$
+                                    597 ;	src/timer.c:94: if(BUTTON_SELECT_CNT > BUTTON_LONG_PRESS_COUNT){
+      0000B0 E5*00            [12]  598 	mov	a,_BUTTON_SELECT_CNT
+      0000B2 24 DF            [12]  599 	add	a,#0xff - 0x20
+      0000B4 50 04            [24]  600 	jnc	00118$
+                                    601 ;	src/timer.c:95: BUTTON_DATA_SELECT_RELEASED_LONGP = 1;
                                     602 ;	assignBit
-      0000A5 D2 15            [12]  603 	setb	_BUTTON_DATA_SELECT_RELEASED_NORMAL
-      0000A7                        604 00122$:
-                                    605 ;	../timer.c:100: BUTTON_DATA_SELECT_PRESSED = 0;
-                                    606 ;	assignBit
-      0000A7 C2 14            [12]  607 	clr	_BUTTON_DATA_SELECT_PRESSED
-                                    608 ;	../timer.c:101: BUTTON_SELECT_CNT = 0;
-      0000A9 75*00 00         [24]  609 	mov	_BUTTON_SELECT_CNT,#0x00
-                                    610 ;	../timer.c:102: BUTTON_SELECT_STATE = 0xff;
-      0000AC 75*00 FF         [24]  611 	mov	_BUTTON_SELECT_STATE,#0xff
-      0000AF                        612 00124$:
-                                    613 ;	../timer.c:106: if(BUTTON_DATA_MENU_PRESSED)
-      0000AF 30 10 09         [24]  614 	jnb	_BUTTON_DATA_MENU_PRESSED,00128$
-                                    615 ;	../timer.c:107: if(++BUTTON_MENU_CNT == BUTTON_HELD_DOWN_COUNT)				//Detect held down button
-      0000B2 05*00            [12]  616 	inc	_BUTTON_MENU_CNT
-      0000B4 74 96            [12]  617 	mov	a,#0x96
-      0000B6 B5*00 02         [24]  618 	cjne	a,_BUTTON_MENU_CNT,00128$
-                                    619 ;	../timer.c:108: BUTTON_DATA_MENU_HELD_DOWN = 1;
-                                    620 ;	assignBit
-      0000B9 D2 13            [12]  621 	setb	_BUTTON_DATA_MENU_HELD_DOWN
-      0000BB                        622 00128$:
-                                    623 ;	../timer.c:109: if(BUTTON_DATA_SELECT_PRESSED)
-      0000BB 30 14 09         [24]  624 	jnb	_BUTTON_DATA_SELECT_PRESSED,00135$
-                                    625 ;	../timer.c:110: if(++BUTTON_SELECT_CNT == BUTTON_HELD_DOWN_COUNT)				//Detect held down button
-      0000BE 05*00            [12]  626 	inc	_BUTTON_SELECT_CNT
-      0000C0 74 96            [12]  627 	mov	a,#0x96
-      0000C2 B5*00 02         [24]  628 	cjne	a,_BUTTON_SELECT_CNT,00135$
-                                    629 ;	../timer.c:111: BUTTON_DATA_SELECT_HELD_DOWN = 1;
-                                    630 ;	assignBit
-      0000C5 D2 17            [12]  631 	setb	_BUTTON_DATA_SELECT_HELD_DOWN
-      0000C7                        632 00135$:
-      0000C7 D0 D0            [24]  633 	pop	psw
-      0000C9 D0 E0            [24]  634 	pop	acc
-      0000CB 32               [24]  635 	reti
-                                    636 ;	eliminated unneeded push/pop dpl
-                                    637 ;	eliminated unneeded push/pop dph
-                                    638 ;	eliminated unneeded push/pop b
-                                    639 ;------------------------------------------------------------
-                                    640 ;Allocation info for local variables in function 'centiseconds'
-                                    641 ;------------------------------------------------------------
-                                    642 ;ticks_now                 Allocated to registers 
-                                    643 ;------------------------------------------------------------
-                                    644 ;	../timer.c:114: volatile uint16_t centiseconds() {
-                                    645 ;	-----------------------------------------
-                                    646 ;	 function centiseconds
-                                    647 ;	-----------------------------------------
-      0000CC                        648 _centiseconds:
-                           000007   649 	ar7 = 0x07
-                           000006   650 	ar6 = 0x06
-                           000005   651 	ar5 = 0x05
-                           000004   652 	ar4 = 0x04
-                           000003   653 	ar3 = 0x03
-                           000002   654 	ar2 = 0x02
-                           000001   655 	ar1 = 0x01
-                           000000   656 	ar0 = 0x00
-                                    657 ;	../timer.c:116: INT_IE_ET0 = 0;
-                                    658 ;	assignBit
-      0000CC C2 A9            [12]  659 	clr	_INT_IE_ET0
-                                    660 ;	../timer.c:117: ticks_now = ticks_10ms;
-      0000CE 85*00 82         [24]  661 	mov	dpl,_ticks_10ms
-      0000D1 85*01 83         [24]  662 	mov	dph,(_ticks_10ms + 1)
-                                    663 ;	../timer.c:118: INT_IE_ET0 = 1;
-                                    664 ;	assignBit
-      0000D4 D2 A9            [12]  665 	setb	_INT_IE_ET0
-                                    666 ;	../timer.c:119: return ticks_now;
-      0000D6 22               [24]  667 	ret
-                                    668 	.area CSEG    (CODE)
-                                    669 	.area CONST   (CODE)
-                                    670 	.area XINIT   (CODE)
-                                    671 	.area CABS    (ABS,CODE)
+      0000B6 D2 16            [12]  603 	setb	_BUTTON_DATA_SELECT_RELEASED_LONGP
+      0000B8 80 02            [24]  604 	sjmp	00122$
+      0000BA                        605 00118$:
+                                    606 ;	src/timer.c:97: BUTTON_DATA_SELECT_RELEASED_NORMAL = 1;
+                                    607 ;	assignBit
+      0000BA D2 15            [12]  608 	setb	_BUTTON_DATA_SELECT_RELEASED_NORMAL
+      0000BC                        609 00122$:
+                                    610 ;	src/timer.c:100: BUTTON_DATA_SELECT_PRESSED = 0;
+                                    611 ;	assignBit
+      0000BC C2 14            [12]  612 	clr	_BUTTON_DATA_SELECT_PRESSED
+                                    613 ;	src/timer.c:101: BUTTON_SELECT_CNT = 0;
+      0000BE 75*00 00         [24]  614 	mov	_BUTTON_SELECT_CNT,#0x00
+                                    615 ;	src/timer.c:102: BUTTON_SELECT_STATE = 0xff;
+      0000C1 75*00 FF         [24]  616 	mov	_BUTTON_SELECT_STATE,#0xff
+      0000C4                        617 00124$:
+                                    618 ;	src/timer.c:106: if(BUTTON_DATA_MENU_PRESSED)
+      0000C4 30 10 0D         [24]  619 	jnb	_BUTTON_DATA_MENU_PRESSED,00128$
+                                    620 ;	src/timer.c:107: if(++BUTTON_MENU_CNT >= BUTTON_HELD_DOWN_COUNT)				//Detect held down button
+      0000C7 E5*00            [12]  621 	mov	a,_BUTTON_MENU_CNT
+      0000C9 04               [12]  622 	inc	a
+      0000CA FF               [12]  623 	mov	r7,a
+      0000CB 8F*00            [24]  624 	mov	_BUTTON_MENU_CNT,r7
+      0000CD BF 96 00         [24]  625 	cjne	r7,#0x96,00210$
+      0000D0                        626 00210$:
+      0000D0 40 02            [24]  627 	jc	00128$
+                                    628 ;	src/timer.c:108: BUTTON_DATA_MENU_HELD_DOWN = 1;
+                                    629 ;	assignBit
+      0000D2 D2 13            [12]  630 	setb	_BUTTON_DATA_MENU_HELD_DOWN
+      0000D4                        631 00128$:
+                                    632 ;	src/timer.c:109: if(BUTTON_DATA_SELECT_PRESSED)
+      0000D4 30 14 0D         [24]  633 	jnb	_BUTTON_DATA_SELECT_PRESSED,00135$
+                                    634 ;	src/timer.c:110: if(++BUTTON_SELECT_CNT >= BUTTON_HELD_DOWN_COUNT)				//Detect held down button
+      0000D7 E5*00            [12]  635 	mov	a,_BUTTON_SELECT_CNT
+      0000D9 04               [12]  636 	inc	a
+      0000DA FF               [12]  637 	mov	r7,a
+      0000DB 8F*00            [24]  638 	mov	_BUTTON_SELECT_CNT,r7
+      0000DD BF 96 00         [24]  639 	cjne	r7,#0x96,00213$
+      0000E0                        640 00213$:
+      0000E0 40 02            [24]  641 	jc	00135$
+                                    642 ;	src/timer.c:111: BUTTON_DATA_SELECT_HELD_DOWN = 1;
+                                    643 ;	assignBit
+      0000E2 D2 17            [12]  644 	setb	_BUTTON_DATA_SELECT_HELD_DOWN
+      0000E4                        645 00135$:
+                                    646 ;	src/timer.c:112: }
+      0000E4 D0 D0            [24]  647 	pop	psw
+      0000E6 D0 E0            [24]  648 	pop	acc
+      0000E8 32               [24]  649 	reti
+                                    650 ;	eliminated unneeded push/pop dpl
+                                    651 ;	eliminated unneeded push/pop dph
+                                    652 ;	eliminated unneeded push/pop b
+                                    653 ;------------------------------------------------------------
+                                    654 ;Allocation info for local variables in function 'centiseconds'
+                                    655 ;------------------------------------------------------------
+                                    656 ;ticks_now                 Allocated to registers 
+                                    657 ;------------------------------------------------------------
+                                    658 ;	src/timer.c:114: volatile uint16_t centiseconds() {
+                                    659 ;	-----------------------------------------
+                                    660 ;	 function centiseconds
+                                    661 ;	-----------------------------------------
+      0000E9                        662 _centiseconds:
+                           000007   663 	ar7 = 0x07
+                           000006   664 	ar6 = 0x06
+                           000005   665 	ar5 = 0x05
+                           000004   666 	ar4 = 0x04
+                           000003   667 	ar3 = 0x03
+                           000002   668 	ar2 = 0x02
+                           000001   669 	ar1 = 0x01
+                           000000   670 	ar0 = 0x00
+                                    671 ;	src/timer.c:116: INT_IE_ET0 = 0;
+                                    672 ;	assignBit
+      0000E9 C2 A9            [12]  673 	clr	_INT_IE_ET0
+                                    674 ;	src/timer.c:117: ticks_now = ticks_10ms;
+      0000EB 85*00 82         [24]  675 	mov	dpl,_ticks_10ms
+      0000EE 85*01 83         [24]  676 	mov	dph,(_ticks_10ms + 1)
+                                    677 ;	src/timer.c:118: INT_IE_ET0 = 1;
+                                    678 ;	assignBit
+      0000F1 D2 A9            [12]  679 	setb	_INT_IE_ET0
+                                    680 ;	src/timer.c:119: return ticks_now;
+                                    681 ;	src/timer.c:120: }
+      0000F3 22               [24]  682 	ret
+                                    683 	.area CSEG    (CODE)
+                                    684 	.area CONST   (CODE)
+                                    685 	.area XINIT   (CODE)
+                                    686 	.area CABS    (ABS,CODE)

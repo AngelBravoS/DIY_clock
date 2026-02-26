@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.9 #9959 (Linux)
+; Version 4.2.0 #13081 (Linux)
 ;--------------------------------------------------------
 	.module crc
 	.optsdcc -mmcs51 --model-small
@@ -30,12 +30,12 @@
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
 ;--------------------------------------------------------
-; overlayable items in internal ram 
+; overlayable items in internal ram
 ;--------------------------------------------------------
 	.area	OSEG    (OVR,DATA)
 _crcSlow_PARM_2:
 	.ds 1
-_crcSlow_message_1_2:
+_crcSlow_message_65536_2:
 	.ds 3
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
@@ -96,12 +96,12 @@ _crcSlow_message_1_2:
 ;Allocation info for local variables in function 'crcSlow'
 ;------------------------------------------------------------
 ;nBytes                    Allocated with name '_crcSlow_PARM_2'
-;message                   Allocated with name '_crcSlow_message_1_2'
+;message                   Allocated with name '_crcSlow_message_65536_2'
 ;remainder                 Allocated to registers r3 r4 
 ;byte                      Allocated to registers r2 
 ;bit                       Allocated to registers r7 
 ;------------------------------------------------------------
-;	../crc.c:42: crcSlow(const uint8_t message[], uint8_t nBytes)
+;	src/crc.c:42: crcSlow(const uint8_t message[], uint8_t nBytes)
 ;	-----------------------------------------
 ;	 function crcSlow
 ;	-----------------------------------------
@@ -114,59 +114,61 @@ _crcSlow:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-	mov	_crcSlow_message_1_2,dpl
-	mov	(_crcSlow_message_1_2 + 1),dph
-	mov	(_crcSlow_message_1_2 + 2),b
-;	../crc.c:44: crc            remainder = INITIAL_REMAINDER;
+	mov	_crcSlow_message_65536_2,dpl
+	mov	(_crcSlow_message_65536_2 + 1),dph
+	mov	(_crcSlow_message_65536_2 + 2),b
+;	src/crc.c:44: crc            remainder = INITIAL_REMAINDER;
 	mov	r3,#0xff
 	mov	r4,#0xff
-;	../crc.c:52: for (byte = 0; byte < nBytes; ++byte)
+;	src/crc.c:52: for (byte = 0; byte < nBytes; ++byte)
 	mov	r2,#0x00
 00109$:
 	clr	c
 	mov	a,r2
 	subb	a,_crcSlow_PARM_2
 	jnc	00105$
-;	../crc.c:57: remainder ^= (message[byte] << (WIDTH - 8));
+;	src/crc.c:57: remainder ^= (message[byte] << (WIDTH - 8));
 	mov	a,r2
-	add	a,_crcSlow_message_1_2
+	add	a,_crcSlow_message_65536_2
 	mov	r0,a
 	clr	a
-	addc	a,(_crcSlow_message_1_2 + 1)
+	addc	a,(_crcSlow_message_65536_2 + 1)
 	mov	r1,a
-	mov	r7,(_crcSlow_message_1_2 + 2)
+	mov	r7,(_crcSlow_message_65536_2 + 2)
 	mov	dpl,r0
 	mov	dph,r1
 	mov	b,r7
 	lcall	__gptrget
 	mov	r7,a
-	clr	a
-	mov	r0,a
-	xrl	ar3,a
-	mov	a,r7
-	xrl	ar4,a
-;	../crc.c:62: for (bit = 8; bit > 0; --bit)
+	mov	r0,#0x00
+	mov	ar5,r3
+	mov	ar6,r4
+	mov	a,r5
+	xrl	ar0,a
+	mov	a,r6
+	xrl	ar7,a
+	mov	ar3,r0
+	mov	ar4,r7
+;	src/crc.c:62: for (bit = 8; bit > 0; --bit)
 	mov	r7,#0x08
 00106$:
-;	../crc.c:67: if (remainder & TOPBIT)
+;	src/crc.c:67: if (remainder & TOPBIT)
 	mov	a,r4
 	jnb	acc.7,00102$
-;	../crc.c:69: remainder = (remainder << 1) ^ POLYNOMIAL;
+;	src/crc.c:69: remainder = (remainder << 1) ^ POLYNOMIAL;
 	mov	a,r3
 	add	a,r3
 	mov	r5,a
 	mov	a,r4
 	rlc	a
 	mov	r6,a
-	mov	a,#0x21
-	xrl	a,r5
-	mov	r3,a
-	mov	a,#0x10
-	xrl	a,r6
-	mov	r4,a
+	xrl	ar5,#0x21
+	xrl	ar6,#0x10
+	mov	ar3,r5
+	mov	ar4,r6
 	sjmp	00107$
 00102$:
-;	../crc.c:73: remainder = (remainder << 1);
+;	src/crc.c:73: remainder = (remainder << 1);
 	mov	a,r3
 	add	a,r3
 	mov	r3,a
@@ -174,19 +176,16 @@ _crcSlow:
 	rlc	a
 	mov	r4,a
 00107$:
-;	../crc.c:62: for (bit = 8; bit > 0; --bit)
-	mov	a,r7
-	dec	a
-	mov	r6,a
-	mov	r7,a
-	jnz	00106$
-;	../crc.c:52: for (byte = 0; byte < nBytes; ++byte)
+;	src/crc.c:62: for (bit = 8; bit > 0; --bit)
+	djnz	r7,00106$
+;	src/crc.c:52: for (byte = 0; byte < nBytes; ++byte)
 	inc	r2
 	sjmp	00109$
 00105$:
-;	../crc.c:81: return (remainder ^ FINAL_XOR_VALUE);
+;	src/crc.c:81: return (remainder ^ FINAL_XOR_VALUE);
 	mov	dpl,r3
 	mov	dph,r4
+;	src/crc.c:83: }   /* crcSlow() */
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

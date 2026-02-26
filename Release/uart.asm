@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.9 #9959 (Linux)
+; Version 4.2.0 #13081 (Linux)
 ;--------------------------------------------------------
 	.module uart
 	.optsdcc -mmcs51 --model-small
@@ -295,7 +295,7 @@ _PORT_P5_3	=	0x00cb
 _PORT_P5_4	=	0x00cc
 _PORT_P5_5	=	0x00cd
 _PORT_P5_6	=	0x00ce
-_PORT_P5_7	=	0x00cd
+_PORT_P5_7	=	0x00cf
 _INT_IE_EX0	=	0x00a8
 _INT_IE_ET0	=	0x00a9
 _INT_IE_EX1	=	0x00aa
@@ -332,7 +332,7 @@ _UART_TB8	=	0x009b
 _UART_REN	=	0x009c
 _UART_SM2	=	0x009d
 _UART_SM1	=	0x009e
-_UART_SM0	=	0x009e
+_UART_SM0	=	0x009f
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
@@ -343,7 +343,7 @@ _UART_SM0	=	0x009e
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
 ;--------------------------------------------------------
-; overlayable items in internal ram 
+; overlayable items in internal ram
 ;--------------------------------------------------------
 	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
@@ -406,7 +406,7 @@ _UART_SM0	=	0x009e
 ;------------------------------------------------------------
 ;c                         Allocated to registers 
 ;------------------------------------------------------------
-;	../uart.c:10: void putchar(uint8_t c) {
+;	src/uart.c:10: void putchar(uint8_t c) {
 ;	-----------------------------------------
 ;	 function putchar
 ;	-----------------------------------------
@@ -420,13 +420,14 @@ _putchar:
 	ar1 = 0x01
 	ar0 = 0x00
 	mov	_UART_SBUF,dpl
-;	../uart.c:12: while(!UART_TI); // Wait for transmission to complete
+;	src/uart.c:12: while(!UART_TI); // Wait for transmission to complete
 00101$:
-;	../uart.c:13: UART_TI = 0;	 // Clear transmit flag
+;	src/uart.c:13: UART_TI = 0;	 // Clear transmit flag
 ;	assignBit
-	jbc	_UART_TI,00112$
+	jbc	_UART_TI,00114$
 	sjmp	00101$
-00112$:
+00114$:
+;	src/uart.c:14: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

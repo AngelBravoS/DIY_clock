@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.9 #9959 (Linux)
+; Version 4.2.0 #13081 (Linux)
 ;--------------------------------------------------------
 	.module ds1302
 	.optsdcc -mmcs51 --model-small
@@ -14,7 +14,7 @@
 	.globl _ds1302_init
 	.globl _ds1302_struct_addr
 	.globl _crcSlow
-	.globl _memcpy
+	.globl ___memcpy
 	.globl _UART_SM0
 	.globl _UART_SM1
 	.globl _UART_SM2
@@ -325,7 +325,7 @@ _PORT_P5_3	=	0x00cb
 _PORT_P5_4	=	0x00cc
 _PORT_P5_5	=	0x00cd
 _PORT_P5_6	=	0x00ce
-_PORT_P5_7	=	0x00cd
+_PORT_P5_7	=	0x00cf
 _INT_IE_EX0	=	0x00a8
 _INT_IE_ET0	=	0x00a9
 _INT_IE_EX1	=	0x00aa
@@ -362,7 +362,7 @@ _UART_TB8	=	0x009b
 _UART_REN	=	0x009c
 _UART_SM2	=	0x009d
 _UART_SM1	=	0x009e
-_UART_SM0	=	0x009e
+_UART_SM0	=	0x009f
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
@@ -376,7 +376,7 @@ _DS1302_DATA	=	0x0021
 _ds1302::
 	.ds 8
 ;--------------------------------------------------------
-; overlayable items in internal ram 
+; overlayable items in internal ram
 ;--------------------------------------------------------
 	.area	OSEG    (OVR,DATA)
 	.area	OSEG    (OVR,DATA)
@@ -455,7 +455,7 @@ _ds1302_sram_data	=	0x0000
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_reset'
 ;------------------------------------------------------------
-;	../ds1302.c:55: void ds1302_reset() {
+;	src/ds1302.c:58: void ds1302_reset() {
 ;	-----------------------------------------
 ;	 function ds1302_reset
 ;	-----------------------------------------
@@ -468,16 +468,16 @@ _ds1302_reset:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	../ds1302.c:56: DS1302_IO = 0;
+;	src/ds1302.c:59: DS1302_IO = 0;
 ;	assignBit
 	clr	_PORT_P1_1
-;	../ds1302.c:57: DS1302_CLK = 0;
+;	src/ds1302.c:60: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:58: DS1302_CE = 0;
+;	src/ds1302.c:61: DS1302_CE = 0;
 ;	assignBit
 	clr	_PORT_P1_0
-;	../ds1302.c:80: __endasm;
+;	src/ds1302.c:83: __endasm;
 	nop
 	nop
 	nop
@@ -498,26 +498,27 @@ _ds1302_reset:
 	nop
 	nop
 	nop
+;	src/ds1302.c:84: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_start'
 ;------------------------------------------------------------
 ;command                   Allocated to registers 
 ;------------------------------------------------------------
-;	../ds1302.c:83: void ds1302_start(uint8_t command) {
+;	src/ds1302.c:86: void ds1302_start(uint8_t command) {
 ;	-----------------------------------------
 ;	 function ds1302_start
 ;	-----------------------------------------
 _ds1302_start:
 	mov	_DS1302_DATA,dpl
-;	../ds1302.c:86: DS1302_IO = DS1302_DATA_0;				 //Write first data bit
+;	src/ds1302.c:89: DS1302_IO = DS1302_DATA_0;				 //Write first data bit
 ;	assignBit
 	mov	c,_DS1302_DATA_0
 	mov	_PORT_P1_1,c
-;	../ds1302.c:87: DS1302_CE = 1;							 //Raise CE
+;	src/ds1302.c:90: DS1302_CE = 1;							 //Raise CE
 ;	assignBit
 	setb	_PORT_P1_0
-;	../ds1302.c:111: __endasm;								 //Wait tCC
+;	src/ds1302.c:114: __endasm;								 //Wait tCC
 	nop
 	nop
 	nop
@@ -540,449 +541,452 @@ _ds1302_start:
 	nop
 	nop
 	nop
-;	../ds1302.c:112: DS1302_CLK = 1;					     	 //Raise CLK
+;	src/ds1302.c:115: DS1302_CLK = 1;					     	 //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:118: __endasm;						 		//Extend tCH
+;	src/ds1302.c:121: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:119: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:122: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:120: DS1302_IO = DS1302_DATA_1;				 //Write bit
+;	src/ds1302.c:123: DS1302_IO = DS1302_DATA_1;				 //Write bit
 ;	assignBit
 	mov	c,_DS1302_DATA_1
 	mov	_PORT_P1_1,c
-;	../ds1302.c:121: DS1302_CLK = 1;						     //Raise CLK
+;	src/ds1302.c:124: DS1302_CLK = 1;						     //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:127: __endasm;						 		//Extend tCH
+;	src/ds1302.c:130: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:128: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:131: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:129: DS1302_IO = DS1302_DATA_2;				 //Write bit
+;	src/ds1302.c:132: DS1302_IO = DS1302_DATA_2;				 //Write bit
 ;	assignBit
 	mov	c,_DS1302_DATA_2
 	mov	_PORT_P1_1,c
-;	../ds1302.c:130: DS1302_CLK = 1;						     //Raise CLK
+;	src/ds1302.c:133: DS1302_CLK = 1;						     //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:136: __endasm;						 		//Extend tCH
+;	src/ds1302.c:139: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:137: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:140: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:138: DS1302_IO = DS1302_DATA_3;				 //Write bit
+;	src/ds1302.c:141: DS1302_IO = DS1302_DATA_3;				 //Write bit
 ;	assignBit
 	mov	c,_DS1302_DATA_3
 	mov	_PORT_P1_1,c
-;	../ds1302.c:139: DS1302_CLK = 1;						     //Raise CLK
+;	src/ds1302.c:142: DS1302_CLK = 1;						     //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:145: __endasm;						 		//Extend tCH
+;	src/ds1302.c:148: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:146: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:149: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:147: DS1302_IO = DS1302_DATA_4;				 //Write bit
+;	src/ds1302.c:150: DS1302_IO = DS1302_DATA_4;				 //Write bit
 ;	assignBit
 	mov	c,_DS1302_DATA_4
 	mov	_PORT_P1_1,c
-;	../ds1302.c:148: DS1302_CLK = 1;						     //Raise CLK
+;	src/ds1302.c:151: DS1302_CLK = 1;						     //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:154: __endasm;						 		//Extend tCH
+;	src/ds1302.c:157: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:155: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:158: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:156: DS1302_IO = DS1302_DATA_5;				 //Write bit
+;	src/ds1302.c:159: DS1302_IO = DS1302_DATA_5;				 //Write bit
 ;	assignBit
 	mov	c,_DS1302_DATA_5
 	mov	_PORT_P1_1,c
-;	../ds1302.c:157: DS1302_CLK = 1;						     //Raise CLK
+;	src/ds1302.c:160: DS1302_CLK = 1;						     //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:163: __endasm;						 		//Extend tCH
+;	src/ds1302.c:166: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:164: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:167: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:165: DS1302_IO = DS1302_DATA_6;				 //Write bit
+;	src/ds1302.c:168: DS1302_IO = DS1302_DATA_6;				 //Write bit
 ;	assignBit
 	mov	c,_DS1302_DATA_6
 	mov	_PORT_P1_1,c
-;	../ds1302.c:166: DS1302_CLK = 1;						     //Raise CLK
+;	src/ds1302.c:169: DS1302_CLK = 1;						     //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:172: __endasm;						 		//Extend tCH
+;	src/ds1302.c:175: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:173: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:176: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:174: DS1302_IO = DS1302_DATA_7;				 //Write bit
+;	src/ds1302.c:177: DS1302_IO = DS1302_DATA_7;				 //Write bit
 ;	assignBit
 	mov	c,_DS1302_DATA_7
 	mov	_PORT_P1_1,c
-;	../ds1302.c:175: DS1302_CLK = 1;						     //Raise CLK
+;	src/ds1302.c:178: DS1302_CLK = 1;						     //Raise CLK
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:181: __endasm;						 		//Extend tCH
+;	src/ds1302.c:184: __endasm;						 		//Extend tCH
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:182: DS1302_CLK = 0;							 //Drop CLK
+;	src/ds1302.c:185: DS1302_CLK = 0;							 //Drop CLK
 ;	assignBit
 	clr	_PORT_P1_2
+;	src/ds1302.c:186: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_read_byte_slow'
 ;------------------------------------------------------------
-;	../ds1302.c:185: uint8_t ds1302_read_byte_slow() {
+;	src/ds1302.c:188: uint8_t ds1302_read_byte_slow() {
 ;	-----------------------------------------
 ;	 function ds1302_read_byte_slow
 ;	-----------------------------------------
 _ds1302_read_byte_slow:
-;	../ds1302.c:186: DS1302_IO = 1;		//Stop driving I/O line
+;	src/ds1302.c:189: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	../ds1302.c:193: __endasm;
+;	src/ds1302.c:196: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:194: DS1302_DATA_0 = DS1302_IO;
+;	src/ds1302.c:197: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	../ds1302.c:196: DS1302_CLK = 1;
+;	src/ds1302.c:199: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:202: __endasm;
+;	src/ds1302.c:205: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:203: DS1302_CLK = 0;
+;	src/ds1302.c:206: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:208: __endasm;
+;	src/ds1302.c:211: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:209: DS1302_DATA_1 = DS1302_IO;
+;	src/ds1302.c:212: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	../ds1302.c:211: DS1302_CLK = 1;
+;	src/ds1302.c:214: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:217: __endasm;
+;	src/ds1302.c:220: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:218: DS1302_CLK = 0;
+;	src/ds1302.c:221: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:223: __endasm;
+;	src/ds1302.c:226: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:224: DS1302_DATA_2 = DS1302_IO;
+;	src/ds1302.c:227: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	../ds1302.c:226: DS1302_CLK = 1;
+;	src/ds1302.c:229: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:232: __endasm;
+;	src/ds1302.c:235: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:233: DS1302_CLK = 0;
+;	src/ds1302.c:236: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:238: __endasm;
+;	src/ds1302.c:241: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:239: DS1302_DATA_3 = DS1302_IO;
+;	src/ds1302.c:242: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	../ds1302.c:241: DS1302_CLK = 1;
+;	src/ds1302.c:244: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:247: __endasm;
+;	src/ds1302.c:250: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:248: DS1302_CLK = 0;
+;	src/ds1302.c:251: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:253: __endasm;
+;	src/ds1302.c:256: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:254: DS1302_DATA_4 = DS1302_IO;
+;	src/ds1302.c:257: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	../ds1302.c:256: DS1302_CLK = 1;
+;	src/ds1302.c:259: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:262: __endasm;
+;	src/ds1302.c:265: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:263: DS1302_CLK = 0;
+;	src/ds1302.c:266: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:268: __endasm;
+;	src/ds1302.c:271: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:269: DS1302_DATA_5 = DS1302_IO;
+;	src/ds1302.c:272: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	../ds1302.c:271: DS1302_CLK = 1;
+;	src/ds1302.c:274: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:277: __endasm;
+;	src/ds1302.c:280: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:278: DS1302_CLK = 0;
+;	src/ds1302.c:281: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:283: __endasm;
+;	src/ds1302.c:286: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:284: DS1302_DATA_6 = DS1302_IO;
+;	src/ds1302.c:287: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	../ds1302.c:286: DS1302_CLK = 1;
+;	src/ds1302.c:289: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:292: __endasm;
+;	src/ds1302.c:295: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:293: DS1302_CLK = 0;
+;	src/ds1302.c:296: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:298: __endasm;
+;	src/ds1302.c:301: __endasm;
 	nop
 	nop
 	nop
-;	../ds1302.c:299: DS1302_DATA_7 = DS1302_IO;
+;	src/ds1302.c:302: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	../ds1302.c:300: DS1302_CLK = 1;
+;	src/ds1302.c:303: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:306: __endasm;
+;	src/ds1302.c:309: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:307: DS1302_CLK = 0;
+;	src/ds1302.c:310: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:309: return DS1302_DATA;
+;	src/ds1302.c:312: return DS1302_DATA;
 	mov	dpl,_DS1302_DATA
+;	src/ds1302.c:313: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_write_byte_slow'
 ;------------------------------------------------------------
 ;byte                      Allocated to registers 
 ;------------------------------------------------------------
-;	../ds1302.c:312: void ds1302_write_byte_slow(uint8_t byte) {
+;	src/ds1302.c:315: void ds1302_write_byte_slow(uint8_t byte) {
 ;	-----------------------------------------
 ;	 function ds1302_write_byte_slow
 ;	-----------------------------------------
 _ds1302_write_byte_slow:
 	mov	_DS1302_DATA,dpl
-;	../ds1302.c:315: DS1302_IO = DS1302_DATA_0;
+;	src/ds1302.c:318: DS1302_IO = DS1302_DATA_0;
 ;	assignBit
 	mov	c,_DS1302_DATA_0
 	mov	_PORT_P1_1,c
-;	../ds1302.c:316: DS1302_CLK = 1;
+;	src/ds1302.c:319: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:322: __endasm;
+;	src/ds1302.c:325: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:323: DS1302_CLK = 0;
+;	src/ds1302.c:326: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:325: DS1302_IO = DS1302_DATA_1;
+;	src/ds1302.c:328: DS1302_IO = DS1302_DATA_1;
 ;	assignBit
 	mov	c,_DS1302_DATA_1
 	mov	_PORT_P1_1,c
-;	../ds1302.c:326: DS1302_CLK = 1;
+;	src/ds1302.c:329: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:332: __endasm;
+;	src/ds1302.c:335: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:333: DS1302_CLK = 0;
+;	src/ds1302.c:336: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:336: DS1302_IO = DS1302_DATA_2;
+;	src/ds1302.c:339: DS1302_IO = DS1302_DATA_2;
 ;	assignBit
 	mov	c,_DS1302_DATA_2
 	mov	_PORT_P1_1,c
-;	../ds1302.c:337: DS1302_CLK = 1;
+;	src/ds1302.c:340: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:343: __endasm;
+;	src/ds1302.c:346: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:344: DS1302_CLK = 0;
+;	src/ds1302.c:347: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:346: DS1302_IO = DS1302_DATA_3;
+;	src/ds1302.c:349: DS1302_IO = DS1302_DATA_3;
 ;	assignBit
 	mov	c,_DS1302_DATA_3
 	mov	_PORT_P1_1,c
-;	../ds1302.c:347: DS1302_CLK = 1;
+;	src/ds1302.c:350: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:353: __endasm;
+;	src/ds1302.c:356: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:354: DS1302_CLK = 0;
+;	src/ds1302.c:357: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:356: DS1302_IO = DS1302_DATA_4;
+;	src/ds1302.c:359: DS1302_IO = DS1302_DATA_4;
 ;	assignBit
 	mov	c,_DS1302_DATA_4
 	mov	_PORT_P1_1,c
-;	../ds1302.c:357: DS1302_CLK = 1;
+;	src/ds1302.c:360: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:363: __endasm;
+;	src/ds1302.c:366: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:364: DS1302_CLK = 0;
+;	src/ds1302.c:367: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:366: DS1302_IO = DS1302_DATA_5;
+;	src/ds1302.c:369: DS1302_IO = DS1302_DATA_5;
 ;	assignBit
 	mov	c,_DS1302_DATA_5
 	mov	_PORT_P1_1,c
-;	../ds1302.c:367: DS1302_CLK = 1;
+;	src/ds1302.c:370: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:373: __endasm;
+;	src/ds1302.c:376: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:374: DS1302_CLK = 0;
+;	src/ds1302.c:377: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:375: DS1302_IO = DS1302_DATA_6;
+;	src/ds1302.c:378: DS1302_IO = DS1302_DATA_6;
 ;	assignBit
 	mov	c,_DS1302_DATA_6
 	mov	_PORT_P1_1,c
-;	../ds1302.c:377: DS1302_CLK = 1;
+;	src/ds1302.c:380: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:383: __endasm;
+;	src/ds1302.c:386: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:384: DS1302_CLK = 0;
+;	src/ds1302.c:387: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	../ds1302.c:386: DS1302_IO = DS1302_DATA_7;
+;	src/ds1302.c:389: DS1302_IO = DS1302_DATA_7;
 ;	assignBit
 	mov	c,_DS1302_DATA_7
 	mov	_PORT_P1_1,c
-;	../ds1302.c:387: DS1302_CLK = 1;
+;	src/ds1302.c:390: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	../ds1302.c:393: __endasm;
+;	src/ds1302.c:396: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	../ds1302.c:394: DS1302_CLK = 0;
+;	src/ds1302.c:397: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
+;	src/ds1302.c:398: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_set_time'
 ;------------------------------------------------------------
 ;index                     Allocated to registers r7 
 ;------------------------------------------------------------
-;	../ds1302.c:398: void ds1302_set_time() {
+;	src/ds1302.c:400: void ds1302_set_time() {
 ;	-----------------------------------------
 ;	 function ds1302_set_time
 ;	-----------------------------------------
 _ds1302_set_time:
-;	../ds1302.c:400: ds1302_start(0x8e); 	//Start single byte write to control register
+;	src/ds1302.c:402: ds1302_start(0x8e); 	//Start single byte write to control register
 	mov	dpl,#0x8e
 	lcall	_ds1302_start
-;	../ds1302.c:401: ds1302_write_byte_slow(0x00);//Write 0x00 to control register, disable WP
+;	src/ds1302.c:403: ds1302_write_byte_slow(0x00);//Write 0x00 to control register, disable WP
 	mov	dpl,#0x00
 	lcall	_ds1302_write_byte_slow
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
+;	include/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
 ;	assignBit
 	clr	_PORT_P1_0
-;	../ds1302.c:404: ds1302_reset(); 		//Reset DS1302 because we're doing a fast second op.
+;	src/ds1302.c:406: ds1302_reset(); 		//Reset DS1302 because we're doing a fast second op.
 	lcall	_ds1302_reset
-;	../ds1302.c:406: ds1302_start(0xbe);		//Start clock burst write
+;	src/ds1302.c:408: ds1302_start(0xbe);		//Start clock burst write
 	mov	dpl,#0xbe
 	lcall	_ds1302_start
-;	../ds1302.c:408: for(index=0;index!=0x08;index++){
+;	src/ds1302.c:410: for(index=0;index!=0x08;index++){
 	mov	r7,#0x00
 00104$:
-;	../ds1302.c:409: ds1302_write_byte_slow(ds1302_struct_addr[index]);
+;	src/ds1302.c:411: ds1302_write_byte_slow(ds1302_struct_addr[index]);
 	mov	dptr,#_ds1302_struct_addr
 	clr	a
 	movc	a,@a+dptr
@@ -992,31 +996,32 @@ _ds1302_set_time:
 	push	ar7
 	lcall	_ds1302_write_byte_slow
 	pop	ar7
-;	../ds1302.c:408: for(index=0;index!=0x08;index++){
+;	src/ds1302.c:410: for(index=0;index!=0x08;index++){
 	inc	r7
 	cjne	r7,#0x08,00104$
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
+;	include/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
 ;	assignBit
 	clr	_PORT_P1_0
-;	../ds1302.c:411: ds1302_end();
+;	src/ds1302.c:413: ds1302_end();
+;	src/ds1302.c:414: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_read_SRAM'
 ;------------------------------------------------------------
 ;index                     Allocated to registers r7 
 ;------------------------------------------------------------
-;	../ds1302.c:414: void ds1302_read_SRAM() {
+;	src/ds1302.c:416: void ds1302_read_SRAM() {
 ;	-----------------------------------------
 ;	 function ds1302_read_SRAM
 ;	-----------------------------------------
 _ds1302_read_SRAM:
-;	../ds1302.c:416: ds1302_start(0xff);		//Start burst read from SRAM
+;	src/ds1302.c:418: ds1302_start(0xff);		//Start burst read from SRAM
 	mov	dpl,#0xff
 	lcall	_ds1302_start
-;	../ds1302.c:417: for(index = 0;index!=0x1f;index++){
+;	src/ds1302.c:419: for(index = 0;index!=0x1f;index++){
 	mov	r7,#0x00
 00103$:
-;	../ds1302.c:418: ds1302_sram_data[index] = ds1302_read_byte_slow(); //Read bytes from DS1302
+;	src/ds1302.c:420: ds1302_sram_data[index] = ds1302_read_byte_slow(); //Read bytes from DS1302
 	mov	ar5,r7
 	mov	r6,#(_ds1302_sram_data >> 8)
 	push	ar7
@@ -1031,31 +1036,32 @@ _ds1302_read_SRAM:
 	mov	dph,r6
 	mov	a,r4
 	movx	@dptr,a
-;	../ds1302.c:417: for(index = 0;index!=0x1f;index++){
+;	src/ds1302.c:419: for(index = 0;index!=0x1f;index++){
 	inc	r7
 	cjne	r7,#0x1f,00103$
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
+;	include/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
 ;	assignBit
 	clr	_PORT_P1_0
-;	../ds1302.c:420: ds1302_end();			//Terminate burst read
+;	src/ds1302.c:422: ds1302_end();			//Terminate burst read
+;	src/ds1302.c:423: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_write_SRAM'
 ;------------------------------------------------------------
 ;index                     Allocated to registers r7 
 ;------------------------------------------------------------
-;	../ds1302.c:423: void ds1302_write_SRAM() {
+;	src/ds1302.c:425: void ds1302_write_SRAM() {
 ;	-----------------------------------------
 ;	 function ds1302_write_SRAM
 ;	-----------------------------------------
 _ds1302_write_SRAM:
-;	../ds1302.c:425: ds1302_start(0xfe);		//Start burst write to SRAM
+;	src/ds1302.c:427: ds1302_start(0xfe);		//Start burst write to SRAM
 	mov	dpl,#0xfe
 	lcall	_ds1302_start
-;	../ds1302.c:426: for(index = 0;index!=0x1f;index++){
+;	src/ds1302.c:428: for(index = 0;index!=0x1f;index++){
 	mov	r7,#0x00
 00103$:
-;	../ds1302.c:427: ds1302_write_byte_slow(ds1302_sram_data[index]);	  //Write bytes to DS1302
+;	src/ds1302.c:429: ds1302_write_byte_slow(ds1302_sram_data[index]);	  //Write bytes to DS1302
 	mov	dpl,r7
 	mov	dph,#(_ds1302_sram_data >> 8)
 	movx	a,@dptr
@@ -1063,25 +1069,26 @@ _ds1302_write_SRAM:
 	push	ar7
 	lcall	_ds1302_write_byte_slow
 	pop	ar7
-;	../ds1302.c:426: for(index = 0;index!=0x1f;index++){
+;	src/ds1302.c:428: for(index = 0;index!=0x1f;index++){
 	inc	r7
 	cjne	r7,#0x1f,00103$
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
+;	include/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
 ;	assignBit
 	clr	_PORT_P1_0
-;	../ds1302.c:429: ds1302_end();			//Terminate burst write
+;	src/ds1302.c:431: ds1302_end();			//Terminate burst write
+;	src/ds1302.c:432: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_check_SRAM'
 ;------------------------------------------------------------
 ;val                       Allocated to registers r6 r5 
 ;------------------------------------------------------------
-;	../ds1302.c:432: uint8_t ds1302_check_SRAM() __reentrant {
+;	src/ds1302.c:434: uint8_t ds1302_check_SRAM() __reentrant {
 ;	-----------------------------------------
 ;	 function ds1302_check_SRAM
 ;	-----------------------------------------
 _ds1302_check_SRAM:
-;	../ds1302.c:433: uint16_t val = ((ds1302_sram_data[0]) | (ds1302_sram_data[1] << 8));
+;	src/ds1302.c:435: uint16_t val = ((ds1302_sram_data[0]) | (ds1302_sram_data[1] << 8));
 	mov	dptr,#_ds1302_sram_data
 	movx	a,@dptr
 	mov	r7,a
@@ -1095,7 +1102,7 @@ _ds1302_check_SRAM:
 	orl	ar6,a
 	mov	a,r4
 	orl	ar5,a
-;	../ds1302.c:434: if(crcSlow(ds1302_sram_data + DS1302_CRC_SIZE,DS1302_BBSRAM_SIZE - DS1302_CRC_SIZE) == val)
+;	src/ds1302.c:436: if(crcSlow(ds1302_sram_data + DS1302_CRC_SIZE,DS1302_BBSRAM_SIZE - DS1302_CRC_SIZE) == val)
 	mov	_crcSlow_PARM_2,#0x1d
 	mov	dptr,#(_ds1302_sram_data + 0x0002)
 	mov	b,#0x00
@@ -1110,93 +1117,97 @@ _ds1302_check_SRAM:
 	cjne	a,ar6,00102$
 	mov	a,r7
 	cjne	a,ar5,00102$
-;	../ds1302.c:435: return 1;
+;	src/ds1302.c:437: return 1;
 	mov	dpl,#0x01
 	ret
 00102$:
-;	../ds1302.c:437: return 0;
+;	src/ds1302.c:439: return 0;
 	mov	dpl,#0x00
+;	src/ds1302.c:440: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_calculate_CRC'
 ;------------------------------------------------------------
 ;crcval                    Allocated to registers r6 r7 
 ;------------------------------------------------------------
-;	../ds1302.c:440: void ds1302_calculate_CRC() __reentrant {
+;	src/ds1302.c:442: void ds1302_calculate_CRC() __reentrant {
 ;	-----------------------------------------
 ;	 function ds1302_calculate_CRC
 ;	-----------------------------------------
 _ds1302_calculate_CRC:
-;	../ds1302.c:441: uint16_t crcval = crcSlow(ds1302_sram_data + DS1302_CRC_SIZE,DS1302_BBSRAM_SIZE - DS1302_CRC_SIZE);
+;	src/ds1302.c:443: uint16_t crcval = crcSlow(ds1302_sram_data + DS1302_CRC_SIZE,DS1302_BBSRAM_SIZE - DS1302_CRC_SIZE);
 	mov	_crcSlow_PARM_2,#0x1d
 	mov	dptr,#(_ds1302_sram_data + 0x0002)
 	mov	b,#0x00
 	lcall	_crcSlow
 	mov	r6,dpl
 	mov	r7,dph
-;	../ds1302.c:442: CRC_LSB = ((uint8_t)(crcval & 0x00ff));
+;	src/ds1302.c:444: CRC_LSB = ((uint8_t)(crcval & 0x00ff));
 	mov	ar5,r6
 	mov	dptr,#_ds1302_sram_data
 	mov	a,r5
 	movx	@dptr,a
-;	../ds1302.c:443: CRC_MSB = ((uint8_t)(crcval >> 8));
+;	src/ds1302.c:445: CRC_MSB = ((uint8_t)(crcval >> 8));
 	mov	ar6,r7
 	mov	dptr,#(_ds1302_sram_data + 0x0001)
 	mov	a,r6
 	movx	@dptr,a
+;	src/ds1302.c:446: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ds1302_power_loss_reset'
 ;------------------------------------------------------------
-;	../ds1302.c:446: void ds1302_power_loss_reset() {
+;	src/ds1302.c:448: void ds1302_power_loss_reset() {
 ;	-----------------------------------------
 ;	 function ds1302_power_loss_reset
 ;	-----------------------------------------
 _ds1302_power_loss_reset:
-;	../ds1302.c:447: memcpy(&ds1302,&ds1302_init,sizeof(ds1302_data));
-	mov	_memcpy_PARM_2,#_ds1302_init
-	mov	(_memcpy_PARM_2 + 1),#(_ds1302_init >> 8)
-	mov	(_memcpy_PARM_2 + 2),#0x80
-	mov	_memcpy_PARM_3,#0x08
-	mov	(_memcpy_PARM_3 + 1),#0x00
+;	src/ds1302.c:449: memcpy(&ds1302,&ds1302_init,sizeof(ds1302_data));
+	mov	___memcpy_PARM_2,#_ds1302_init
+	mov	(___memcpy_PARM_2 + 1),#(_ds1302_init >> 8)
+	mov	(___memcpy_PARM_2 + 2),#0x80
+	mov	___memcpy_PARM_3,#0x08
+	mov	(___memcpy_PARM_3 + 1),#0x00
 	mov	dptr,#_ds1302
 	mov	b,#0x40
-	lcall	_memcpy
-;	../ds1302.c:448: memcpy(&ds1302_sram_data,&ds1302_sram_init,sizeof(ds1302_sram_init));
-	mov	_memcpy_PARM_2,#_ds1302_sram_init
-	mov	(_memcpy_PARM_2 + 1),#(_ds1302_sram_init >> 8)
-	mov	(_memcpy_PARM_2 + 2),#0x80
-	mov	_memcpy_PARM_3,#0x1f
-	mov	(_memcpy_PARM_3 + 1),#0x00
+	lcall	___memcpy
+;	src/ds1302.c:450: memcpy(&ds1302_sram_data,&ds1302_sram_init,sizeof(ds1302_sram_init));
+	mov	___memcpy_PARM_2,#_ds1302_sram_init
+	mov	(___memcpy_PARM_2 + 1),#(_ds1302_sram_init >> 8)
+	mov	(___memcpy_PARM_2 + 2),#0x80
+	mov	___memcpy_PARM_3,#0x1f
+	mov	(___memcpy_PARM_3 + 1),#0x00
 	mov	dptr,#_ds1302_sram_data
 	mov	b,#0x00
-	lcall	_memcpy
-;	../ds1302.c:449: ds1302_calculate_CRC();
+	lcall	___memcpy
+;	src/ds1302.c:451: ds1302_calculate_CRC();
 	lcall	_ds1302_calculate_CRC
-;	../ds1302.c:450: ds1302_set_time();
+;	src/ds1302.c:452: ds1302_set_time();
 	lcall	_ds1302_set_time
-;	../ds1302.c:451: ds1302_reset();
+;	src/ds1302.c:453: ds1302_reset();
 	lcall	_ds1302_reset
-;	../ds1302.c:452: ds1302_set_time();
+;	src/ds1302.c:454: ds1302_set_time();
 	lcall	_ds1302_set_time
-;	../ds1302.c:453: ds1302_reset();
+;	src/ds1302.c:455: ds1302_reset();
 	lcall	_ds1302_reset
-;	../ds1302.c:454: ds1302_write_SRAM();
+;	src/ds1302.c:456: ds1302_write_SRAM();
+;	src/ds1302.c:457: }
 	ljmp	_ds1302_write_SRAM
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'convert_24h_to_12h'
 ;------------------------------------------------------------
 ;h_24                      Allocated to registers r7 
 ;------------------------------------------------------------
-;	../ds1302.c:457: uint8_t convert_24h_to_12h(uint8_t h_24) {
+;	src/ds1302.c:459: uint8_t convert_24h_to_12h(uint8_t h_24) {
 ;	-----------------------------------------
 ;	 function convert_24h_to_12h
 ;	-----------------------------------------
 _convert_24h_to_12h:
-;	../ds1302.c:496: return lut_24h_to_12h[h_24];
+;	src/ds1302.c:498: return lut_24h_to_12h[h_24];
 	mov	a,dpl
-	mov	dptr,#_convert_24h_to_12h_lut_24h_to_12h_1_101
+	mov	dptr,#_convert_24h_to_12h_lut_24h_to_12h_65536_106
 	movc	a,@a+dptr
+;	src/ds1302.c:499: }
 	mov	dpl,a
 	ret
 ;------------------------------------------------------------
@@ -1205,13 +1216,13 @@ _convert_24h_to_12h:
 ;v2                        Allocated with name '_bcd_add_PARM_2'
 ;v1                        Allocated to registers 
 ;------------------------------------------------------------
-;	../ds1302.c:500: uint8_t bcd_add(uint8_t v1,uint8_t v2) __naked {
+;	src/ds1302.c:501: uint8_t bcd_add(uint8_t v1,uint8_t v2) __naked {
 ;	-----------------------------------------
 ;	 function bcd_add
 ;	-----------------------------------------
 _bcd_add:
 ;	naked function: no prologue.
-;	../ds1302.c:511: __endasm;
+;	src/ds1302.c:512: __endasm;
 	push	a
 	push	psw
 	mov	a,dpl
@@ -1221,6 +1232,7 @@ _bcd_add:
 	pop	psw
 	pop	a
 	ret
+;	src/ds1302.c:513: }
 ;	naked function: no epilogue.
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'bcd_add_16'
@@ -1228,13 +1240,13 @@ _bcd_add:
 ;op2                       Allocated with name '_bcd_add_16_PARM_2'
 ;op1                       Allocated to registers 
 ;------------------------------------------------------------
-;	../ds1302.c:514: uint16_t bcd_add_16(uint16_t op1,uint16_t op2) __naked {
+;	src/ds1302.c:515: uint16_t bcd_add_16(uint16_t op1,uint16_t op2) __naked {
 ;	-----------------------------------------
 ;	 function bcd_add_16
 ;	-----------------------------------------
 _bcd_add_16:
 ;	naked function: no prologue.
-;	../ds1302.c:530: __endasm;
+;	src/ds1302.c:531: __endasm;
 	push	a
 	push	psw
 	clr	_CY ;clear carry
@@ -1249,6 +1261,7 @@ _bcd_add_16:
 	pop	psw
 	pop	a
 	ret
+;	src/ds1302.c:532: }
 ;	naked function: no epilogue.
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
@@ -1264,7 +1277,7 @@ _ds1302_init:
 	.db #0x29	; 41
 	.db #0x07	; 7
 	.db #0x06	; 6
-	.db #0x17	; 23
+	.db #0x26	; 38
 	.db #0x00	; 0
 	.org 0x3208
 _ds1302_sram_init:
@@ -1299,8 +1312,8 @@ _ds1302_sram_init:
 	.db #0x00	; 0
 	.db #0x70	; 112	'p'
 	.db #0x00	; 0
-	.org 0x3227
-_convert_24h_to_12h_lut_24h_to_12h_1_101:
+	.org 0x3250
+_convert_24h_to_12h_lut_24h_to_12h_65536_106:
 	.db #0x00	; 0
 	.db #0x01	; 1
 	.db #0x02	; 2

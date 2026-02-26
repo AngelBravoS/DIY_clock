@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.9 #9959 (Linux)
+; Version 4.2.0 #13081 (Linux)
 ;--------------------------------------------------------
 	.module fsm
 	.optsdcc -mmcs51 --model-small
@@ -339,7 +339,7 @@ _PORT_P5_3	=	0x00cb
 _PORT_P5_4	=	0x00cc
 _PORT_P5_5	=	0x00cd
 _PORT_P5_6	=	0x00ce
-_PORT_P5_7	=	0x00cd
+_PORT_P5_7	=	0x00cf
 _INT_IE_EX0	=	0x00a8
 _INT_IE_ET0	=	0x00a9
 _INT_IE_EX1	=	0x00aa
@@ -376,7 +376,7 @@ _UART_TB8	=	0x009b
 _UART_REN	=	0x009c
 _UART_SM2	=	0x009d
 _UART_SM1	=	0x009e
-_UART_SM0	=	0x009e
+_UART_SM0	=	0x009f
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
@@ -392,20 +392,20 @@ _alarm_lastpoll::
 	.ds 1
 _transition_ticks::
 	.ds 2
-_fsm_home_fn_curstate_1_169:
+_fsm_home_fn_curstate_65536_174:
 	.ds 1
-_fsm_set_fn_curstate_1_245:
+_fsm_set_fn_curstate_65536_250:
 	.ds 1
-_fsm_alarm_fn_curstate_1_257:
+_fsm_alarm_fn_curstate_65536_262:
 	.ds 1
-_fsm_alarm_fn_sub_curstate_1_257:
+_fsm_alarm_fn_sub_curstate_65536_262:
 	.ds 1
-_fsm_config_fn_curstate_1_303:
+_fsm_config_fn_curstate_65536_308:
 	.ds 1
-_fsm_config_fn_config_tmp_1_303:
+_fsm_config_fn_config_tmp_65536_308:
 	.ds 2
 ;--------------------------------------------------------
-; overlayable items in internal ram 
+; overlayable items in internal ram
 ;--------------------------------------------------------
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
@@ -475,82 +475,82 @@ _alarms	=	0x0004
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_home_fn'
 ;------------------------------------------------------------
-;__00010038                Allocated to registers 
+;__1310720038              Allocated to registers 
 ;alarm_index               Allocated to registers r5 
 ;temp_cache                Allocated to registers r6 r7 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;__00010021                Allocated to registers r4 
-;__00010019                Allocated to registers r4 
-;__00010017                Allocated to registers r4 
-;__00010015                Allocated to registers r4 
-;__00010013                Allocated to registers r4 
-;__00010011                Allocated to registers r5 
-;__00010009                Allocated to registers r5 
-;__00040040                Allocated to registers 
-;__00050041                Allocated to registers 
-;__00050042                Allocated with name '(_ds1302 + 0x0005)'
+;__1310720021              Allocated to registers 
+;__1310720019              Allocated to registers 
+;__1310720017              Allocated to registers 
+;__1310720015              Allocated to registers 
+;__1310720013              Allocated to registers 
+;__1310720011              Allocated to registers r5 
+;__1310720009              Allocated to registers 
+;__3276800040              Allocated to registers 
+;__3276800041              Allocated to registers 
+;__3276800042              Allocated with name '(_ds1302 + 0x0005)'
 ;index                     Allocated to registers 
 ;dow                       Allocated to registers 
-;__00020048                Allocated to registers 
+;__1966080048              Allocated to registers 
 ;tmp                       Allocated to registers r6 r7 
-;curstate                  Allocated with name '_fsm_home_fn_curstate_1_169'
+;curstate                  Allocated with name '_fsm_home_fn_curstate_65536_174'
 ;------------------------------------------------------------
-;	../fsm.c:15: static enum fsm_states_home curstate = fsm_home_start;
-	mov	_fsm_home_fn_curstate_1_169,#0x00
+;	src/fsm.c:15: static enum fsm_states_home curstate = fsm_home_start;
+	mov	_fsm_home_fn_curstate_65536_174,#0x00
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_set_fn'
 ;------------------------------------------------------------
 ;fsm_set_temp              Allocated to registers r5 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;curstate                  Allocated with name '_fsm_set_fn_curstate_1_245'
+;curstate                  Allocated with name '_fsm_set_fn_curstate_65536_250'
 ;------------------------------------------------------------
-;	../fsm.c:167: static enum fsm_states_set curstate = fsm_set_label; //Default display hhmm
-	mov	_fsm_set_fn_curstate_1_245,#0x00
+;	src/fsm.c:167: static enum fsm_states_set curstate = fsm_set_label; //Default display hhmm
+	mov	_fsm_set_fn_curstate_65536_250,#0x00
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_alarm_fn'
 ;------------------------------------------------------------
 ;alarm_temp                Allocated to registers r5 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;__00020053                Allocated to registers 
-;__00030058                Allocated to registers 
-;__00040059                Allocated to registers r4 
-;__00040060                Allocated to registers r6 
+;__1966080053              Allocated to registers 
+;__2621440058              Allocated to registers 
+;__2621440059              Allocated to registers r4 
+;__2621440060              Allocated to registers r6 
 ;index                     Allocated to registers 
 ;dow                       Allocated to registers 
-;__00040064                Allocated to registers r5 
-;__00040065                Allocated to registers r6 
+;__2621440064              Allocated to registers r5 
+;__2621440065              Allocated to registers r6 
 ;index                     Allocated to registers 
 ;dow                       Allocated to registers 
-;curstate                  Allocated with name '_fsm_alarm_fn_curstate_1_257'
-;sub_curstate              Allocated with name '_fsm_alarm_fn_sub_curstate_1_257'
+;curstate                  Allocated with name '_fsm_alarm_fn_curstate_65536_262'
+;sub_curstate              Allocated with name '_fsm_alarm_fn_sub_curstate_65536_262'
 ;------------------------------------------------------------
-;	../fsm.c:263: static enum fsm_states_alarm curstate = fsm_alarm_label;
-	mov	_fsm_alarm_fn_curstate_1_257,#0x00
-;	../fsm.c:264: static enum fsm_substates_alarm sub_curstate = fsm_alarm_substate_toggle;
-	mov	_fsm_alarm_fn_sub_curstate_1_257,#0x00
+;	src/fsm.c:263: static enum fsm_states_alarm curstate = fsm_alarm_label;
+	mov	_fsm_alarm_fn_curstate_65536_262,#0x00
+;	src/fsm.c:264: static enum fsm_substates_alarm sub_curstate = fsm_alarm_substate_toggle;
+	mov	_fsm_alarm_fn_sub_curstate_65536_262,#0x00
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_config_fn'
 ;------------------------------------------------------------
 ;config_tmp2               Allocated to registers r4 r5 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;__00020071                Allocated to registers 
-;__00040067                Allocated to registers 
+;__1966080071              Allocated to registers 
+;__3276800067              Allocated to registers 
 ;tmp                       Allocated to registers r4 r5 
-;__00040069                Allocated to registers 
+;__3276800069              Allocated to registers 
 ;tmp                       Allocated to registers r4 r5 
 ;tmp                       Allocated to registers r4 r5 
-;curstate                  Allocated with name '_fsm_config_fn_curstate_1_303'
-;config_tmp                Allocated with name '_fsm_config_fn_config_tmp_1_303'
+;curstate                  Allocated with name '_fsm_config_fn_curstate_65536_308'
+;config_tmp                Allocated with name '_fsm_config_fn_config_tmp_65536_308'
 ;------------------------------------------------------------
-;	../fsm.c:397: static enum fsm_states_config curstate = fsm_config_label;
-	mov	_fsm_config_fn_curstate_1_303,#0x00
-;	../fsm.c:11: uint8_t alarm_lastpoll = 0;					  ///< Time alarm was last polled (minutes)
+;	src/fsm.c:397: static enum fsm_states_config curstate = fsm_config_label;
+	mov	_fsm_config_fn_curstate_65536_308,#0x00
+;	src/fsm.c:11: uint8_t alarm_lastpoll = 0;					  ///< Time alarm was last polled (minutes)
 	mov	_alarm_lastpoll,#0x00
-;	../fsm.c:12: uint16_t transition_ticks = 0;				  ///< 10ms timer ticks at last transition
+;	src/fsm.c:12: uint16_t transition_ticks = 0;				  ///< 10ms timer ticks at last transition
 	clr	a
 	mov	_transition_ticks,a
 	mov	(_transition_ticks + 1),a
@@ -566,28 +566,28 @@ _alarms	=	0x0004
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_home_fn'
 ;------------------------------------------------------------
-;__00010038                Allocated to registers 
+;__1310720038              Allocated to registers 
 ;alarm_index               Allocated to registers r5 
 ;temp_cache                Allocated to registers r6 r7 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;__00010021                Allocated to registers r4 
-;__00010019                Allocated to registers r4 
-;__00010017                Allocated to registers r4 
-;__00010015                Allocated to registers r4 
-;__00010013                Allocated to registers r4 
-;__00010011                Allocated to registers r5 
-;__00010009                Allocated to registers r5 
-;__00040040                Allocated to registers 
-;__00050041                Allocated to registers 
-;__00050042                Allocated with name '(_ds1302 + 0x0005)'
+;__1310720021              Allocated to registers 
+;__1310720019              Allocated to registers 
+;__1310720017              Allocated to registers 
+;__1310720015              Allocated to registers 
+;__1310720013              Allocated to registers 
+;__1310720011              Allocated to registers r5 
+;__1310720009              Allocated to registers 
+;__3276800040              Allocated to registers 
+;__3276800041              Allocated to registers 
+;__3276800042              Allocated with name '(_ds1302 + 0x0005)'
 ;index                     Allocated to registers 
 ;dow                       Allocated to registers 
-;__00020048                Allocated to registers 
+;__1966080048              Allocated to registers 
 ;tmp                       Allocated to registers r6 r7 
-;curstate                  Allocated with name '_fsm_home_fn_curstate_1_169'
+;curstate                  Allocated with name '_fsm_home_fn_curstate_65536_174'
 ;------------------------------------------------------------
-;	../fsm.c:14: enum fsm_return fsm_home_fn() __reentrant {
+;	src/fsm.c:14: enum fsm_return fsm_home_fn() __reentrant {
 ;	-----------------------------------------
 ;	 function fsm_home_fn
 ;	-----------------------------------------
@@ -600,39 +600,39 @@ _fsm_home_fn:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	../fsm.c:21: menu_state = button_read_and_clear_menu();
+;	src/fsm.c:21: menu_state = button_read_and_clear_menu();
 	lcall	_button_read_and_clear_menu
 	mov	r7,dpl
-;	../fsm.c:22: select_state = button_read_and_clear_select();
+;	src/fsm.c:22: select_state = button_read_and_clear_select();
 	push	ar7
 	lcall	_button_read_and_clear_select
 	mov	r6,dpl
 	pop	ar7
-;	../fsm.c:24: if(curstate != fsm_home_alarm){
+;	src/fsm.c:24: if(curstate != fsm_home_alarm){
 	mov	a,#0x07
-	cjne	a,_fsm_home_fn_curstate_1_169,00276$
+	cjne	a,_fsm_home_fn_curstate_65536_174,00336$
 	ljmp	00134$
-00276$:
-;	../fsm.c:25: if((menu_state == BUTTON_LONG_PRESSED) && (select_state == BUTTON_LONG_PRESSED)){
-	cjne	r7,#0x01,00277$
+00336$:
+;	src/fsm.c:25: if((menu_state == BUTTON_LONG_PRESSED) && (select_state == BUTTON_LONG_PRESSED)){
+	cjne	r7,#0x01,00337$
 	mov	a,r7
-	sjmp	00278$
-00277$:
+	sjmp	00338$
+00337$:
 	clr	a
-00278$:
+00338$:
 	mov	r5,a
 	jz	00102$
 	cjne	r6,#0x01,00102$
-;	../fsm.c:27: curstate = fsm_home_start; //Reset state back to default
-	mov	_fsm_home_fn_curstate_1_169,#0x00
-;	../fsm.c:28: return fsm_ok; //Return OK to transition to configuration mode
+;	src/fsm.c:27: curstate = fsm_home_start; //Reset state back to default
+	mov	_fsm_home_fn_curstate_65536_174,#0x00
+;	src/fsm.c:28: return fsm_ok; //Return OK to transition to configuration mode
 	mov	dpl,#0x00
 	ret
 00102$:
-;	../fsm.c:32: if(menu_state == BUTTON_PRESSED){
+;	src/fsm.c:32: if(menu_state == BUTTON_PRESSED){
 	mov	a,r7
 	jnz	00107$
-;	../fsm.c:34: transition_ticks = centiseconds();
+;	src/fsm.c:34: transition_ticks = centiseconds();
 	push	ar7
 	push	ar6
 	push	ar5
@@ -642,20 +642,20 @@ _fsm_home_fn:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	../fsm.c:35: fsm_home_auto = 0;
+;	src/fsm.c:35: fsm_home_auto = 0;
 ;	assignBit
 	clr	_fsm_home_auto
-;	../fsm.c:36: if(++curstate == fsm_home_end)
-	inc	_fsm_home_fn_curstate_1_169
+;	src/fsm.c:36: if(++curstate == fsm_home_end)
+	inc	_fsm_home_fn_curstate_65536_174
 	mov	a,#0x06
-	cjne	a,_fsm_home_fn_curstate_1_169,00107$
-;	../fsm.c:37: curstate = fsm_home_start;
-	mov	_fsm_home_fn_curstate_1_169,#0x00
+	cjne	a,_fsm_home_fn_curstate_65536_174,00107$
+;	src/fsm.c:37: curstate = fsm_home_start;
+	mov	_fsm_home_fn_curstate_65536_174,#0x00
 00107$:
-;	../fsm.c:40: if(menu_state == BUTTON_LONG_PRESSED){
+;	src/fsm.c:40: if(menu_state == BUTTON_LONG_PRESSED){
 	mov	a,r5
 	jz	00109$
-;	../fsm.c:42: transition_ticks = centiseconds();
+;	src/fsm.c:42: transition_ticks = centiseconds();
 	push	ar7
 	push	ar6
 	lcall	_centiseconds
@@ -663,44 +663,44 @@ _fsm_home_fn:
 	mov	(_transition_ticks + 1),dph
 	pop	ar6
 	pop	ar7
-;	../fsm.c:43: fsm_home_auto = 0;
+;	src/fsm.c:43: fsm_home_auto = 0;
 ;	assignBit
 	clr	_fsm_home_auto
-;	../fsm.c:44: curstate = fsm_home_start;
-	mov	_fsm_home_fn_curstate_1_169,#0x00
+;	src/fsm.c:44: curstate = fsm_home_start;
+	mov	_fsm_home_fn_curstate_65536_174,#0x00
 00109$:
-;	../fsm.c:47: if(select_state == BUTTON_PRESSED){
+;	src/fsm.c:47: if(select_state == BUTTON_PRESSED){
 	mov	a,r6
 	jnz	00114$
-;	../fsm.c:48: if(display_autobrightness){
-;	../fsm.c:49: display_autobrightness = 0;
+;	src/fsm.c:48: if(display_autobrightness){
+;	src/fsm.c:49: display_autobrightness = 0;
 ;	assignBit
-	jbc	_display_autobrightness,00287$
+	jbc	_display_autobrightness,00347$
 	sjmp	00111$
-00287$:
-;	../fsm.c:50: INT_IE_EA = 0;
+00347$:
+;	src/fsm.c:50: INT_IE_EA = 0;
 ;	assignBit
 	clr	_INT_IE_EA
-;	../fsm.c:51: display_counts = DISPLAY_COUNTS_MAX;
+;	src/fsm.c:51: display_counts = DISPLAY_COUNTS_MAX;
 	mov	_display_counts,#0x00
 	mov	(_display_counts + 1),#0xea
-;	../fsm.c:52: INT_IE_EA = 1;
+;	src/fsm.c:52: INT_IE_EA = 1;
 ;	assignBit
 	setb	_INT_IE_EA
 	sjmp	00114$
 00111$:
-;	../fsm.c:54: display_autobrightness = 1;
+;	src/fsm.c:54: display_autobrightness = 1;
 ;	assignBit
 	setb	_display_autobrightness
 00114$:
-;	../fsm.c:58: if(curstate != fsm_home_start) {
-	mov	a,_fsm_home_fn_curstate_1_169
-	jnz	00288$
+;	src/fsm.c:58: if(curstate != fsm_home_start) {
+	mov	a,_fsm_home_fn_curstate_65536_174
+	jnz	00348$
 	ljmp	00131$
-00288$:
-;	../fsm.c:59: if(fsm_home_auto){
+00348$:
+;	src/fsm.c:59: if(fsm_home_auto){
 	jnb	_fsm_home_auto,00126$
-;	../fsm.c:61: if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_SCROLL_TICKS){
+;	src/fsm.c:61: if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_SCROLL_TICKS){
 	push	ar7
 	push	ar6
 	lcall	_centiseconds
@@ -719,39 +719,39 @@ _fsm_home_fn:
 	subb	a,r4
 	clr	a
 	subb	a,r5
-	jc	00290$
+	jc	00350$
 	ljmp	00134$
-00290$:
-;	../fsm.c:64: while(++curstate != fsm_home_end){
+00350$:
+;	src/fsm.c:64: while(++curstate != fsm_home_end){
 00118$:
-	inc	_fsm_home_fn_curstate_1_169
+	inc	_fsm_home_fn_curstate_65536_174
 	mov	a,#0x06
-	cjne	a,_fsm_home_fn_curstate_1_169,00291$
+	cjne	a,_fsm_home_fn_curstate_65536_174,00351$
 	sjmp	00120$
-00291$:
-;	../fsm.c:65: if((ds1302_sram_data[0x03] >> curstate) & 0x01){
+00351$:
+;	src/fsm.c:65: if((ds1302_sram_data[0x03] >> curstate) & 0x01){
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
 	mov	r5,a
-	mov	b,_fsm_home_fn_curstate_1_169
+	mov	b,_fsm_home_fn_curstate_65536_174
 	inc	b
 	mov	a,r5
-	sjmp	00293$
-00292$:
+	sjmp	00353$
+00352$:
 	clr	c
 	rrc	a
-00293$:
-	djnz	b,00292$
+00353$:
+	djnz	b,00352$
 	jnb	acc.0,00118$
-;	../fsm.c:67: transition_ticks = centiseconds();
+;	src/fsm.c:67: transition_ticks = centiseconds();
 	lcall	_centiseconds
 	mov	_transition_ticks,dpl
 	mov	(_transition_ticks + 1),dph
-;	../fsm.c:68: return fsm_repeat;
+;	src/fsm.c:68: return fsm_repeat;
 	mov	dpl,#0x01
 	ret
 00120$:
-;	../fsm.c:72: transition_ticks = centiseconds();
+;	src/fsm.c:72: transition_ticks = centiseconds();
 	push	ar7
 	push	ar6
 	lcall	_centiseconds
@@ -759,14 +759,14 @@ _fsm_home_fn:
 	mov	(_transition_ticks + 1),dph
 	pop	ar6
 	pop	ar7
-;	../fsm.c:73: fsm_home_auto = 0;
+;	src/fsm.c:73: fsm_home_auto = 0;
 ;	assignBit
 	clr	_fsm_home_auto
-;	../fsm.c:74: curstate = fsm_home_start;
-	mov	_fsm_home_fn_curstate_1_169,#0x00
+;	src/fsm.c:74: curstate = fsm_home_start;
+	mov	_fsm_home_fn_curstate_65536_174,#0x00
 	sjmp	00134$
 00126$:
-;	../fsm.c:78: if(((centiseconds() - transition_ticks) > FSM_HOME_RESET_TICKS)) {
+;	src/fsm.c:78: if(((centiseconds() - transition_ticks) > FSM_HOME_RESET_TICKS)) {
 	push	ar7
 	push	ar6
 	lcall	_centiseconds
@@ -781,12 +781,12 @@ _fsm_home_fn:
 	subb	a,(_transition_ticks + 1)
 	mov	r5,a
 	clr	c
-	mov	a,#0xe8
+	mov	a,#0xf4
 	subb	a,r4
-	mov	a,#0x03
+	mov	a,#0x01
 	subb	a,r5
 	jnc	00134$
-;	../fsm.c:80: transition_ticks = centiseconds();
+;	src/fsm.c:80: transition_ticks = centiseconds();
 	push	ar7
 	push	ar6
 	lcall	_centiseconds
@@ -794,11 +794,11 @@ _fsm_home_fn:
 	mov	(_transition_ticks + 1),dph
 	pop	ar6
 	pop	ar7
-;	../fsm.c:81: curstate = fsm_home_start;
-	mov	_fsm_home_fn_curstate_1_169,#0x00
+;	src/fsm.c:81: curstate = fsm_home_start;
+	mov	_fsm_home_fn_curstate_65536_174,#0x00
 	sjmp	00134$
 00131$:
-;	../fsm.c:88: if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_ENABLE_TICKS) {
+;	src/fsm.c:88: if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_ENABLE_TICKS) {
 	push	ar7
 	push	ar6
 	lcall	_centiseconds
@@ -818,1167 +818,1167 @@ _fsm_home_fn:
 	mov	a,#0x03
 	subb	a,r5
 	jnc	00134$
-;	../fsm.c:90: fsm_home_auto = 1;
+;	src/fsm.c:90: fsm_home_auto = 1;
 ;	assignBit
 	setb	_fsm_home_auto
-;	../fsm.c:91: goto find_auto_target;
+;	src/fsm.c:91: goto find_auto_target;
 	ljmp	00118$
 00134$:
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:352: ds1302_start(0xbf); //Start clock burst read
+;	include/ds1302.h:352: ds1302_start(0xbf); //Start clock burst read
 	mov	dpl,#0xbf
 	push	ar7
 	push	ar6
 	lcall	_ds1302_start
 	pop	ar6
 	pop	ar7
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:353: ds1302.seconds = ds1302_read_byte(); //Read in seconds register
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
+;	include/ds1302.h:353: ds1302.seconds = ds1302_read_byte(); //Read in seconds register
+;	include/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:130: __endasm;
+;	include/ds1302.h:130: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
+;	include/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:133: DS1302_CLK = 1;
+;	include/ds1302.h:133: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:139: __endasm;
+;	include/ds1302.h:139: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:140: DS1302_CLK = 0;
+;	include/ds1302.h:140: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:145: __endasm;
+;	include/ds1302.h:145: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
+;	include/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:148: DS1302_CLK = 1;
+;	include/ds1302.h:148: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:154: __endasm;
+;	include/ds1302.h:154: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:155: DS1302_CLK = 0;
+;	include/ds1302.h:155: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:160: __endasm;
+;	include/ds1302.h:160: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
+;	include/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:163: DS1302_CLK = 1;
+;	include/ds1302.h:163: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:169: __endasm;
+;	include/ds1302.h:169: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:170: DS1302_CLK = 0;
+;	include/ds1302.h:170: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:175: __endasm;
+;	include/ds1302.h:175: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
+;	include/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:178: DS1302_CLK = 1;
+;	include/ds1302.h:178: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:184: __endasm;
+;	include/ds1302.h:184: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:185: DS1302_CLK = 0;
+;	include/ds1302.h:185: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:190: __endasm;
+;	include/ds1302.h:190: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
+;	include/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:193: DS1302_CLK = 1;
+;	include/ds1302.h:193: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:199: __endasm;
+;	include/ds1302.h:199: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:200: DS1302_CLK = 0;
+;	include/ds1302.h:200: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:205: __endasm;
+;	include/ds1302.h:205: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
+;	include/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:208: DS1302_CLK = 1;
+;	include/ds1302.h:208: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:214: __endasm;
+;	include/ds1302.h:214: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:215: DS1302_CLK = 0;
+;	include/ds1302.h:215: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:220: __endasm;
+;	include/ds1302.h:220: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
+;	include/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:223: DS1302_CLK = 1;
+;	include/ds1302.h:223: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:229: __endasm;
+;	include/ds1302.h:229: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:230: DS1302_CLK = 0;
+;	include/ds1302.h:230: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:235: __endasm;
+;	include/ds1302.h:235: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
+;	include/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:237: DS1302_CLK = 1;
+;	include/ds1302.h:237: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:243: __endasm;
+;	include/ds1302.h:243: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:244: DS1302_CLK = 0;
+;	include/ds1302.h:244: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:246: return DS1302_DATA;
-	mov	r5,_DS1302_DATA
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:353: ds1302.seconds = ds1302_read_byte(); //Read in seconds register
-	mov	_ds1302,r5
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:354: ds1302.minutes = ds1302_read_byte(); //Read in minutes register
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
+;	include/ds1302.h:246: return DS1302_DATA;
+	mov	a,_DS1302_DATA
+;	include/ds1302.h:353: ds1302.seconds = ds1302_read_byte(); //Read in seconds register
+	mov	_ds1302,a
+;	include/ds1302.h:354: ds1302.minutes = ds1302_read_byte(); //Read in minutes register
+;	include/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:130: __endasm;
+;	include/ds1302.h:130: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
+;	include/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:133: DS1302_CLK = 1;
+;	include/ds1302.h:133: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:139: __endasm;
+;	include/ds1302.h:139: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:140: DS1302_CLK = 0;
+;	include/ds1302.h:140: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:145: __endasm;
+;	include/ds1302.h:145: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
+;	include/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:148: DS1302_CLK = 1;
+;	include/ds1302.h:148: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:154: __endasm;
+;	include/ds1302.h:154: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:155: DS1302_CLK = 0;
+;	include/ds1302.h:155: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:160: __endasm;
+;	include/ds1302.h:160: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
+;	include/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:163: DS1302_CLK = 1;
+;	include/ds1302.h:163: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:169: __endasm;
+;	include/ds1302.h:169: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:170: DS1302_CLK = 0;
+;	include/ds1302.h:170: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:175: __endasm;
+;	include/ds1302.h:175: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
+;	include/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:178: DS1302_CLK = 1;
+;	include/ds1302.h:178: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:184: __endasm;
+;	include/ds1302.h:184: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:185: DS1302_CLK = 0;
+;	include/ds1302.h:185: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:190: __endasm;
+;	include/ds1302.h:190: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
+;	include/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:193: DS1302_CLK = 1;
+;	include/ds1302.h:193: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:199: __endasm;
+;	include/ds1302.h:199: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:200: DS1302_CLK = 0;
+;	include/ds1302.h:200: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:205: __endasm;
+;	include/ds1302.h:205: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
+;	include/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:208: DS1302_CLK = 1;
+;	include/ds1302.h:208: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:214: __endasm;
+;	include/ds1302.h:214: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:215: DS1302_CLK = 0;
+;	include/ds1302.h:215: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:220: __endasm;
+;	include/ds1302.h:220: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
+;	include/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:223: DS1302_CLK = 1;
+;	include/ds1302.h:223: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:229: __endasm;
+;	include/ds1302.h:229: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:230: DS1302_CLK = 0;
+;	include/ds1302.h:230: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:235: __endasm;
+;	include/ds1302.h:235: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
+;	include/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:237: DS1302_CLK = 1;
+;	include/ds1302.h:237: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:243: __endasm;
+;	include/ds1302.h:243: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:244: DS1302_CLK = 0;
+;	include/ds1302.h:244: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:246: return DS1302_DATA;
+;	include/ds1302.h:246: return DS1302_DATA;
 	mov	r5,_DS1302_DATA
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:354: ds1302.minutes = ds1302_read_byte(); //Read in minutes register
+;	include/ds1302.h:354: ds1302.minutes = ds1302_read_byte(); //Read in minutes register
 	mov	(_ds1302 + 0x0001),r5
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:355: ds1302.hour    = ds1302_read_byte(); //Read in hours register
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
+;	include/ds1302.h:355: ds1302.hour    = ds1302_read_byte(); //Read in hours register
+;	include/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:130: __endasm;
+;	include/ds1302.h:130: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
+;	include/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:133: DS1302_CLK = 1;
+;	include/ds1302.h:133: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:139: __endasm;
+;	include/ds1302.h:139: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:140: DS1302_CLK = 0;
+;	include/ds1302.h:140: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:145: __endasm;
+;	include/ds1302.h:145: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
+;	include/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:148: DS1302_CLK = 1;
+;	include/ds1302.h:148: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:154: __endasm;
+;	include/ds1302.h:154: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:155: DS1302_CLK = 0;
+;	include/ds1302.h:155: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:160: __endasm;
+;	include/ds1302.h:160: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
+;	include/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:163: DS1302_CLK = 1;
+;	include/ds1302.h:163: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:169: __endasm;
+;	include/ds1302.h:169: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:170: DS1302_CLK = 0;
+;	include/ds1302.h:170: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:175: __endasm;
+;	include/ds1302.h:175: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
+;	include/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:178: DS1302_CLK = 1;
+;	include/ds1302.h:178: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:184: __endasm;
+;	include/ds1302.h:184: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:185: DS1302_CLK = 0;
+;	include/ds1302.h:185: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:190: __endasm;
+;	include/ds1302.h:190: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
+;	include/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:193: DS1302_CLK = 1;
+;	include/ds1302.h:193: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:199: __endasm;
+;	include/ds1302.h:199: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:200: DS1302_CLK = 0;
+;	include/ds1302.h:200: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:205: __endasm;
+;	include/ds1302.h:205: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
+;	include/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:208: DS1302_CLK = 1;
+;	include/ds1302.h:208: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:214: __endasm;
+;	include/ds1302.h:214: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:215: DS1302_CLK = 0;
+;	include/ds1302.h:215: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:220: __endasm;
+;	include/ds1302.h:220: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
+;	include/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:223: DS1302_CLK = 1;
+;	include/ds1302.h:223: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:229: __endasm;
+;	include/ds1302.h:229: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:230: DS1302_CLK = 0;
+;	include/ds1302.h:230: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:235: __endasm;
+;	include/ds1302.h:235: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
+;	include/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:237: DS1302_CLK = 1;
+;	include/ds1302.h:237: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:243: __endasm;
+;	include/ds1302.h:243: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:244: DS1302_CLK = 0;
+;	include/ds1302.h:244: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:246: return DS1302_DATA;
-	mov	r4,_DS1302_DATA
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:355: ds1302.hour    = ds1302_read_byte(); //Read in hours register
-	mov	(_ds1302 + 0x0002),r4
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:356: ds1302.date    = ds1302_read_byte(); //Read in date register
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
+;	include/ds1302.h:246: return DS1302_DATA;
+	mov	a,_DS1302_DATA
+;	include/ds1302.h:355: ds1302.hour    = ds1302_read_byte(); //Read in hours register
+	mov	(_ds1302 + 0x0002),a
+;	include/ds1302.h:356: ds1302.date    = ds1302_read_byte(); //Read in date register
+;	include/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:130: __endasm;
+;	include/ds1302.h:130: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
+;	include/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:133: DS1302_CLK = 1;
+;	include/ds1302.h:133: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:139: __endasm;
+;	include/ds1302.h:139: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:140: DS1302_CLK = 0;
+;	include/ds1302.h:140: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:145: __endasm;
+;	include/ds1302.h:145: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
+;	include/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:148: DS1302_CLK = 1;
+;	include/ds1302.h:148: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:154: __endasm;
+;	include/ds1302.h:154: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:155: DS1302_CLK = 0;
+;	include/ds1302.h:155: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:160: __endasm;
+;	include/ds1302.h:160: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
+;	include/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:163: DS1302_CLK = 1;
+;	include/ds1302.h:163: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:169: __endasm;
+;	include/ds1302.h:169: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:170: DS1302_CLK = 0;
+;	include/ds1302.h:170: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:175: __endasm;
+;	include/ds1302.h:175: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
+;	include/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:178: DS1302_CLK = 1;
+;	include/ds1302.h:178: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:184: __endasm;
+;	include/ds1302.h:184: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:185: DS1302_CLK = 0;
+;	include/ds1302.h:185: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:190: __endasm;
+;	include/ds1302.h:190: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
+;	include/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:193: DS1302_CLK = 1;
+;	include/ds1302.h:193: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:199: __endasm;
+;	include/ds1302.h:199: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:200: DS1302_CLK = 0;
+;	include/ds1302.h:200: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:205: __endasm;
+;	include/ds1302.h:205: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
+;	include/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:208: DS1302_CLK = 1;
+;	include/ds1302.h:208: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:214: __endasm;
+;	include/ds1302.h:214: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:215: DS1302_CLK = 0;
+;	include/ds1302.h:215: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:220: __endasm;
+;	include/ds1302.h:220: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
+;	include/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:223: DS1302_CLK = 1;
+;	include/ds1302.h:223: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:229: __endasm;
+;	include/ds1302.h:229: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:230: DS1302_CLK = 0;
+;	include/ds1302.h:230: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:235: __endasm;
+;	include/ds1302.h:235: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
+;	include/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:237: DS1302_CLK = 1;
+;	include/ds1302.h:237: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:243: __endasm;
+;	include/ds1302.h:243: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:244: DS1302_CLK = 0;
+;	include/ds1302.h:244: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:246: return DS1302_DATA;
-	mov	r4,_DS1302_DATA
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:356: ds1302.date    = ds1302_read_byte(); //Read in date register
-	mov	(_ds1302 + 0x0003),r4
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:357: ds1302.month   = ds1302_read_byte(); //Read in month register
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
+;	include/ds1302.h:246: return DS1302_DATA;
+	mov	a,_DS1302_DATA
+;	include/ds1302.h:356: ds1302.date    = ds1302_read_byte(); //Read in date register
+	mov	(_ds1302 + 0x0003),a
+;	include/ds1302.h:357: ds1302.month   = ds1302_read_byte(); //Read in month register
+;	include/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:130: __endasm;
+;	include/ds1302.h:130: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
+;	include/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:133: DS1302_CLK = 1;
+;	include/ds1302.h:133: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:139: __endasm;
+;	include/ds1302.h:139: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:140: DS1302_CLK = 0;
+;	include/ds1302.h:140: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:145: __endasm;
+;	include/ds1302.h:145: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
+;	include/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:148: DS1302_CLK = 1;
+;	include/ds1302.h:148: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:154: __endasm;
+;	include/ds1302.h:154: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:155: DS1302_CLK = 0;
+;	include/ds1302.h:155: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:160: __endasm;
+;	include/ds1302.h:160: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
+;	include/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:163: DS1302_CLK = 1;
+;	include/ds1302.h:163: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:169: __endasm;
+;	include/ds1302.h:169: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:170: DS1302_CLK = 0;
+;	include/ds1302.h:170: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:175: __endasm;
+;	include/ds1302.h:175: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
+;	include/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:178: DS1302_CLK = 1;
+;	include/ds1302.h:178: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:184: __endasm;
+;	include/ds1302.h:184: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:185: DS1302_CLK = 0;
+;	include/ds1302.h:185: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:190: __endasm;
+;	include/ds1302.h:190: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
+;	include/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:193: DS1302_CLK = 1;
+;	include/ds1302.h:193: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:199: __endasm;
+;	include/ds1302.h:199: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:200: DS1302_CLK = 0;
+;	include/ds1302.h:200: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:205: __endasm;
+;	include/ds1302.h:205: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
+;	include/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:208: DS1302_CLK = 1;
+;	include/ds1302.h:208: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:214: __endasm;
+;	include/ds1302.h:214: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:215: DS1302_CLK = 0;
+;	include/ds1302.h:215: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:220: __endasm;
+;	include/ds1302.h:220: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
+;	include/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:223: DS1302_CLK = 1;
+;	include/ds1302.h:223: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:229: __endasm;
+;	include/ds1302.h:229: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:230: DS1302_CLK = 0;
+;	include/ds1302.h:230: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:235: __endasm;
+;	include/ds1302.h:235: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
+;	include/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:237: DS1302_CLK = 1;
+;	include/ds1302.h:237: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:243: __endasm;
+;	include/ds1302.h:243: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:244: DS1302_CLK = 0;
+;	include/ds1302.h:244: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:246: return DS1302_DATA;
-	mov	r4,_DS1302_DATA
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:357: ds1302.month   = ds1302_read_byte(); //Read in month register
-	mov	(_ds1302 + 0x0004),r4
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:358: ds1302.day 	   = ds1302_read_byte(); //Read in day of week register
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
+;	include/ds1302.h:246: return DS1302_DATA;
+	mov	a,_DS1302_DATA
+;	include/ds1302.h:357: ds1302.month   = ds1302_read_byte(); //Read in month register
+	mov	(_ds1302 + 0x0004),a
+;	include/ds1302.h:358: ds1302.day 	   = ds1302_read_byte(); //Read in day of week register
+;	include/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:130: __endasm;
+;	include/ds1302.h:130: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
+;	include/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:133: DS1302_CLK = 1;
+;	include/ds1302.h:133: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:139: __endasm;
+;	include/ds1302.h:139: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:140: DS1302_CLK = 0;
+;	include/ds1302.h:140: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:145: __endasm;
+;	include/ds1302.h:145: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
+;	include/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:148: DS1302_CLK = 1;
+;	include/ds1302.h:148: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:154: __endasm;
+;	include/ds1302.h:154: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:155: DS1302_CLK = 0;
+;	include/ds1302.h:155: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:160: __endasm;
+;	include/ds1302.h:160: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
+;	include/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:163: DS1302_CLK = 1;
+;	include/ds1302.h:163: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:169: __endasm;
+;	include/ds1302.h:169: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:170: DS1302_CLK = 0;
+;	include/ds1302.h:170: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:175: __endasm;
+;	include/ds1302.h:175: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
+;	include/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:178: DS1302_CLK = 1;
+;	include/ds1302.h:178: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:184: __endasm;
+;	include/ds1302.h:184: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:185: DS1302_CLK = 0;
+;	include/ds1302.h:185: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:190: __endasm;
+;	include/ds1302.h:190: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
+;	include/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:193: DS1302_CLK = 1;
+;	include/ds1302.h:193: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:199: __endasm;
+;	include/ds1302.h:199: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:200: DS1302_CLK = 0;
+;	include/ds1302.h:200: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:205: __endasm;
+;	include/ds1302.h:205: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
+;	include/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:208: DS1302_CLK = 1;
+;	include/ds1302.h:208: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:214: __endasm;
+;	include/ds1302.h:214: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:215: DS1302_CLK = 0;
+;	include/ds1302.h:215: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:220: __endasm;
+;	include/ds1302.h:220: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
+;	include/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:223: DS1302_CLK = 1;
+;	include/ds1302.h:223: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:229: __endasm;
+;	include/ds1302.h:229: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:230: DS1302_CLK = 0;
+;	include/ds1302.h:230: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:235: __endasm;
+;	include/ds1302.h:235: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
+;	include/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:237: DS1302_CLK = 1;
+;	include/ds1302.h:237: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:243: __endasm;
+;	include/ds1302.h:243: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:244: DS1302_CLK = 0;
+;	include/ds1302.h:244: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:246: return DS1302_DATA;
-	mov	r4,_DS1302_DATA
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:358: ds1302.day 	   = ds1302_read_byte(); //Read in day of week register
-	mov	(_ds1302 + 0x0005),r4
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:359: ds1302.year    = ds1302_read_byte(); //Read in year register
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
+;	include/ds1302.h:246: return DS1302_DATA;
+	mov	a,_DS1302_DATA
+;	include/ds1302.h:358: ds1302.day 	   = ds1302_read_byte(); //Read in day of week register
+	mov	(_ds1302 + 0x0005),a
+;	include/ds1302.h:359: ds1302.year    = ds1302_read_byte(); //Read in year register
+;	include/ds1302.h:123: DS1302_IO = 1;		//Stop driving I/O line
 ;	assignBit
 	setb	_PORT_P1_1
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:130: __endasm;
+;	include/ds1302.h:130: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
+;	include/ds1302.h:131: DS1302_DATA_0 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_0,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:133: DS1302_CLK = 1;
+;	include/ds1302.h:133: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:139: __endasm;
+;	include/ds1302.h:139: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:140: DS1302_CLK = 0;
+;	include/ds1302.h:140: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:145: __endasm;
+;	include/ds1302.h:145: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
+;	include/ds1302.h:146: DS1302_DATA_1 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_1,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:148: DS1302_CLK = 1;
+;	include/ds1302.h:148: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:154: __endasm;
+;	include/ds1302.h:154: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:155: DS1302_CLK = 0;
+;	include/ds1302.h:155: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:160: __endasm;
+;	include/ds1302.h:160: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
+;	include/ds1302.h:161: DS1302_DATA_2 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_2,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:163: DS1302_CLK = 1;
+;	include/ds1302.h:163: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:169: __endasm;
+;	include/ds1302.h:169: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:170: DS1302_CLK = 0;
+;	include/ds1302.h:170: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:175: __endasm;
+;	include/ds1302.h:175: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
+;	include/ds1302.h:176: DS1302_DATA_3 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_3,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:178: DS1302_CLK = 1;
+;	include/ds1302.h:178: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:184: __endasm;
+;	include/ds1302.h:184: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:185: DS1302_CLK = 0;
+;	include/ds1302.h:185: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:190: __endasm;
+;	include/ds1302.h:190: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
+;	include/ds1302.h:191: DS1302_DATA_4 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_4,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:193: DS1302_CLK = 1;
+;	include/ds1302.h:193: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:199: __endasm;
+;	include/ds1302.h:199: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:200: DS1302_CLK = 0;
+;	include/ds1302.h:200: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:205: __endasm;
+;	include/ds1302.h:205: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
+;	include/ds1302.h:206: DS1302_DATA_5 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_5,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:208: DS1302_CLK = 1;
+;	include/ds1302.h:208: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:214: __endasm;
+;	include/ds1302.h:214: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:215: DS1302_CLK = 0;
+;	include/ds1302.h:215: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:220: __endasm;
+;	include/ds1302.h:220: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
+;	include/ds1302.h:221: DS1302_DATA_6 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_6,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:223: DS1302_CLK = 1;
+;	include/ds1302.h:223: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:229: __endasm;
+;	include/ds1302.h:229: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:230: DS1302_CLK = 0;
+;	include/ds1302.h:230: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:235: __endasm;
+;	include/ds1302.h:235: __endasm;
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
+;	include/ds1302.h:236: DS1302_DATA_7 = DS1302_IO;
 ;	assignBit
 	mov	c,_PORT_P1_1
 	mov	_DS1302_DATA_7,c
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:237: DS1302_CLK = 1;
+;	include/ds1302.h:237: DS1302_CLK = 1;
 ;	assignBit
 	setb	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:243: __endasm;
+;	include/ds1302.h:243: __endasm;
 	nop
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:244: DS1302_CLK = 0;
+;	include/ds1302.h:244: DS1302_CLK = 0;
 ;	assignBit
 	clr	_PORT_P1_2
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:246: return DS1302_DATA;
-	mov	r4,_DS1302_DATA
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:359: ds1302.year    = ds1302_read_byte(); //Read in year register
-	mov	(_ds1302 + 0x0006),r4
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
+;	include/ds1302.h:246: return DS1302_DATA;
+	mov	a,_DS1302_DATA
+;	include/ds1302.h:359: ds1302.year    = ds1302_read_byte(); //Read in year register
+	mov	(_ds1302 + 0x0006),a
+;	include/ds1302.h:322: DS1302_CE = 0; //Drop CE to end communication.
 ;	assignBit
 	clr	_PORT_P1_0
-;	../fsm.c:100: if((alarm_lastpoll != ds1302.minutes) && alarm_global_state()){
+;	src/fsm.c:100: if((alarm_lastpoll != ds1302.minutes) && alarm_global_state()){
 	mov	a,r5
-	cjne	a,_alarm_lastpoll,00297$
+	cjne	a,_alarm_lastpoll,00357$
 	ljmp	00143$
-00297$:
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:84: return (ds1302_sram_data[3] & 0x01);
+00357$:
+;	include/alarm.h:84: return (ds1302_sram_data[3] & 0x01);
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
 	mov	r5,a
-	jb	acc.0,00298$
+	jb	acc.0,00358$
 	ljmp	00143$
-00298$:
-;	../fsm.c:100: if((alarm_lastpoll != ds1302.minutes) && alarm_global_state()){
-;	../fsm.c:116: alarm_lastpoll = ds1302.minutes;
+00358$:
+;	src/fsm.c:100: if((alarm_lastpoll != ds1302.minutes) && alarm_global_state()){
+;	src/fsm.c:116: alarm_lastpoll = ds1302.minutes;
 	mov	r5,#0x00
 00182$:
-;	../fsm.c:102: for(;alarm_index < NUM_ALARMS;alarm_index++){
-	cjne	r5,#0x07,00299$
-00299$:
-	jc	00300$
+;	src/fsm.c:102: for(;alarm_index < NUM_ALARMS;alarm_index++){
+	cjne	r5,#0x07,00359$
+00359$:
+	jc	00360$
 	ljmp	00141$
-00300$:
-;	../fsm.c:103: if(alarm_dow_state(alarm_index,ds1302.day) && (
+00360$:
+;	src/fsm.c:103: if(alarm_dow_state(alarm_index,ds1302.day) && (
 	push	ar6
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:106: return ((alarms[index].dow_and_enable >> dow) & 0x01);
+;	include/alarm.h:106: return ((alarms[index].dow_and_enable >> dow) & 0x01);
 	mov	a,r5
 	mov	b,#0x03
 	mul	ab
@@ -1998,16 +1998,16 @@ _fsm_home_fn:
 	mov	b,(_ds1302 + 0x0005)
 	inc	b
 	mov	a,r6
-	sjmp	00302$
-00301$:
+	sjmp	00362$
+00361$:
 	clr	c
 	rrc	a
-00302$:
-	djnz	b,00301$
+00362$:
+	djnz	b,00361$
 	pop	ar6
 	jnb	acc.0,00183$
-;	../fsm.c:103: if(alarm_dow_state(alarm_index,ds1302.day) && (
-;	../fsm.c:104: alarms[alarm_index].dow_and_enable & 0x01)){
+;	src/fsm.c:103: if(alarm_dow_state(alarm_index,ds1302.day) && (
+;	src/fsm.c:104: alarms[alarm_index].dow_and_enable & 0x01)){
 	push	ar6
 	mov	a,r3
 	add	a,#_alarms
@@ -2022,7 +2022,7 @@ _fsm_home_fn:
 	movx	a,@dptr
 	pop	ar6
 	jnb	acc.0,00183$
-;	../fsm.c:105: if((alarms[alarm_index].hour == ds1302.hour) &&
+;	src/fsm.c:105: if((alarms[alarm_index].hour == ds1302.hour) &&
 	mov	a,r3
 	add	a,#_alarms
 	mov	dpl,a
@@ -2032,7 +2032,7 @@ _fsm_home_fn:
 	movx	a,@dptr
 	mov	r2,a
 	cjne	a,(_ds1302 + 0x0002),00183$
-;	../fsm.c:106: (alarms[alarm_index].minute == ds1302.minutes)){
+;	src/fsm.c:106: (alarms[alarm_index].minute == ds1302.minutes)){
 	mov	a,r3
 	add	a,#_alarms
 	mov	r3,a
@@ -2045,53 +2045,53 @@ _fsm_home_fn:
 	movx	a,@dptr
 	mov	r4,a
 	cjne	a,(_ds1302 + 0x0001),00183$
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:130: INT_IE2 &= 0xfb;
+;	include/alarm.h:130: INT_IE2 &= 0xfb;
 	anl	_INT_IE2,#0xfb
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:131: alarm_counter = 0x00;
+;	include/alarm.h:131: alarm_counter = 0x00;
 	clr	a
 	mov	_alarm_counter,a
 	mov	(_alarm_counter + 1),a
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:132: INT_IE2 |= 0x04;
+;	include/alarm.h:132: INT_IE2 |= 0x04;
 	orl	_INT_IE2,#0x04
-;	../fsm.c:108: display_autobrightness = 0;
+;	src/fsm.c:108: display_autobrightness = 0;
 ;	assignBit
 	clr	_display_autobrightness
-;	../fsm.c:109: INT_IE_EA = 0;
+;	src/fsm.c:109: INT_IE_EA = 0;
 ;	assignBit
 	clr	_INT_IE_EA
-;	../fsm.c:110: display_counts = DISPLAY_COUNTS_MAX;
+;	src/fsm.c:110: display_counts = DISPLAY_COUNTS_MAX;
 	mov	_display_counts,#0x00
 	mov	(_display_counts + 1),#0xea
-;	../fsm.c:111: INT_IE_EA = 1;
+;	src/fsm.c:111: INT_IE_EA = 1;
 ;	assignBit
 	setb	_INT_IE_EA
-;	../fsm.c:112: curstate = fsm_home_alarm;
-	mov	_fsm_home_fn_curstate_1_169,#0x07
+;	src/fsm.c:112: curstate = fsm_home_alarm;
+	mov	_fsm_home_fn_curstate_65536_174,#0x07
 00183$:
-;	../fsm.c:102: for(;alarm_index < NUM_ALARMS;alarm_index++){
+;	src/fsm.c:102: for(;alarm_index < NUM_ALARMS;alarm_index++){
 	inc	r5
 	ljmp	00182$
 00141$:
-;	../fsm.c:116: alarm_lastpoll = ds1302.minutes;
+;	src/fsm.c:116: alarm_lastpoll = ds1302.minutes;
 	mov	_alarm_lastpoll,(_ds1302 + 0x0001)
 00143$:
-;	../fsm.c:119: switch(curstate) {
-	mov	a,_fsm_home_fn_curstate_1_169
+;	src/fsm.c:119: switch(curstate) {
+	mov	a,_fsm_home_fn_curstate_65536_174
 	add	a,#0xff - 0x07
-	jnc	00309$
+	jnc	00369$
 	ljmp	00163$
-00309$:
-	mov	a,_fsm_home_fn_curstate_1_169
-	add	a,#(00310$-3-.)
+00369$:
+	mov	a,_fsm_home_fn_curstate_65536_174
+	add	a,#(00370$-3-.)
 	movc	a,@a+pc
 	mov	dpl,a
-	mov	a,_fsm_home_fn_curstate_1_169
-	add	a,#(00311$-3-.)
+	mov	a,_fsm_home_fn_curstate_65536_174
+	add	a,#(00371$-3-.)
 	movc	a,@a+pc
 	mov	dph,a
 	clr	a
 	jmp	@a+dptr
-00310$:
+00370$:
 	.db	00146$
 	.db	00154$
 	.db	00157$
@@ -2100,7 +2100,7 @@ _fsm_home_fn:
 	.db	00162$
 	.db	00163$
 	.db	00146$
-00311$:
+00371$:
 	.db	00146$>>8
 	.db	00154$>>8
 	.db	00157$>>8
@@ -2109,88 +2109,88 @@ _fsm_home_fn:
 	.db	00162$>>8
 	.db	00163$>>8
 	.db	00146$>>8
-;	../fsm.c:121: case fsm_home_time:
+;	src/fsm.c:121: case fsm_home_time:
 00146$:
-;	../fsm.c:123: if(curstate == fsm_home_alarm){
+;	src/fsm.c:123: if(curstate == fsm_home_alarm){
 	mov	a,#0x07
-	cjne	a,_fsm_home_fn_curstate_1_169,00151$
-;	../fsm.c:124: display_flash = 0x0f;
+	cjne	a,_fsm_home_fn_curstate_65536_174,00151$
+;	src/fsm.c:124: display_flash = 0x0f;
 	mov	_display_flash,#0x0f
-;	../fsm.c:125: if((menu_state == BUTTON_LONG_PRESSED) && (select_state == BUTTON_LONG_PRESSED)){
+;	src/fsm.c:125: if((menu_state == BUTTON_LONG_PRESSED) && (select_state == BUTTON_LONG_PRESSED)){
 	cjne	r7,#0x01,00151$
 	cjne	r6,#0x01,00151$
-;	../fsm.c:126: display_flash = 0x00;
+;	src/fsm.c:126: display_flash = 0x00;
 	mov	_display_flash,#0x00
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:149: INT_IE2 &= 0xfb;
+;	include/alarm.h:149: INT_IE2 &= 0xfb;
 	anl	_INT_IE2,#0xfb
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:150: INT_IE_EA = 0;
+;	include/alarm.h:150: INT_IE_EA = 0;
 ;	assignBit
 	clr	_INT_IE_EA
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:151: ALARM_BUZZER_DRIVE_INACTIVE();
+;	include/alarm.h:151: ALARM_BUZZER_DRIVE_INACTIVE();
 ;	assignBit
 	setb	_PORT_P1_5
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:152: INT_IE_EA = 1;
+;	include/alarm.h:152: INT_IE_EA = 1;
 ;	assignBit
 	setb	_INT_IE_EA
-;	../fsm.c:128: display_autobrightness = 1;
+;	src/fsm.c:128: display_autobrightness = 1;
 ;	assignBit
 	setb	_display_autobrightness
-;	../fsm.c:129: curstate = fsm_home_start; //Reset state back to default
-	mov	_fsm_home_fn_curstate_1_169,#0x00
+;	src/fsm.c:129: curstate = fsm_home_start; //Reset state back to default
+	mov	_fsm_home_fn_curstate_65536_174,#0x00
 00151$:
-;	../fsm.c:132: display_puttime(ds1302.hour,ds1302.minutes);
+;	src/fsm.c:132: display_puttime(ds1302.hour,ds1302.minutes);
 	mov	dpl,(_ds1302 + 0x0002)
 	mov	_display_puttime_PARM_2,(_ds1302 + 0x0001)
 	lcall	_display_puttime
-;	../fsm.c:133: if(ds1302.seconds % 2)
+;	src/fsm.c:133: if(ds1302.seconds % 2)
 	mov	a,_ds1302
-	jb	acc.0,00318$
+	jb	acc.0,00378$
 	ljmp	00163$
-00318$:
-;	/home/shenghao/workspace/TESTMCS51/display.h:116: display_buffer[1] &= 0x7f;
+00378$:
+;	include/display.h:116: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:117: display_buffer[2] &= 0x7f;
+;	include/display.h:117: display_buffer[2] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0002)
 	mov	(_display_buffer + 0x0002),a
-;	../fsm.c:135: break;
+;	src/fsm.c:135: break;
 	ljmp	00163$
-;	../fsm.c:136: case fsm_home_mmss:
+;	src/fsm.c:136: case fsm_home_mmss:
 00154$:
-;	../fsm.c:138: display_putbcd(ds1302.minutes,ds1302.seconds);
+;	src/fsm.c:138: display_putbcd(ds1302.minutes,ds1302.seconds);
 	mov	dpl,(_ds1302 + 0x0001)
 	mov	_display_putbcd_PARM_2,_ds1302
 	lcall	_display_putbcd
-;	../fsm.c:139: if(ds1302.seconds % 2)
+;	src/fsm.c:139: if(ds1302.seconds % 2)
 	mov	a,_ds1302
-	jb	acc.0,00319$
+	jb	acc.0,00379$
 	ljmp	00163$
-00319$:
-;	/home/shenghao/workspace/TESTMCS51/display.h:116: display_buffer[1] &= 0x7f;
+00379$:
+;	include/display.h:116: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:117: display_buffer[2] &= 0x7f;
+;	include/display.h:117: display_buffer[2] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0002)
 	mov	(_display_buffer + 0x0002),a
-;	../fsm.c:141: break;
+;	src/fsm.c:141: break;
 	ljmp	00163$
-;	../fsm.c:142: case fsm_home_temp:
+;	src/fsm.c:142: case fsm_home_temp:
 00157$:
-;	../fsm.c:143: temp_cache = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
-;	/home/shenghao/workspace/TESTMCS51/adc.h:147: INT_IE_EADC = 0;				//Disable ADC interrupt
+;	src/fsm.c:143: temp_cache = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
+;	include/adc.h:147: INT_IE_EADC = 0;				//Disable ADC interrupt
 ;	assignBit
 	clr	_INT_IE_EADC
-;	/home/shenghao/workspace/TESTMCS51/adc.h:148: tmp = adc_thermistor_reading;	//Store temporary result
+;	include/adc.h:148: tmp = adc_thermistor_reading;	//Store temporary result
 	mov	r6,_adc_thermistor_reading
 	mov	r7,(_adc_thermistor_reading + 1)
-;	/home/shenghao/workspace/TESTMCS51/adc.h:149: INT_IE_EADC = 1;				//Enable ADC interrupt
+;	include/adc.h:149: INT_IE_EADC = 1;				//Enable ADC interrupt
 ;	assignBit
 	setb	_INT_IE_EADC
-;	../fsm.c:143: temp_cache = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
+;	src/fsm.c:143: temp_cache = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
 	mov	a,r6
 	add	a,r6
 	mov	r6,a
@@ -2208,52 +2208,54 @@ _fsm_home_fn:
 	clr	a
 	movc	a,@a+dptr
 	mov	r7,a
-;	../fsm.c:144: temp_cache = bcd_add_16(temp_cache,(ds1302_sram_data[DS1302_BBSRAM_SIZE-2] |
+;	src/fsm.c:144: temp_cache = bcd_add_16(temp_cache,(ds1302_sram_data[DS1302_BBSRAM_SIZE-2] |
 	mov	dptr,#(_ds1302_sram_data + 0x001d)
 	movx	a,@dptr
 	mov	r5,a
-;	../fsm.c:145: (ds1302_sram_data[DS1302_BBSRAM_SIZE-1] << 0x08)));
+;	src/fsm.c:145: (ds1302_sram_data[DS1302_BBSRAM_SIZE-1] << 0x08)));
 	mov	dptr,#(_ds1302_sram_data + 0x001e)
 	movx	a,@dptr
 	mov	r3,a
 	clr	a
+	mov	r4,a
 	mov	r2,a
-	orl	a,r5
-	mov	_bcd_add_16_PARM_2,a
-	mov	a,r3
-	orl	a,r2
-	mov	(_bcd_add_16_PARM_2 + 1),a
+	mov	a,r5
+	orl	ar4,a
+	mov	a,r2
+	orl	ar3,a
+	mov	_bcd_add_16_PARM_2,r4
+	mov	(_bcd_add_16_PARM_2 + 1),r3
 	mov	dpl,r6
 	mov	dph,r7
 	lcall	_bcd_add_16
-	mov	r4,dpl
-	mov	r5,dph
-	mov	ar6,r4
-	mov	ar7,r5
-;	../fsm.c:146: if(temp_cache > 0x0999)
+	mov	r6,dpl
+	mov	r7,dph
+;	src/fsm.c:146: if(temp_cache > 0x0999)
+	mov	ar4,r6
+	mov	ar5,r7
 	clr	c
 	mov	a,#0x99
-	subb	a,r6
+	subb	a,r4
 	mov	a,#0x09
-	subb	a,r7
+	subb	a,r5
 	jnc	00159$
-;	../fsm.c:147: temp_cache = 0x0999;
+;	src/fsm.c:147: temp_cache = 0x0999;
 	mov	r6,#0x99
 	mov	r7,#0x09
 00159$:
-;	../fsm.c:148: display_puttemp(temp_cache);
+;	src/fsm.c:148: display_puttemp(temp_cache);
 	mov	dpl,r6
 	mov	dph,r7
 	lcall	_display_puttemp
-;	/home/shenghao/workspace/TESTMCS51/display.h:146: display_buffer[1] &= 0x7f;
+;	include/display.h:146: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	../fsm.c:150: break;
-;	../fsm.c:151: case fsm_home_dow:
+;	src/fsm.c:150: break;
+;	src/fsm.c:151: case fsm_home_dow:
 	sjmp	00163$
 00160$:
-;	../fsm.c:152: display_puts(ledstrings[ds1302.day-1]);
+;	src/fsm.c:152: display_puts(ledstrings[ds1302.day-1]);
 	mov	r6,(_ds1302 + 0x0005)
 	mov	r7,#0x00
 	mov	a,r6
@@ -2273,24 +2275,25 @@ _fsm_home_fn:
 	addc	a,#(_ledstrings >> 8)
 	mov	dph,a
 	lcall	_display_puts
-;	../fsm.c:153: break;
-;	../fsm.c:154: case fsm_home_date:
+;	src/fsm.c:153: break;
+;	src/fsm.c:154: case fsm_home_date:
 	sjmp	00163$
 00161$:
-;	../fsm.c:155: display_putdate();
+;	src/fsm.c:155: display_putdate();
 	lcall	_display_putdate
-;	../fsm.c:156: break;
-;	../fsm.c:157: case fsm_home_yyyy:
+;	src/fsm.c:156: break;
+;	src/fsm.c:157: case fsm_home_yyyy:
 	sjmp	00163$
 00162$:
-;	../fsm.c:159: display_putbcd(0x20,ds1302.year);
+;	src/fsm.c:159: display_putbcd(0x20,ds1302.year);
 	mov	_display_putbcd_PARM_2,(_ds1302 + 0x0006)
 	mov	dpl,#0x20
 	lcall	_display_putbcd
-;	../fsm.c:161: }
+;	src/fsm.c:161: }
 00163$:
-;	../fsm.c:163: return fsm_repeat;	//Return repeat so we come back to this state.
+;	src/fsm.c:163: return fsm_repeat;	//Return repeat so we come back to this state.
 	mov	dpl,#0x01
+;	src/fsm.c:164: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_set_fn'
@@ -2298,70 +2301,70 @@ _fsm_home_fn:
 ;fsm_set_temp              Allocated to registers r5 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;curstate                  Allocated with name '_fsm_set_fn_curstate_1_245'
+;curstate                  Allocated with name '_fsm_set_fn_curstate_65536_250'
 ;------------------------------------------------------------
-;	../fsm.c:166: enum fsm_return fsm_set_fn() __reentrant {
+;	src/fsm.c:166: enum fsm_return fsm_set_fn() __reentrant {
 ;	-----------------------------------------
 ;	 function fsm_set_fn
 ;	-----------------------------------------
 _fsm_set_fn:
-;	../fsm.c:172: menu_state = button_read_and_clear_menu();
+;	src/fsm.c:172: menu_state = button_read_and_clear_menu();
 	lcall	_button_read_and_clear_menu
 	mov	r7,dpl
-;	../fsm.c:173: select_state = button_read_and_clear_select();
+;	src/fsm.c:173: select_state = button_read_and_clear_select();
 	push	ar7
 	lcall	_button_read_and_clear_select
 	mov	r6,dpl
 	pop	ar7
-;	../fsm.c:175: if(curstate != fsm_set_label){
-	mov	a,_fsm_set_fn_curstate_1_245
+;	src/fsm.c:175: if(curstate != fsm_set_label){
+	mov	a,_fsm_set_fn_curstate_65536_250
 	jz	00108$
-;	../fsm.c:176: if(menu_state == BUTTON_LONG_PRESSED){
+;	src/fsm.c:176: if(menu_state == BUTTON_LONG_PRESSED){
 	cjne	r7,#0x01,00102$
-;	../fsm.c:178: display_flash = 0x00;
+;	src/fsm.c:178: display_flash = 0x00;
 	mov	_display_flash,#0x00
-;	../fsm.c:179: ds1302_set_time();		  //Set new time
+;	src/fsm.c:179: ds1302_set_time();		  //Set new time
 	lcall	_ds1302_set_time
-;	../fsm.c:180: alarm_lastpoll = 0x60;	  //Reset last poll time, force compare
+;	src/fsm.c:180: alarm_lastpoll = 0x60;	  //Reset last poll time, force compare
 	mov	_alarm_lastpoll,#0x60
-;	../fsm.c:181: curstate = fsm_set_label; //Set state back to default
-	mov	_fsm_set_fn_curstate_1_245,#0x00
-;	../fsm.c:182: return fsm_ok;
+;	src/fsm.c:181: curstate = fsm_set_label; //Set state back to default
+	mov	_fsm_set_fn_curstate_65536_250,#0x00
+;	src/fsm.c:182: return fsm_ok;
 	mov	dpl,#0x00
 	ret
 00102$:
-;	../fsm.c:184: if(menu_state == BUTTON_PRESSED){
+;	src/fsm.c:184: if(menu_state == BUTTON_PRESSED){
 	mov	a,r7
 	jnz	00108$
-;	../fsm.c:186: if(++curstate == fsm_set_end)
-	inc	_fsm_set_fn_curstate_1_245
+;	src/fsm.c:186: if(++curstate == fsm_set_end)
+	inc	_fsm_set_fn_curstate_65536_250
 	mov	a,#0x07
-	cjne	a,_fsm_set_fn_curstate_1_245,00108$
-;	../fsm.c:187: curstate = fsm_set_start;
-	mov	_fsm_set_fn_curstate_1_245,#0x01
+	cjne	a,_fsm_set_fn_curstate_65536_250,00108$
+;	src/fsm.c:187: curstate = fsm_set_start;
+	mov	_fsm_set_fn_curstate_65536_250,#0x01
 00108$:
-;	../fsm.c:191: fsm_set_temp = 0;
+;	src/fsm.c:191: fsm_set_temp = 0;
 	mov	r5,#0x00
-;	../fsm.c:192: if((select_state == BUTTON_PRESSED) || (select_state == BUTTON_HELD_DOWN))
+;	src/fsm.c:192: if((select_state == BUTTON_PRESSED) || (select_state == BUTTON_HELD_DOWN))
 	mov	a,r6
 	jz	00109$
 	cjne	r6,#0x02,00110$
 00109$:
-;	../fsm.c:193: fsm_set_temp = 1;
+;	src/fsm.c:193: fsm_set_temp = 1;
 	mov	r5,#0x01
 00110$:
-;	../fsm.c:196: switch(curstate) {
-	mov	a,_fsm_set_fn_curstate_1_245
+;	src/fsm.c:196: switch(curstate) {
+	mov	a,_fsm_set_fn_curstate_65536_250
 	add	a,#0xff - 0x06
-	jnc	00222$
+	jnc	00242$
 	ljmp	00149$
-00222$:
-	mov	a,_fsm_set_fn_curstate_1_245
+00242$:
+	mov	a,_fsm_set_fn_curstate_65536_250
 	mov	b,#0x03
 	mul	ab
-	mov	dptr,#00223$
+	mov	dptr,#00243$
 	jmp	@a+dptr
-00223$:
+00243$:
 	ljmp	00112$
 	ljmp	00118$
 	ljmp	00118$
@@ -2369,191 +2372,188 @@ _fsm_set_fn:
 	ljmp	00128$
 	ljmp	00143$
 	ljmp	00146$
-;	../fsm.c:197: case fsm_set_label:
+;	src/fsm.c:197: case fsm_set_label:
 00112$:
-;	../fsm.c:198: if(select_state == BUTTON_PRESSED)
+;	src/fsm.c:198: if(select_state == BUTTON_PRESSED)
 	mov	a,r6
 	jnz	00114$
-;	../fsm.c:199: curstate++;
-	inc	_fsm_set_fn_curstate_1_245
+;	src/fsm.c:199: curstate++;
+	inc	_fsm_set_fn_curstate_65536_250
 00114$:
-;	../fsm.c:200: if(menu_state == BUTTON_PRESSED)
+;	src/fsm.c:200: if(menu_state == BUTTON_PRESSED)
 	mov	a,r7
 	jnz	00116$
-;	../fsm.c:201: return fsm_fail;
+;	src/fsm.c:201: return fsm_fail;
 	mov	dpl,#0x02
 	ret
 00116$:
-;	../fsm.c:202: display_puts(ledstrings[ledstrings_setc]);
+;	src/fsm.c:202: display_puts(ledstrings[ledstrings_setc]);
 	mov	dptr,#(_ledstrings + 0x0023)
 	lcall	_display_puts
-;	../fsm.c:203: break;
+;	src/fsm.c:203: break;
 	ljmp	00149$
-;	../fsm.c:205: case fsm_set_mm:
+;	src/fsm.c:205: case fsm_set_mm:
 00118$:
-;	../fsm.c:206: if(curstate == fsm_set_hh){
+;	src/fsm.c:206: if(curstate == fsm_set_hh){
 	mov	a,#0x01
-	cjne	a,_fsm_set_fn_curstate_1_245,00122$
-;	../fsm.c:207: ds1302.hour = bcd_add(ds1302.hour,fsm_set_temp);
+	cjne	a,_fsm_set_fn_curstate_65536_250,00122$
+;	src/fsm.c:207: ds1302.hour = bcd_add(ds1302.hour,fsm_set_temp);
 	mov	_bcd_add_PARM_2,r5
 	mov	dpl,(_ds1302 + 0x0002)
 	push	ar5
 	lcall	_bcd_add
 	mov	r7,dpl
 	pop	ar5
-;	../fsm.c:208: if(ds1302.hour > 0x23)
+;	src/fsm.c:208: if(ds1302.hour > 0x23)
 	mov	a,r7
 	mov	(_ds1302 + 0x0002),a
 	add	a,#0xff - 0x23
 	jnc	00120$
-;	../fsm.c:209: ds1302.hour = 0x00;
+;	src/fsm.c:209: ds1302.hour = 0x00;
 	mov	(_ds1302 + 0x0002),#0x00
 00120$:
-;	../fsm.c:210: display_flash = 0x03;
+;	src/fsm.c:210: display_flash = 0x03;
 	mov	_display_flash,#0x03
 00122$:
-;	../fsm.c:212: if(curstate == fsm_set_mm){
+;	src/fsm.c:212: if(curstate == fsm_set_mm){
 	mov	a,#0x02
-	cjne	a,_fsm_set_fn_curstate_1_245,00126$
-;	../fsm.c:213: ds1302.minutes = bcd_add(ds1302.minutes,fsm_set_temp);
+	cjne	a,_fsm_set_fn_curstate_65536_250,00126$
+;	src/fsm.c:213: ds1302.minutes = bcd_add(ds1302.minutes,fsm_set_temp);
 	mov	_bcd_add_PARM_2,r5
 	mov	dpl,(_ds1302 + 0x0001)
 	lcall	_bcd_add
-;	../fsm.c:214: if(ds1302.minutes > 0x59)
+;	src/fsm.c:214: if(ds1302.minutes > 0x59)
 	mov	a,dpl
 	mov	r7,a
 	mov	(_ds1302 + 0x0001),a
 	add	a,#0xff - 0x59
 	jnc	00124$
-;	../fsm.c:215: ds1302.minutes = 0;
+;	src/fsm.c:215: ds1302.minutes = 0;
 	mov	(_ds1302 + 0x0001),#0x00
 00124$:
-;	../fsm.c:216: display_flash = 0x0c;
+;	src/fsm.c:216: display_flash = 0x0c;
 	mov	_display_flash,#0x0c
 00126$:
-;	../fsm.c:218: display_puttime(ds1302.hour,ds1302.minutes);
+;	src/fsm.c:218: display_puttime(ds1302.hour,ds1302.minutes);
 	mov	dpl,(_ds1302 + 0x0002)
 	mov	_display_puttime_PARM_2,(_ds1302 + 0x0001)
 	lcall	_display_puttime
-;	/home/shenghao/workspace/TESTMCS51/display.h:116: display_buffer[1] &= 0x7f;
+;	include/display.h:116: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:117: display_buffer[2] &= 0x7f;
+;	include/display.h:117: display_buffer[2] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0002)
 	mov	(_display_buffer + 0x0002),a
-;	../fsm.c:220: break;
+;	src/fsm.c:220: break;
 	ljmp	00149$
-;	../fsm.c:222: case fsm_set_month:
+;	src/fsm.c:222: case fsm_set_month:
 00128$:
-;	../fsm.c:223: if(curstate == fsm_set_dd){
+;	src/fsm.c:223: if(curstate == fsm_set_dd){
 	mov	a,#0x03
-	cjne	a,_fsm_set_fn_curstate_1_245,00135$
-;	../fsm.c:224: ds1302.date = bcd_add(ds1302.date,fsm_set_temp);
+	cjne	a,_fsm_set_fn_curstate_65536_250,00135$
+;	src/fsm.c:224: ds1302.date = bcd_add(ds1302.date,fsm_set_temp);
 	mov	_bcd_add_PARM_2,r5
 	mov	dpl,(_ds1302 + 0x0003)
 	push	ar5
 	lcall	_bcd_add
 	mov	r7,dpl
 	pop	ar5
-;	../fsm.c:225: if(ds1302.date > 0x31)
+;	src/fsm.c:225: if(ds1302.date > 0x31)
 	mov	a,r7
 	mov	(_ds1302 + 0x0003),a
 	add	a,#0xff - 0x31
 	jnc	00130$
-;	../fsm.c:227: ds1302.date = 0x00;
+;	src/fsm.c:227: ds1302.date = 0x00;
 	mov	(_ds1302 + 0x0003),#0x00
 00130$:
-;	../fsm.c:228: if(DATE_DISPLAY_MMDD)
+;	src/fsm.c:228: if(DATE_DISPLAY_MMDD)
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
 	rl	a
 	anl	a,#0x01
 	mov	r7,a
 	jz	00132$
-;	../fsm.c:229: display_flash = 0x0c;
+;	src/fsm.c:229: display_flash = 0x0c;
 	mov	_display_flash,#0x0c
 	sjmp	00135$
 00132$:
-;	../fsm.c:231: display_flash = 0x03;
+;	src/fsm.c:231: display_flash = 0x03;
 	mov	_display_flash,#0x03
 00135$:
-;	../fsm.c:233: if(curstate == fsm_set_month){
+;	src/fsm.c:233: if(curstate == fsm_set_month){
 	mov	a,#0x04
-	cjne	a,_fsm_set_fn_curstate_1_245,00142$
-;	../fsm.c:234: ds1302.month = bcd_add(ds1302.month,fsm_set_temp);
+	cjne	a,_fsm_set_fn_curstate_65536_250,00142$
+;	src/fsm.c:234: ds1302.month = bcd_add(ds1302.month,fsm_set_temp);
 	mov	_bcd_add_PARM_2,r5
 	mov	dpl,(_ds1302 + 0x0004)
 	lcall	_bcd_add
-;	../fsm.c:235: if(ds1302.month > 0x12)
+;	src/fsm.c:235: if(ds1302.month > 0x12)
 	mov	a,dpl
-	mov	r7,a
 	mov	(_ds1302 + 0x0004),a
 	add	a,#0xff - 0x12
 	jnc	00137$
-;	../fsm.c:236: ds1302.month = 0x00;
+;	src/fsm.c:236: ds1302.month = 0x00;
 	mov	(_ds1302 + 0x0004),#0x00
 00137$:
-;	../fsm.c:237: if(DATE_DISPLAY_MMDD)
+;	src/fsm.c:237: if(DATE_DISPLAY_MMDD)
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
 	rl	a
 	anl	a,#0x01
 	mov	r7,a
 	jz	00139$
-;	../fsm.c:238: display_flash = 0x03;
+;	src/fsm.c:238: display_flash = 0x03;
 	mov	_display_flash,#0x03
 	sjmp	00142$
 00139$:
-;	../fsm.c:240: display_flash = 0x0c;
+;	src/fsm.c:240: display_flash = 0x0c;
 	mov	_display_flash,#0x0c
 00142$:
-;	../fsm.c:242: display_putdate();
+;	src/fsm.c:242: display_putdate();
 	lcall	_display_putdate
-;	../fsm.c:243: break;
-;	../fsm.c:244: case fsm_set_yyyy:
+;	src/fsm.c:243: break;
+;	src/fsm.c:244: case fsm_set_yyyy:
 	sjmp	00149$
 00143$:
-;	../fsm.c:245: ds1302.year = bcd_add(ds1302.year,fsm_set_temp);
+;	src/fsm.c:245: ds1302.year = bcd_add(ds1302.year,fsm_set_temp);
 	mov	_bcd_add_PARM_2,r5
 	mov	dpl,(_ds1302 + 0x0006)
 	lcall	_bcd_add
-;	../fsm.c:246: if(ds1302.year > 0x99)
+;	src/fsm.c:246: if(ds1302.year > 0x99)
 	mov	a,dpl
-	mov	r7,a
 	mov	(_ds1302 + 0x0006),a
 	add	a,#0xff - 0x99
 	jnc	00145$
-;	../fsm.c:247: ds1302.year = 0x00;
+;	src/fsm.c:247: ds1302.year = 0x00;
 	mov	(_ds1302 + 0x0006),#0x00
 00145$:
-;	../fsm.c:248: display_flash = 0x0f;
+;	src/fsm.c:248: display_flash = 0x0f;
 	mov	_display_flash,#0x0f
-;	../fsm.c:249: display_putbcd(0x20,ds1302.year);
+;	src/fsm.c:249: display_putbcd(0x20,ds1302.year);
 	mov	_display_putbcd_PARM_2,(_ds1302 + 0x0006)
 	mov	dpl,#0x20
 	lcall	_display_putbcd
-;	../fsm.c:250: break;
-;	../fsm.c:251: case fsm_set_dow:
+;	src/fsm.c:250: break;
+;	src/fsm.c:251: case fsm_set_dow:
 	sjmp	00149$
 00146$:
-;	../fsm.c:252: ds1302.day = bcd_add(ds1302.day,fsm_set_temp);
+;	src/fsm.c:252: ds1302.day = bcd_add(ds1302.day,fsm_set_temp);
 	mov	_bcd_add_PARM_2,r5
 	mov	dpl,(_ds1302 + 0x0005)
 	lcall	_bcd_add
-;	../fsm.c:253: if(ds1302.day > 0x07)
+;	src/fsm.c:253: if(ds1302.day > 0x07)
 	mov	a,dpl
-	mov	r7,a
 	mov	(_ds1302 + 0x0005),a
 	add	a,#0xff - 0x07
 	jnc	00148$
-;	../fsm.c:254: ds1302.day = 0x01; //DOW register only from 0x01 - 0x07
+;	src/fsm.c:254: ds1302.day = 0x01; //DOW register only from 0x01 - 0x07
 	mov	(_ds1302 + 0x0005),#0x01
 00148$:
-;	../fsm.c:255: display_flash = 0x0f;
+;	src/fsm.c:255: display_flash = 0x0f;
 	mov	_display_flash,#0x0f
-;	../fsm.c:256: display_puts(ledstrings[ds1302.day-1]);
+;	src/fsm.c:256: display_puts(ledstrings[ds1302.day-1]);
 	mov	r6,(_ds1302 + 0x0005)
 	mov	r7,#0x00
 	mov	a,r6
@@ -2573,10 +2573,11 @@ _fsm_set_fn:
 	addc	a,#(_ledstrings >> 8)
 	mov	dph,a
 	lcall	_display_puts
-;	../fsm.c:258: }
+;	src/fsm.c:258: }
 00149$:
-;	../fsm.c:260: return fsm_repeat;
+;	src/fsm.c:260: return fsm_repeat;
 	mov	dpl,#0x01
+;	src/fsm.c:261: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_alarm_fn'
@@ -2584,155 +2585,154 @@ _fsm_set_fn:
 ;alarm_temp                Allocated to registers r5 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;__00020053                Allocated to registers 
-;__00030058                Allocated to registers 
-;__00040059                Allocated to registers r4 
-;__00040060                Allocated to registers r6 
+;__1966080053              Allocated to registers 
+;__2621440058              Allocated to registers 
+;__2621440059              Allocated to registers r4 
+;__2621440060              Allocated to registers r6 
 ;index                     Allocated to registers 
 ;dow                       Allocated to registers 
-;__00040064                Allocated to registers r5 
-;__00040065                Allocated to registers r6 
+;__2621440064              Allocated to registers r5 
+;__2621440065              Allocated to registers r6 
 ;index                     Allocated to registers 
 ;dow                       Allocated to registers 
-;curstate                  Allocated with name '_fsm_alarm_fn_curstate_1_257'
-;sub_curstate              Allocated with name '_fsm_alarm_fn_sub_curstate_1_257'
+;curstate                  Allocated with name '_fsm_alarm_fn_curstate_65536_262'
+;sub_curstate              Allocated with name '_fsm_alarm_fn_sub_curstate_65536_262'
 ;------------------------------------------------------------
-;	../fsm.c:262: enum fsm_return fsm_alarm_fn() __reentrant {
+;	src/fsm.c:262: enum fsm_return fsm_alarm_fn() __reentrant {
 ;	-----------------------------------------
 ;	 function fsm_alarm_fn
 ;	-----------------------------------------
 _fsm_alarm_fn:
-;	../fsm.c:270: menu_state = button_read_and_clear_menu();
+;	src/fsm.c:270: menu_state = button_read_and_clear_menu();
 	lcall	_button_read_and_clear_menu
 	mov	r7,dpl
-;	../fsm.c:271: select_state = button_read_and_clear_select();
+;	src/fsm.c:271: select_state = button_read_and_clear_select();
 	push	ar7
 	lcall	_button_read_and_clear_select
 	mov	r6,dpl
 	pop	ar7
-;	../fsm.c:273: alarm_temp = 0;
+;	src/fsm.c:273: alarm_temp = 0;
 	mov	r5,#0x00
-;	../fsm.c:274: if(select_state == BUTTON_PRESSED || select_state == BUTTON_HELD_DOWN)
+;	src/fsm.c:274: if(select_state == BUTTON_PRESSED || select_state == BUTTON_HELD_DOWN)
 	mov	a,r6
 	jz	00101$
 	cjne	r6,#0x02,00102$
 00101$:
-;	../fsm.c:275: alarm_temp = 1;
+;	src/fsm.c:275: alarm_temp = 1;
 	mov	r5,#0x01
 00102$:
-;	../fsm.c:277: switch(curstate) {
+;	src/fsm.c:277: switch(curstate) {
 	clr	a
-	cjne	a,_fsm_alarm_fn_curstate_1_257,00257$
+	cjne	a,_fsm_alarm_fn_curstate_65536_262,00283$
 	sjmp	00104$
-00257$:
+00283$:
 	mov	a,#0x01
-;	../fsm.c:278: case fsm_alarm_label:
-	cjne	a,_fsm_alarm_fn_curstate_1_257,00119$
+;	src/fsm.c:278: case fsm_alarm_label:
+	cjne	a,_fsm_alarm_fn_curstate_65536_262,00119$
 	sjmp	00109$
 00104$:
-;	../fsm.c:279: if(menu_state == BUTTON_PRESSED)
+;	src/fsm.c:279: if(menu_state == BUTTON_PRESSED)
 	mov	a,r7
 	jnz	00106$
-;	../fsm.c:281: return fsm_fail;
+;	src/fsm.c:281: return fsm_fail;
 	mov	dpl,#0x02
 	ret
 00106$:
-;	../fsm.c:282: if(select_state == BUTTON_PRESSED){
+;	src/fsm.c:282: if(select_state == BUTTON_PRESSED){
 	mov	a,r6
 	jnz	00108$
-;	../fsm.c:284: curstate++;
-	inc	_fsm_alarm_fn_curstate_1_257
-;	../fsm.c:285: return fsm_repeat;
+;	src/fsm.c:284: curstate++;
+	inc	_fsm_alarm_fn_curstate_65536_262
+;	src/fsm.c:285: return fsm_repeat;
 	mov	dpl,#0x01
 	ret
 00108$:
-;	../fsm.c:287: display_puts(ledstrings[ledstrings_seta]);
+;	src/fsm.c:287: display_puts(ledstrings[ledstrings_seta]);
 	mov	dptr,#(_ledstrings + 0x0028)
 	lcall	_display_puts
-;	../fsm.c:288: break;
+;	src/fsm.c:288: break;
 	ljmp	00164$
-;	../fsm.c:289: case fsm_alarm_global_toggle:
+;	src/fsm.c:289: case fsm_alarm_global_toggle:
 00109$:
-;	../fsm.c:290: if(menu_state == BUTTON_LONG_PRESSED){
+;	src/fsm.c:290: if(menu_state == BUTTON_LONG_PRESSED){
 	cjne	r7,#0x01,00111$
-;	../fsm.c:291: curstate = fsm_alarm_label;
-	mov	_fsm_alarm_fn_curstate_1_257,#0x00
-;	../fsm.c:292: ds1302_calculate_CRC();
+;	src/fsm.c:291: curstate = fsm_alarm_label;
+	mov	_fsm_alarm_fn_curstate_65536_262,#0x00
+;	src/fsm.c:292: ds1302_calculate_CRC();
 	lcall	_ds1302_calculate_CRC
-;	../fsm.c:293: ds1302_write_SRAM();	  //Save data
+;	src/fsm.c:293: ds1302_write_SRAM();	  //Save data
 	lcall	_ds1302_write_SRAM
-;	../fsm.c:294: alarm_lastpoll = 0x60;	  //Reset last poll time, force compare
+;	src/fsm.c:294: alarm_lastpoll = 0x60;	  //Reset last poll time, force compare
 	mov	_alarm_lastpoll,#0x60
-;	../fsm.c:295: return fsm_ok;
+;	src/fsm.c:295: return fsm_ok;
 	mov	dpl,#0x00
 	ret
 00111$:
-;	../fsm.c:297: if(select_state == BUTTON_PRESSED)
+;	src/fsm.c:297: if(select_state == BUTTON_PRESSED)
 	mov	a,r6
 	jnz	00113$
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:94: ds1302_sram_data[3] ^= 0x01;
+;	include/alarm.h:94: ds1302_sram_data[3] ^= 0x01;
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
 	xrl	a,#0x01
 	mov	r4,a
 	movx	@dptr,a
-;	../fsm.c:298: alarm_global_toggle();
+;	src/fsm.c:298: alarm_global_toggle();
 00113$:
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:84: return (ds1302_sram_data[3] & 0x01);
+;	include/alarm.h:84: return (ds1302_sram_data[3] & 0x01);
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
-	mov	r4,a
 	jnb	acc.0,00115$
-;	../fsm.c:299: if(alarm_global_state())
-;	../fsm.c:300: display_puts(ledstrings[ledstrings_alon]);
+;	src/fsm.c:299: if(alarm_global_state())
+;	src/fsm.c:300: display_puts(ledstrings[ledstrings_alon]);
 	mov	dptr,#(_ledstrings + 0x002d)
 	push	ar7
 	lcall	_display_puts
 	pop	ar7
 	sjmp	00116$
 00115$:
-;	../fsm.c:302: display_puts(ledstrings[ledstrings_alof]);
+;	src/fsm.c:302: display_puts(ledstrings[ledstrings_alof]);
 	mov	dptr,#(_ledstrings + 0x0032)
 	push	ar7
 	lcall	_display_puts
 	pop	ar7
 00116$:
-;	/home/shenghao/workspace/TESTMCS51/display.h:116: display_buffer[1] &= 0x7f;
+;	include/display.h:116: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:117: display_buffer[2] &= 0x7f;
+;	include/display.h:117: display_buffer[2] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0002)
 	mov	(_display_buffer + 0x0002),a
-;	../fsm.c:305: if(menu_state == BUTTON_PRESSED){
+;	src/fsm.c:305: if(menu_state == BUTTON_PRESSED){
 	mov	a,r7
-	jz	00265$
+	jz	00291$
 	ljmp	00164$
-00265$:
-;	../fsm.c:306: ++curstate;
-	inc	_fsm_alarm_fn_curstate_1_257
-;	../fsm.c:308: break;
+00291$:
+;	src/fsm.c:306: ++curstate;
+	inc	_fsm_alarm_fn_curstate_65536_262
+;	src/fsm.c:308: break;
 	ljmp	00164$
-;	../fsm.c:309: default:
+;	src/fsm.c:309: default:
 00119$:
-;	../fsm.c:310: switch(sub_curstate){
-	mov	a,_fsm_alarm_fn_sub_curstate_1_257
+;	src/fsm.c:310: switch(sub_curstate){
+	mov	a,_fsm_alarm_fn_sub_curstate_65536_262
 	add	a,#0xff - 0x09
-	jnc	00266$
+	jnc	00292$
 	ljmp	00164$
-00266$:
-	mov	a,_fsm_alarm_fn_sub_curstate_1_257
-	add	a,#(00267$-3-.)
+00292$:
+	mov	a,_fsm_alarm_fn_sub_curstate_65536_262
+	add	a,#(00293$-3-.)
 	movc	a,@a+pc
 	mov	dpl,a
-	mov	a,_fsm_alarm_fn_sub_curstate_1_257
-	add	a,#(00268$-3-.)
+	mov	a,_fsm_alarm_fn_sub_curstate_65536_262
+	add	a,#(00294$-3-.)
 	movc	a,@a+pc
 	mov	dph,a
 	clr	a
 	jmp	@a+dptr
-00267$:
+00293$:
 	.db	00120$
 	.db	00132$
 	.db	00132$
@@ -2743,7 +2743,7 @@ _fsm_alarm_fn:
 	.db	00151$
 	.db	00151$
 	.db	00151$
-00268$:
+00294$:
 	.db	00120$>>8
 	.db	00132$>>8
 	.db	00132$>>8
@@ -2754,30 +2754,30 @@ _fsm_alarm_fn:
 	.db	00151$>>8
 	.db	00151$>>8
 	.db	00151$>>8
-;	../fsm.c:311: case fsm_alarm_substate_toggle:
+;	src/fsm.c:311: case fsm_alarm_substate_toggle:
 00120$:
-;	../fsm.c:312: if(menu_state == BUTTON_PRESSED){
+;	src/fsm.c:312: if(menu_state == BUTTON_PRESSED){
 	mov	a,r7
 	jnz	00124$
-;	../fsm.c:313: if(++curstate == (fsm_alarm_end + NUM_ALARMS))
-	inc	_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:313: if(++curstate == (fsm_alarm_end + NUM_ALARMS))
+	inc	_fsm_alarm_fn_curstate_65536_262
 	mov	a,#0x09
-	cjne	a,_fsm_alarm_fn_curstate_1_257,00270$
-	sjmp	00271$
-00270$:
+	cjne	a,_fsm_alarm_fn_curstate_65536_262,00296$
+	sjmp	00297$
+00296$:
 	ljmp	00164$
-00271$:
-;	../fsm.c:314: curstate = fsm_alarm_start;
-	mov	_fsm_alarm_fn_curstate_1_257,#0x01
-;	../fsm.c:315: break;
+00297$:
+;	src/fsm.c:314: curstate = fsm_alarm_start;
+	mov	_fsm_alarm_fn_curstate_65536_262,#0x01
+;	src/fsm.c:315: break;
 	ljmp	00164$
 00124$:
-;	../fsm.c:317: if(select_state == BUTTON_PRESSED){
+;	src/fsm.c:317: if(select_state == BUTTON_PRESSED){
 	mov	a,r6
 	jnz	00126$
-;	../fsm.c:318: alarms[(curstate - fsm_alarm_end)].dow_and_enable ^= 1;
+;	src/fsm.c:318: alarms[(curstate - fsm_alarm_end)].dow_and_enable ^= 1;
 	push	ar6
-	mov	a,_fsm_alarm_fn_curstate_1_257
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -2811,42 +2811,42 @@ _fsm_alarm_fn:
 	mov	dph,r6
 	mov	a,r4
 	movx	@dptr,a
-;	../fsm.c:392: return fsm_repeat;
+;	src/fsm.c:392: return fsm_repeat;
 	pop	ar6
-;	../fsm.c:318: alarms[(curstate - fsm_alarm_end)].dow_and_enable ^= 1;
+;	src/fsm.c:318: alarms[(curstate - fsm_alarm_end)].dow_and_enable ^= 1;
 00126$:
-;	../fsm.c:320: if(select_state == BUTTON_LONG_PRESSED){
+;	src/fsm.c:320: if(select_state == BUTTON_LONG_PRESSED){
 	cjne	r6,#0x01,00128$
-;	../fsm.c:321: sub_curstate++;
-	inc	_fsm_alarm_fn_sub_curstate_1_257
-;	../fsm.c:322: break;
+;	src/fsm.c:321: sub_curstate++;
+	inc	_fsm_alarm_fn_sub_curstate_65536_262
+;	src/fsm.c:322: break;
 	ljmp	00164$
 00128$:
-;	../fsm.c:324: if(menu_state == BUTTON_LONG_PRESSED){
+;	src/fsm.c:324: if(menu_state == BUTTON_LONG_PRESSED){
 	cjne	r7,#0x01,00130$
-;	../fsm.c:325: sub_curstate = fsm_alarm_substate_toggle;
-	mov	_fsm_alarm_fn_sub_curstate_1_257,#0x00
-;	../fsm.c:326: curstate = fsm_alarm_label;
-	mov	_fsm_alarm_fn_curstate_1_257,#0x00
-;	../fsm.c:327: return fsm_ok;
+;	src/fsm.c:325: sub_curstate = fsm_alarm_substate_toggle;
+	mov	_fsm_alarm_fn_sub_curstate_65536_262,#0x00
+;	src/fsm.c:326: curstate = fsm_alarm_label;
+	mov	_fsm_alarm_fn_curstate_65536_262,#0x00
+;	src/fsm.c:327: return fsm_ok;
 	mov	dpl,#0x00
 	ret
 00130$:
-;	../fsm.c:329: display_buffer[0] = ledfonts_numeric_normal['A'];
+;	src/fsm.c:329: display_buffer[0] = ledfonts_numeric_normal['A'];
 	mov	dptr,#(_ledfonts_numeric_normal + 0x0041)
 	clr	a
 	movc	a,@a+dptr
 	mov	r6,a
 	mov	_display_buffer,r6
-;	../fsm.c:330: display_buffer[1] = ledfonts_numeric_normal[(curstate - fsm_alarm_end)];
-	mov	a,_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:330: display_buffer[1] = ledfonts_numeric_normal[(curstate - fsm_alarm_end)];
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	dptr,#_ledfonts_numeric_normal
 	movc	a,@a+dptr
 	mov	r6,a
 	mov	(_display_buffer + 0x0001),r6
-;	../fsm.c:331: display_putbool(alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0x01);
-	mov	a,_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:331: display_putbool(alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0x01);
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -2865,42 +2865,42 @@ _fsm_alarm_fn:
 	anl	a,r6
 	mov	dpl,a
 	lcall	_display_putbool
-;	/home/shenghao/workspace/TESTMCS51/display.h:116: display_buffer[1] &= 0x7f;
+;	include/display.h:116: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:117: display_buffer[2] &= 0x7f;
+;	include/display.h:117: display_buffer[2] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0002)
 	mov	(_display_buffer + 0x0002),a
-;	../fsm.c:333: break;
+;	src/fsm.c:333: break;
 	ljmp	00164$
-;	../fsm.c:335: case fsm_alarm_substate_mm:
+;	src/fsm.c:335: case fsm_alarm_substate_mm:
 00132$:
-;	../fsm.c:336: if(menu_state == BUTTON_PRESSED){
+;	src/fsm.c:336: if(menu_state == BUTTON_PRESSED){
 	mov	a,r7
 	jnz	00134$
-;	../fsm.c:337: sub_curstate++;
-	inc	_fsm_alarm_fn_sub_curstate_1_257
-;	../fsm.c:338: display_flash = 0x00;
+;	src/fsm.c:337: sub_curstate++;
+	inc	_fsm_alarm_fn_sub_curstate_65536_262
+;	src/fsm.c:338: display_flash = 0x00;
 	mov	_display_flash,#0x00
-;	../fsm.c:339: break;
+;	src/fsm.c:339: break;
 	ljmp	00164$
 00134$:
-;	../fsm.c:341: if(menu_state == BUTTON_LONG_PRESSED){
+;	src/fsm.c:341: if(menu_state == BUTTON_LONG_PRESSED){
 	cjne	r7,#0x01,00136$
-;	../fsm.c:342: sub_curstate = fsm_alarm_substate_toggle;
-	mov	_fsm_alarm_fn_sub_curstate_1_257,#0x00
-;	../fsm.c:343: display_flash = 0x00;
+;	src/fsm.c:342: sub_curstate = fsm_alarm_substate_toggle;
+	mov	_fsm_alarm_fn_sub_curstate_65536_262,#0x00
+;	src/fsm.c:343: display_flash = 0x00;
 	mov	_display_flash,#0x00
-;	../fsm.c:344: break;
+;	src/fsm.c:344: break;
 	ljmp	00164$
 00136$:
-;	../fsm.c:346: if(sub_curstate == fsm_alarm_substate_hh){
+;	src/fsm.c:346: if(sub_curstate == fsm_alarm_substate_hh){
 	mov	a,#0x01
-	cjne	a,_fsm_alarm_fn_sub_curstate_1_257,00140$
-;	../fsm.c:347: alarms[(curstate - fsm_alarm_end)].hour = bcd_add(alarms[(curstate - fsm_alarm_end)].hour,alarm_temp);
-	mov	a,_fsm_alarm_fn_curstate_1_257
+	cjne	a,_fsm_alarm_fn_sub_curstate_65536_262,00140$
+;	src/fsm.c:347: alarms[(curstate - fsm_alarm_end)].hour = bcd_add(alarms[(curstate - fsm_alarm_end)].hour,alarm_temp);
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -2933,8 +2933,8 @@ _fsm_alarm_fn:
 	mov	dph,r3
 	mov	a,r6
 	movx	@dptr,a
-;	../fsm.c:348: if(alarms[(curstate - fsm_alarm_end)].hour > 0x23)
-	mov	a,_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:348: if(alarms[(curstate - fsm_alarm_end)].hour > 0x23)
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -2947,8 +2947,8 @@ _fsm_alarm_fn:
 	mov  r6,a
 	add	a,#0xff - 0x23
 	jnc	00138$
-;	../fsm.c:349: alarms[(curstate - fsm_alarm_end)].hour = 0x00;
-	mov	a,_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:349: alarms[(curstate - fsm_alarm_end)].hour = 0x00;
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -2960,14 +2960,14 @@ _fsm_alarm_fn:
 	clr	a
 	movx	@dptr,a
 00138$:
-;	../fsm.c:350: display_flash = 0x03;
+;	src/fsm.c:350: display_flash = 0x03;
 	mov	_display_flash,#0x03
 00140$:
-;	../fsm.c:352: if(sub_curstate == fsm_alarm_substate_mm){
+;	src/fsm.c:352: if(sub_curstate == fsm_alarm_substate_mm){
 	mov	a,#0x02
-	cjne	a,_fsm_alarm_fn_sub_curstate_1_257,00144$
-;	../fsm.c:353: alarms[(curstate - fsm_alarm_end)].minute = bcd_add(alarms[(curstate - fsm_alarm_end)].minute,alarm_temp);
-	mov	a,_fsm_alarm_fn_curstate_1_257
+	cjne	a,_fsm_alarm_fn_sub_curstate_65536_262,00144$
+;	src/fsm.c:353: alarms[(curstate - fsm_alarm_end)].minute = bcd_add(alarms[(curstate - fsm_alarm_end)].minute,alarm_temp);
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -2979,9 +2979,9 @@ _fsm_alarm_fn:
 	addc	a,#(_alarms >> 8)
 	mov	r3,a
 	inc	r2
-	cjne	r2,#0x00,00285$
+	cjne	r2,#0x00,00311$
 	inc	r3
-00285$:
+00311$:
 	mov	a,r4
 	add	a,#_alarms
 	mov	r4,a
@@ -3005,8 +3005,8 @@ _fsm_alarm_fn:
 	mov	dph,r3
 	mov	a,r6
 	movx	@dptr,a
-;	../fsm.c:354: if(alarms[(curstate - fsm_alarm_end)].minute > 0x59)
-	mov	a,_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:354: if(alarms[(curstate - fsm_alarm_end)].minute > 0x59)
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -3022,8 +3022,8 @@ _fsm_alarm_fn:
 	mov  r6,a
 	add	a,#0xff - 0x59
 	jnc	00142$
-;	../fsm.c:355: alarms[(curstate - fsm_alarm_end)].minute = 0x00;
-	mov	a,_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:355: alarms[(curstate - fsm_alarm_end)].minute = 0x00;
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -3038,11 +3038,11 @@ _fsm_alarm_fn:
 	clr	a
 	movx	@dptr,a
 00142$:
-;	../fsm.c:356: display_flash = 0x0c;
+;	src/fsm.c:356: display_flash = 0x0c;
 	mov	_display_flash,#0x0c
 00144$:
-;	../fsm.c:358: display_puttime(alarms[(curstate - fsm_alarm_end)].hour,alarms[(curstate - fsm_alarm_end)].minute);
-	mov	a,_fsm_alarm_fn_curstate_1_257
+;	src/fsm.c:358: display_puttime(alarms[(curstate - fsm_alarm_end)].hour,alarms[(curstate - fsm_alarm_end)].minute);
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
 	mov	b,#0x03
 	mul	ab
@@ -3068,20 +3068,20 @@ _fsm_alarm_fn:
 	mov	_display_puttime_PARM_2,a
 	mov	dpl,r3
 	lcall	_display_puttime
-;	/home/shenghao/workspace/TESTMCS51/display.h:116: display_buffer[1] &= 0x7f;
+;	include/display.h:116: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:117: display_buffer[2] &= 0x7f;
+;	include/display.h:117: display_buffer[2] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0002)
 	mov	(_display_buffer + 0x0002),a
-;	../fsm.c:360: break;
+;	src/fsm.c:360: break;
 	ljmp	00164$
-;	../fsm.c:367: case fsm_alarm_substate_dow_sun:
+;	src/fsm.c:367: case fsm_alarm_substate_dow_sun:
 00151$:
-;	../fsm.c:368: display_puts(ledstrings[sub_curstate - fsm_alarm_substate_mm -1]);
-	mov	r4,_fsm_alarm_fn_sub_curstate_1_257
+;	src/fsm.c:368: display_puts(ledstrings[sub_curstate - fsm_alarm_substate_mm -1]);
+	mov	r4,_fsm_alarm_fn_sub_curstate_65536_262
 	mov	r6,#0x00
 	mov	a,r4
 	add	a,#0xfd
@@ -3104,13 +3104,13 @@ _fsm_alarm_fn:
 	lcall	_display_puts
 	pop	ar5
 	pop	ar7
-;	../fsm.c:369: if(alarm_dow_state(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm)){
-	mov	a,_fsm_alarm_fn_sub_curstate_1_257
+;	src/fsm.c:369: if(alarm_dow_state(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm)){
+	mov	r6,_fsm_alarm_fn_sub_curstate_65536_262
+	dec	r6
+	dec	r6
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
-	mov	r6,a
-	mov	a,_fsm_alarm_fn_curstate_1_257
-	add	a,#0xfe
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:106: return ((alarms[index].dow_and_enable >> dow) & 0x01);
+;	include/alarm.h:106: return ((alarms[index].dow_and_enable >> dow) & 0x01);
 	mov	b,#0x03
 	mul	ab
 	add	a,#_alarms
@@ -3127,38 +3127,38 @@ _fsm_alarm_fn:
 	mov	b,r6
 	inc	b
 	mov	a,r4
-	sjmp	00288$
-00287$:
+	sjmp	00314$
+00313$:
 	clr	c
 	rrc	a
-00288$:
-	djnz	b,00287$
+00314$:
+	djnz	b,00313$
 	mov	r6,a
 	jnb	acc.0,00153$
-;	../fsm.c:369: if(alarm_dow_state(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm)){
-;	/home/shenghao/workspace/TESTMCS51/display.h:175: display_buffer[3] &= 0x7f;
+;	src/fsm.c:369: if(alarm_dow_state(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm)){
+;	include/display.h:175: display_buffer[3] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0003)
 	mov	(_display_buffer + 0x0003),a
-;	../fsm.c:370: display_ampmon();
+;	src/fsm.c:370: display_ampmon();
 	sjmp	00154$
 00153$:
-;	/home/shenghao/workspace/TESTMCS51/display.h:190: display_buffer[3] |= 0x80;
+;	include/display.h:190: display_buffer[3] |= 0x80;
 	mov	a,#0x80
 	orl	a,(_display_buffer + 0x0003)
 	mov	(_display_buffer + 0x0003),a
-;	../fsm.c:372: display_ampmoff();
+;	src/fsm.c:372: display_ampmoff();
 00154$:
-;	../fsm.c:374: if(alarm_temp)
+;	src/fsm.c:374: if(alarm_temp)
 	mov	a,r5
 	jz	00156$
-;	../fsm.c:375: alarm_dow_toggle(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm);
-	mov	a,_fsm_alarm_fn_sub_curstate_1_257
+;	src/fsm.c:375: alarm_dow_toggle(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm);
+	mov	r6,_fsm_alarm_fn_sub_curstate_65536_262
+	dec	r6
+	dec	r6
+	mov	a,_fsm_alarm_fn_curstate_65536_262
 	add	a,#0xfe
-	mov	r6,a
-	mov	a,_fsm_alarm_fn_curstate_1_257
-	add	a,#0xfe
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:116: alarms[index].dow_and_enable ^= (0x01 << dow);
+;	include/alarm.h:116: alarms[index].dow_and_enable ^= (0x01 << dow);
 	mov	b,#0x03
 	mul	ab
 	mov	r5,a
@@ -3189,39 +3189,40 @@ _fsm_alarm_fn:
 	mov	b,r6
 	inc	b
 	mov	a,#0x01
-	sjmp	00293$
-00291$:
+	sjmp	00319$
+00317$:
 	add	a,acc
-00293$:
-	djnz	b,00291$
+00319$:
+	djnz	b,00317$
 	mov	r6,a
 	xrl	ar5,a
 	mov	dpl,r2
 	mov	dph,r3
 	mov	a,r5
 	movx	@dptr,a
-;	../fsm.c:375: alarm_dow_toggle(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm);
+;	src/fsm.c:375: alarm_dow_toggle(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm);
 00156$:
-;	../fsm.c:376: if(menu_state == BUTTON_PRESSED){
+;	src/fsm.c:376: if(menu_state == BUTTON_PRESSED){
 	mov	a,r7
 	jnz	00160$
-;	../fsm.c:377: if(++sub_curstate == fsm_alarm_substate_end){
-	inc	_fsm_alarm_fn_sub_curstate_1_257
+;	src/fsm.c:377: if(++sub_curstate == fsm_alarm_substate_end){
+	inc	_fsm_alarm_fn_sub_curstate_65536_262
 	mov	a,#0x0a
-	cjne	a,_fsm_alarm_fn_sub_curstate_1_257,00164$
-;	../fsm.c:378: sub_curstate = fsm_alarm_substate_start;
-	mov	_fsm_alarm_fn_sub_curstate_1_257,#0x01
-;	../fsm.c:380: break;
+	cjne	a,_fsm_alarm_fn_sub_curstate_65536_262,00164$
+;	src/fsm.c:378: sub_curstate = fsm_alarm_substate_start;
+	mov	_fsm_alarm_fn_sub_curstate_65536_262,#0x01
+;	src/fsm.c:380: break;
 	sjmp	00164$
 00160$:
-;	../fsm.c:382: if(menu_state == BUTTON_LONG_PRESSED){
+;	src/fsm.c:382: if(menu_state == BUTTON_LONG_PRESSED){
 	cjne	r7,#0x01,00164$
-;	../fsm.c:383: sub_curstate = fsm_alarm_substate_toggle;
-	mov	_fsm_alarm_fn_sub_curstate_1_257,#0x00
-;	../fsm.c:390: }
+;	src/fsm.c:383: sub_curstate = fsm_alarm_substate_toggle;
+	mov	_fsm_alarm_fn_sub_curstate_65536_262,#0x00
+;	src/fsm.c:390: }
 00164$:
-;	../fsm.c:392: return fsm_repeat;
+;	src/fsm.c:392: return fsm_repeat;
 	mov	dpl,#0x01
+;	src/fsm.c:393: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fsm_config_fn'
@@ -3229,45 +3230,45 @@ _fsm_alarm_fn:
 ;config_tmp2               Allocated to registers r4 r5 
 ;menu_state                Allocated to registers r7 
 ;select_state              Allocated to registers r6 
-;__00020071                Allocated to registers 
-;__00040067                Allocated to registers 
+;__1966080071              Allocated to registers 
+;__3276800067              Allocated to registers 
 ;tmp                       Allocated to registers r4 r5 
-;__00040069                Allocated to registers 
+;__3276800069              Allocated to registers 
 ;tmp                       Allocated to registers r4 r5 
 ;tmp                       Allocated to registers r4 r5 
-;curstate                  Allocated with name '_fsm_config_fn_curstate_1_303'
-;config_tmp                Allocated with name '_fsm_config_fn_config_tmp_1_303'
+;curstate                  Allocated with name '_fsm_config_fn_curstate_65536_308'
+;config_tmp                Allocated with name '_fsm_config_fn_config_tmp_65536_308'
 ;------------------------------------------------------------
-;	../fsm.c:396: enum fsm_return fsm_config_fn() __reentrant {
+;	src/fsm.c:396: enum fsm_return fsm_config_fn() __reentrant {
 ;	-----------------------------------------
 ;	 function fsm_config_fn
 ;	-----------------------------------------
 _fsm_config_fn:
-;	../fsm.c:403: menu_state = button_read_and_clear_menu();
+;	src/fsm.c:403: menu_state = button_read_and_clear_menu();
 	lcall	_button_read_and_clear_menu
 	mov	r7,dpl
-;	../fsm.c:404: select_state = button_read_and_clear_select();
+;	src/fsm.c:404: select_state = button_read_and_clear_select();
 	push	ar7
 	lcall	_button_read_and_clear_select
 	mov	r6,dpl
 	pop	ar7
-;	../fsm.c:406: switch(curstate) {
-	mov	a,_fsm_config_fn_curstate_1_303
+;	src/fsm.c:406: switch(curstate) {
+	mov	a,_fsm_config_fn_curstate_65536_308
 	add	a,#0xff - 0x0e
-	jnc	00240$
+	jnc	00286$
 	ljmp	00164$
-00240$:
-	mov	a,_fsm_config_fn_curstate_1_303
-	add	a,#(00241$-3-.)
+00286$:
+	mov	a,_fsm_config_fn_curstate_65536_308
+	add	a,#(00287$-3-.)
 	movc	a,@a+pc
 	mov	dpl,a
-	mov	a,_fsm_config_fn_curstate_1_303
-	add	a,#(00242$-3-.)
+	mov	a,_fsm_config_fn_curstate_65536_308
+	add	a,#(00288$-3-.)
 	movc	a,@a+pc
 	mov	dph,a
 	clr	a
 	jmp	@a+dptr
-00241$:
+00287$:
 	.db	00101$
 	.db	00106$
 	.db	00112$
@@ -3283,7 +3284,7 @@ _fsm_config_fn:
 	.db	00150$
 	.db	00150$
 	.db	00150$
-00242$:
+00288$:
 	.db	00101$>>8
 	.db	00106$>>8
 	.db	00112$>>8
@@ -3299,151 +3300,151 @@ _fsm_config_fn:
 	.db	00150$>>8
 	.db	00150$>>8
 	.db	00150$>>8
-;	../fsm.c:407: case fsm_config_label:
+;	src/fsm.c:407: case fsm_config_label:
 00101$:
-;	../fsm.c:408: if(menu_state == BUTTON_PRESSED){
+;	src/fsm.c:408: if(menu_state == BUTTON_PRESSED){
 	mov	a,r7
 	jnz	00103$
-;	../fsm.c:414: ds1302_calculate_CRC();
+;	src/fsm.c:414: ds1302_calculate_CRC();
 	lcall	_ds1302_calculate_CRC
-;	../fsm.c:415: ds1302_write_SRAM();
+;	src/fsm.c:415: ds1302_write_SRAM();
 	lcall	_ds1302_write_SRAM
-;	../fsm.c:416: transition_ticks = centiseconds();
+;	src/fsm.c:416: transition_ticks = centiseconds();
 	lcall	_centiseconds
 	mov	_transition_ticks,dpl
 	mov	(_transition_ticks + 1),dph
-;	../fsm.c:417: return fsm_fail;
+;	src/fsm.c:417: return fsm_fail;
 	mov	dpl,#0x02
 	ret
 00103$:
-;	../fsm.c:419: if(select_state == BUTTON_PRESSED)
+;	src/fsm.c:419: if(select_state == BUTTON_PRESSED)
 	mov	a,r6
 	jnz	00105$
-;	../fsm.c:420: curstate++;
-	inc	_fsm_config_fn_curstate_1_303
+;	src/fsm.c:420: curstate++;
+	inc	_fsm_config_fn_curstate_65536_308
 00105$:
-;	../fsm.c:421: display_puts(ledstrings[ledstrings_conf]);
+;	src/fsm.c:421: display_puts(ledstrings[ledstrings_conf]);
 	mov	dptr,#(_ledstrings + 0x0037)
 	lcall	_display_puts
-;	../fsm.c:422: break;
+;	src/fsm.c:422: break;
 	ljmp	00164$
-;	../fsm.c:423: case fsm_config_ldr_calib_label:
+;	src/fsm.c:423: case fsm_config_ldr_calib_label:
 00106$:
-;	../fsm.c:424: if(menu_state == BUTTON_PRESSED)
+;	src/fsm.c:424: if(menu_state == BUTTON_PRESSED)
 	mov	a,r7
 	jnz	00108$
-;	../fsm.c:425: curstate = fsm_config_thermistor_calib_label;
-	mov	_fsm_config_fn_curstate_1_303,#0x04
+;	src/fsm.c:425: curstate = fsm_config_thermistor_calib_label;
+	mov	_fsm_config_fn_curstate_65536_308,#0x04
 00108$:
-;	../fsm.c:426: if(select_state == BUTTON_PRESSED)
+;	src/fsm.c:426: if(select_state == BUTTON_PRESSED)
 	mov	a,r6
 	jnz	00110$
-;	../fsm.c:427: curstate = fsm_config_ldr_calib_low;
-	mov	_fsm_config_fn_curstate_1_303,#0x02
+;	src/fsm.c:427: curstate = fsm_config_ldr_calib_low;
+	mov	_fsm_config_fn_curstate_65536_308,#0x02
 00110$:
-;	../fsm.c:428: display_puts(ledstrings[ledstrings_lcal]);
+;	src/fsm.c:428: display_puts(ledstrings[ledstrings_lcal]);
 	mov	dptr,#(_ledstrings + 0x003c)
 	lcall	_display_puts
-;	../fsm.c:429: break;
+;	src/fsm.c:429: break;
 	ljmp	00164$
-;	../fsm.c:431: case fsm_config_ldr_calib_high:
+;	src/fsm.c:431: case fsm_config_ldr_calib_high:
 00112$:
-;	../fsm.c:432: display_autobrightness = 0;
+;	src/fsm.c:432: display_autobrightness = 0;
 ;	assignBit
 	clr	_display_autobrightness
-;	../fsm.c:434: if(menu_state == BUTTON_LONG_PRESSED)
+;	src/fsm.c:434: if(menu_state == BUTTON_LONG_PRESSED)
 	cjne	r7,#0x01,00114$
-;	../fsm.c:435: curstate = fsm_config_ldr_calib_label;
-	mov	_fsm_config_fn_curstate_1_303,#0x01
+;	src/fsm.c:435: curstate = fsm_config_ldr_calib_label;
+	mov	_fsm_config_fn_curstate_65536_308,#0x01
 00114$:
-;	../fsm.c:436: if(select_state == BUTTON_PRESSED){
+;	src/fsm.c:436: if(select_state == BUTTON_PRESSED){
 	mov	a,r6
 	jnz	00119$
-;	../fsm.c:437: if(curstate == fsm_config_ldr_calib_low) {
+;	src/fsm.c:437: if(curstate == fsm_config_ldr_calib_low) {
 	mov	a,#0x02
-	cjne	a,_fsm_config_fn_curstate_1_303,00116$
-;	/home/shenghao/workspace/TESTMCS51/adc.h:133: INT_IE_EADC = 0;				//Disable ADC interrupt
+	cjne	a,_fsm_config_fn_curstate_65536_308,00116$
+;	include/adc.h:133: INT_IE_EADC = 0;				//Disable ADC interrupt
 ;	assignBit
 	clr	_INT_IE_EADC
-;	/home/shenghao/workspace/TESTMCS51/adc.h:134: tmp = adc_ldr_reading;	   		//Store temporary result
+;	include/adc.h:134: tmp = adc_ldr_reading;	   		//Store temporary result
 	mov	r4,_adc_ldr_reading
 	mov	r5,(_adc_ldr_reading + 1)
-;	/home/shenghao/workspace/TESTMCS51/adc.h:135: INT_IE_EADC = 1;				//Enable ADC interrupt
+;	include/adc.h:135: INT_IE_EADC = 1;				//Enable ADC interrupt
 ;	assignBit
 	setb	_INT_IE_EADC
-;	../fsm.c:438: config_tmp = adc_get_ldr();
-	mov	_fsm_config_fn_config_tmp_1_303,r4
-	mov	(_fsm_config_fn_config_tmp_1_303 + 1),r5
-;	../fsm.c:439: curstate++;
-	inc	_fsm_config_fn_curstate_1_303
+;	src/fsm.c:438: config_tmp = adc_get_ldr();
+	mov	_fsm_config_fn_config_tmp_65536_308,r4
+	mov	(_fsm_config_fn_config_tmp_65536_308 + 1),r5
+;	src/fsm.c:439: curstate++;
+	inc	_fsm_config_fn_curstate_65536_308
 	sjmp	00119$
 00116$:
-;	/home/shenghao/workspace/TESTMCS51/adc.h:133: INT_IE_EADC = 0;				//Disable ADC interrupt
+;	include/adc.h:133: INT_IE_EADC = 0;				//Disable ADC interrupt
 ;	assignBit
 	clr	_INT_IE_EADC
-;	/home/shenghao/workspace/TESTMCS51/adc.h:134: tmp = adc_ldr_reading;	   		//Store temporary result
+;	include/adc.h:134: tmp = adc_ldr_reading;	   		//Store temporary result
 	mov	r4,_adc_ldr_reading
 	mov	r5,(_adc_ldr_reading + 1)
-;	/home/shenghao/workspace/TESTMCS51/adc.h:135: INT_IE_EADC = 1;				//Enable ADC interrupt
+;	include/adc.h:135: INT_IE_EADC = 1;				//Enable ADC interrupt
 ;	assignBit
 	setb	_INT_IE_EADC
-;	../fsm.c:441: adc_calibrate_LDR(adc_get_ldr(),config_tmp);
-	mov	_adc_calibrate_LDR_PARM_2,_fsm_config_fn_config_tmp_1_303
-	mov	(_adc_calibrate_LDR_PARM_2 + 1),(_fsm_config_fn_config_tmp_1_303 + 1)
+;	src/fsm.c:441: adc_calibrate_LDR(adc_get_ldr(),config_tmp);
+	mov	_adc_calibrate_LDR_PARM_2,_fsm_config_fn_config_tmp_65536_308
+	mov	(_adc_calibrate_LDR_PARM_2 + 1),(_fsm_config_fn_config_tmp_65536_308 + 1)
 	mov	dpl,r4
 	mov	dph,r5
 	lcall	_adc_calibrate_LDR
-;	../fsm.c:442: curstate = fsm_config_ldr_calib_label;
-	mov	_fsm_config_fn_curstate_1_303,#0x01
-;	../fsm.c:443: display_autobrightness = 1;
+;	src/fsm.c:442: curstate = fsm_config_ldr_calib_label;
+	mov	_fsm_config_fn_curstate_65536_308,#0x01
+;	src/fsm.c:443: display_autobrightness = 1;
 ;	assignBit
 	setb	_display_autobrightness
 00119$:
-;	../fsm.c:446: if(curstate == fsm_config_ldr_calib_low) {
+;	src/fsm.c:446: if(curstate == fsm_config_ldr_calib_low) {
 	mov	a,#0x02
-	cjne	a,_fsm_config_fn_curstate_1_303,00121$
-;	../fsm.c:447: display_puts(ledstrings[ledstrings_cllo]);
+	cjne	a,_fsm_config_fn_curstate_65536_308,00121$
+;	src/fsm.c:447: display_puts(ledstrings[ledstrings_cllo]);
 	mov	dptr,#(_ledstrings + 0x0046)
 	lcall	_display_puts
-;	../fsm.c:448: INT_IE_EA = 0;
+;	src/fsm.c:448: INT_IE_EA = 0;
 ;	assignBit
 	clr	_INT_IE_EA
-;	../fsm.c:449: display_counts = DISPLAY_COUNTS_MIN;
+;	src/fsm.c:449: display_counts = DISPLAY_COUNTS_MIN;
 	mov	_display_counts,#0x2c
 	mov	(_display_counts + 1),#0x01
-;	../fsm.c:450: INT_IE_EA = 1;
+;	src/fsm.c:450: INT_IE_EA = 1;
 ;	assignBit
 	setb	_INT_IE_EA
 	ljmp	00164$
 00121$:
-;	../fsm.c:452: display_puts(ledstrings[ledstrings_clhi]);
+;	src/fsm.c:452: display_puts(ledstrings[ledstrings_clhi]);
 	mov	dptr,#(_ledstrings + 0x004b)
 	lcall	_display_puts
-;	../fsm.c:453: INT_IE_EA = 0;
+;	src/fsm.c:453: INT_IE_EA = 0;
 ;	assignBit
 	clr	_INT_IE_EA
-;	../fsm.c:454: display_counts = DISPLAY_COUNTS_MAX;
+;	src/fsm.c:454: display_counts = DISPLAY_COUNTS_MAX;
 	mov	_display_counts,#0x00
 	mov	(_display_counts + 1),#0xea
-;	../fsm.c:455: INT_IE_EA = 1;
+;	src/fsm.c:455: INT_IE_EA = 1;
 ;	assignBit
 	setb	_INT_IE_EA
-;	../fsm.c:457: break;
+;	src/fsm.c:457: break;
 	ljmp	00164$
-;	../fsm.c:458: case fsm_config_thermistor_calib_label:
+;	src/fsm.c:458: case fsm_config_thermistor_calib_label:
 00123$:
-;	../fsm.c:459: if(menu_state == BUTTON_PRESSED)
+;	src/fsm.c:459: if(menu_state == BUTTON_PRESSED)
 	mov	a,r7
 	jnz	00125$
-;	../fsm.c:460: curstate = fsm_config_display_label;
-	mov	_fsm_config_fn_curstate_1_303,#0x06
+;	src/fsm.c:460: curstate = fsm_config_display_label;
+	mov	_fsm_config_fn_curstate_65536_308,#0x06
 00125$:
-;	../fsm.c:461: if(select_state == BUTTON_PRESSED) {
+;	src/fsm.c:461: if(select_state == BUTTON_PRESSED) {
 	mov	a,r6
 	jnz	00127$
-;	../fsm.c:462: curstate = fsm_config_thermistor_calib;
-	mov	_fsm_config_fn_curstate_1_303,#0x05
-;	../fsm.c:463: config_tmp = (TEMP_OFFSET_LSB | (TEMP_OFFSET_MSB << 0x08));
+;	src/fsm.c:462: curstate = fsm_config_thermistor_calib;
+	mov	_fsm_config_fn_curstate_65536_308,#0x05
+;	src/fsm.c:463: config_tmp = (TEMP_OFFSET_LSB | (TEMP_OFFSET_MSB << 0x08));
 	mov	dptr,#(_ds1302_sram_data + 0x001d)
 	movx	a,@dptr
 	mov	r5,a
@@ -3453,71 +3454,74 @@ _fsm_config_fn:
 	clr	a
 	mov	r4,a
 	mov	r2,a
-	orl	a,r5
-	mov	_fsm_config_fn_config_tmp_1_303,a
-	mov	a,r3
-	orl	a,r2
-	mov	(_fsm_config_fn_config_tmp_1_303 + 1),a
+	mov	a,r5
+	orl	ar4,a
+	mov	a,r2
+	orl	ar3,a
+	mov	_fsm_config_fn_config_tmp_65536_308,r4
+	mov	(_fsm_config_fn_config_tmp_65536_308 + 1),r3
 00127$:
-;	../fsm.c:465: display_puts(ledstrings[ledstrings_tcal]);
+;	src/fsm.c:465: display_puts(ledstrings[ledstrings_tcal]);
 	mov	dptr,#(_ledstrings + 0x0050)
 	lcall	_display_puts
-;	../fsm.c:466: break;
+;	src/fsm.c:466: break;
 	ljmp	00164$
-;	../fsm.c:467: case fsm_config_thermistor_calib:
+;	src/fsm.c:467: case fsm_config_thermistor_calib:
 00128$:
-;	../fsm.c:468: if(menu_state == BUTTON_LONG_PRESSED) {
+;	src/fsm.c:468: if(menu_state == BUTTON_LONG_PRESSED) {
 	cjne	r7,#0x01,00130$
-;	../fsm.c:469: curstate = fsm_config_thermistor_calib_label;
-	mov	_fsm_config_fn_curstate_1_303,#0x04
-;	../fsm.c:470: TEMP_OFFSET_LSB = (config_tmp & 0x00ff);
-	mov	r5,_fsm_config_fn_config_tmp_1_303
+;	src/fsm.c:469: curstate = fsm_config_thermistor_calib_label;
+	mov	_fsm_config_fn_curstate_65536_308,#0x04
+;	src/fsm.c:470: TEMP_OFFSET_LSB = (config_tmp & 0x00ff);
+	mov	r5,_fsm_config_fn_config_tmp_65536_308
 	mov	dptr,#(_ds1302_sram_data + 0x001d)
 	mov	a,r5
 	movx	@dptr,a
-;	../fsm.c:471: TEMP_OFFSET_MSB = (config_tmp >> 0x08);
-	mov	r5,(_fsm_config_fn_config_tmp_1_303 + 1)
+;	src/fsm.c:471: TEMP_OFFSET_MSB = (config_tmp >> 0x08);
+	mov	r5,(_fsm_config_fn_config_tmp_65536_308 + 1)
 	mov	dptr,#(_ds1302_sram_data + 0x001e)
 	mov	a,r5
 	movx	@dptr,a
 00130$:
-;	../fsm.c:473: if((select_state == BUTTON_PRESSED) || (select_state == BUTTON_HELD_DOWN))
+;	src/fsm.c:473: if((select_state == BUTTON_PRESSED) || (select_state == BUTTON_HELD_DOWN))
 	mov	a,r6
 	jz	00131$
 	cjne	r6,#0x02,00132$
 00131$:
-;	../fsm.c:474: config_tmp = bcd_add_16(config_tmp,0x0001);
+;	src/fsm.c:474: config_tmp = bcd_add_16(config_tmp,0x0001);
 	mov	_bcd_add_16_PARM_2,#0x01
 	mov	(_bcd_add_16_PARM_2 + 1),#0x00
-	mov	dpl,_fsm_config_fn_config_tmp_1_303
-	mov	dph,(_fsm_config_fn_config_tmp_1_303 + 1)
+	mov	dpl,_fsm_config_fn_config_tmp_65536_308
+	mov	dph,(_fsm_config_fn_config_tmp_65536_308 + 1)
 	lcall	_bcd_add_16
-	mov	_fsm_config_fn_config_tmp_1_303,dpl
-	mov	(_fsm_config_fn_config_tmp_1_303 + 1),dph
+	mov	_fsm_config_fn_config_tmp_65536_308,dpl
+	mov	(_fsm_config_fn_config_tmp_65536_308 + 1),dph
 00132$:
-;	../fsm.c:476: if(config_tmp > 0x0140)
+;	src/fsm.c:476: if(config_tmp > 0x0140)
+	mov	r4,_fsm_config_fn_config_tmp_65536_308
+	mov	r5,(_fsm_config_fn_config_tmp_65536_308 + 1)
 	clr	c
 	mov	a,#0x40
-	subb	a,_fsm_config_fn_config_tmp_1_303
+	subb	a,r4
 	mov	a,#0x01
-	subb	a,(_fsm_config_fn_config_tmp_1_303 + 1)
+	subb	a,r5
 	jnc	00135$
-;	../fsm.c:477: config_tmp = 0x0000;
+;	src/fsm.c:477: config_tmp = 0x0000;
 	clr	a
-	mov	_fsm_config_fn_config_tmp_1_303,a
-	mov	(_fsm_config_fn_config_tmp_1_303 + 1),a
+	mov	_fsm_config_fn_config_tmp_65536_308,a
+	mov	(_fsm_config_fn_config_tmp_65536_308 + 1),a
 00135$:
-;	../fsm.c:479: config_tmp2 = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
-;	/home/shenghao/workspace/TESTMCS51/adc.h:147: INT_IE_EADC = 0;				//Disable ADC interrupt
+;	src/fsm.c:479: config_tmp2 = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
+;	include/adc.h:147: INT_IE_EADC = 0;				//Disable ADC interrupt
 ;	assignBit
 	clr	_INT_IE_EADC
-;	/home/shenghao/workspace/TESTMCS51/adc.h:148: tmp = adc_thermistor_reading;	//Store temporary result
+;	include/adc.h:148: tmp = adc_thermistor_reading;	//Store temporary result
 	mov	r4,_adc_thermistor_reading
 	mov	r5,(_adc_thermistor_reading + 1)
-;	/home/shenghao/workspace/TESTMCS51/adc.h:149: INT_IE_EADC = 1;				//Enable ADC interrupt
+;	include/adc.h:149: INT_IE_EADC = 1;				//Enable ADC interrupt
 ;	assignBit
 	setb	_INT_IE_EADC
-;	../fsm.c:479: config_tmp2 = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
+;	src/fsm.c:479: config_tmp2 = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
 	mov	a,r4
 	add	a,r4
 	mov	r4,a
@@ -3535,56 +3539,56 @@ _fsm_config_fn:
 	clr	a
 	movc	a,@a+dptr
 	mov	r5,a
-;	../fsm.c:480: config_tmp2 = bcd_add_16(config_tmp2,config_tmp);
-	mov	_bcd_add_16_PARM_2,_fsm_config_fn_config_tmp_1_303
-	mov	(_bcd_add_16_PARM_2 + 1),(_fsm_config_fn_config_tmp_1_303 + 1)
+;	src/fsm.c:480: config_tmp2 = bcd_add_16(config_tmp2,config_tmp);
+	mov	_bcd_add_16_PARM_2,_fsm_config_fn_config_tmp_65536_308
+	mov	(_bcd_add_16_PARM_2 + 1),(_fsm_config_fn_config_tmp_65536_308 + 1)
 	mov	dpl,r4
 	mov	dph,r5
 	lcall	_bcd_add_16
-	mov	r2,dpl
-	mov	r3,dph
-	mov	ar4,r2
-	mov	ar5,r3
-;	../fsm.c:481: if(config_tmp2 > 0x0999)
+	mov	r4,dpl
+	mov	r5,dph
+;	src/fsm.c:481: if(config_tmp2 > 0x0999)
+	mov	ar2,r4
+	mov	ar3,r5
 	clr	c
 	mov	a,#0x99
-	subb	a,r4
+	subb	a,r2
 	mov	a,#0x09
-	subb	a,r5
+	subb	a,r3
 	jnc	00137$
-;	../fsm.c:482: config_tmp2 = 0x0999;
+;	src/fsm.c:482: config_tmp2 = 0x0999;
 	mov	r4,#0x99
 	mov	r5,#0x09
 00137$:
-;	../fsm.c:483: display_puttemp(config_tmp2);
+;	src/fsm.c:483: display_puttemp(config_tmp2);
 	mov	dpl,r4
 	mov	dph,r5
 	lcall	_display_puttemp
-;	../fsm.c:484: break;
+;	src/fsm.c:484: break;
 	ljmp	00164$
-;	../fsm.c:485: case fsm_config_display_label:
+;	src/fsm.c:485: case fsm_config_display_label:
 00138$:
-;	../fsm.c:486: if(select_state == BUTTON_PRESSED)
+;	src/fsm.c:486: if(select_state == BUTTON_PRESSED)
 	mov	a,r6
 	jnz	00140$
-;	../fsm.c:487: curstate = fsm_config_auto_mmss;
-	mov	_fsm_config_fn_curstate_1_303,#0x07
+;	src/fsm.c:487: curstate = fsm_config_auto_mmss;
+	mov	_fsm_config_fn_curstate_65536_308,#0x07
 00140$:
-;	../fsm.c:488: if(menu_state == BUTTON_PRESSED)
+;	src/fsm.c:488: if(menu_state == BUTTON_PRESSED)
 	mov	a,r7
-;	../fsm.c:489: curstate = fsm_config_label;
+;	src/fsm.c:489: curstate = fsm_config_label;
 	jnz	00142$
-	mov	_fsm_config_fn_curstate_1_303,a
+	mov	_fsm_config_fn_curstate_65536_308,a
 00142$:
-;	../fsm.c:490: display_puts(ledstrings[ledstrings_disp]);
+;	src/fsm.c:490: display_puts(ledstrings[ledstrings_disp]);
 	mov	dptr,#(_ledstrings + 0x0055)
 	lcall	_display_puts
-;	../fsm.c:491: break;
+;	src/fsm.c:491: break;
 	ljmp	00164$
-;	../fsm.c:499: case fsm_config_display_remove_lzeroes:
+;	src/fsm.c:499: case fsm_config_display_remove_lzeroes:
 00150$:
-;	../fsm.c:500: display_puts(ledstrings[curstate + 0x0b]);
-	mov	r4,_fsm_config_fn_curstate_1_303
+;	src/fsm.c:500: display_puts(ledstrings[curstate + 0x0b]);
+	mov	r4,_fsm_config_fn_curstate_65536_308
 	mov	r5,#0x00
 	mov	a,#0x0b
 	add	a,r4
@@ -3607,26 +3611,26 @@ _fsm_config_fn:
 	lcall	_display_puts
 	pop	ar6
 	pop	ar7
-;	../fsm.c:501: if(curstate != fsm_config_display_remove_lzeroes) {
+;	src/fsm.c:501: if(curstate != fsm_config_display_remove_lzeroes) {
 	mov	a,#0x0e
-	cjne	a,_fsm_config_fn_curstate_1_303,00265$
+	cjne	a,_fsm_config_fn_curstate_65536_308,00311$
 	sjmp	00156$
-00265$:
-;	../fsm.c:502: display_putbool((SC_1 >> (curstate - 0x06)) & 0x01);
+00311$:
+;	src/fsm.c:502: display_putbool((SC_1 >> (curstate - 0x06)) & 0x01);
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
 	mov	r5,a
-	mov	a,_fsm_config_fn_curstate_1_303
+	mov	a,_fsm_config_fn_curstate_65536_308
 	add	a,#0xfa
 	mov	b,a
 	inc	b
 	mov	a,r5
-	sjmp	00267$
-00266$:
+	sjmp	00313$
+00312$:
 	clr	c
 	rrc	a
-00267$:
-	djnz	b,00266$
+00313$:
+	djnz	b,00312$
 	anl	a,#0x01
 	mov	dpl,a
 	push	ar7
@@ -3634,23 +3638,23 @@ _fsm_config_fn:
 	lcall	_display_putbool
 	pop	ar6
 	pop	ar7
-;	../fsm.c:503: if(select_state == BUTTON_PRESSED)
+;	src/fsm.c:503: if(select_state == BUTTON_PRESSED)
 	mov	a,r6
 	jnz	00157$
-;	../fsm.c:504: SC_1 ^= (0x01 << (curstate - 0x06));
+;	src/fsm.c:504: SC_1 ^= (0x01 << (curstate - 0x06));
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
 	movx	a,@dptr
 	mov	r5,a
-	mov	a,_fsm_config_fn_curstate_1_303
+	mov	a,_fsm_config_fn_curstate_65536_308
 	add	a,#0xfa
 	mov	b,a
 	inc	b
 	mov	a,#0x01
-	sjmp	00271$
-00269$:
+	sjmp	00317$
+00315$:
 	add	a,acc
-00271$:
-	djnz	b,00269$
+00317$:
+	djnz	b,00315$
 	mov	r4,a
 	xrl	ar5,a
 	mov	dptr,#(_ds1302_sram_data + 0x0003)
@@ -3658,7 +3662,7 @@ _fsm_config_fn:
 	movx	@dptr,a
 	sjmp	00157$
 00156$:
-;	../fsm.c:506: display_putbool(DISPLAY_REMOVE_LEADING_ZEROES);
+;	src/fsm.c:506: display_putbool(DISPLAY_REMOVE_LEADING_ZEROES);
 	mov	dptr,#(_ds1302_sram_data + 0x0002)
 	movx	a,@dptr
 	mov	r5,a
@@ -3670,42 +3674,43 @@ _fsm_config_fn:
 	lcall	_display_putbool
 	pop	ar6
 	pop	ar7
-;	../fsm.c:507: if(select_state == BUTTON_PRESSED)
+;	src/fsm.c:507: if(select_state == BUTTON_PRESSED)
 	mov	a,r6
 	jnz	00157$
-;	../fsm.c:508: SC_0 ^= 0x01;
+;	src/fsm.c:508: SC_0 ^= 0x01;
 	mov	dptr,#(_ds1302_sram_data + 0x0002)
 	movx	a,@dptr
 	xrl	a,#0x01
 	mov	r6,a
 	movx	@dptr,a
 00157$:
-;	/home/shenghao/workspace/TESTMCS51/display.h:116: display_buffer[1] &= 0x7f;
+;	include/display.h:116: display_buffer[1] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0001)
 	mov	(_display_buffer + 0x0001),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:117: display_buffer[2] &= 0x7f;
+;	include/display.h:117: display_buffer[2] &= 0x7f;
 	mov	a,#0x7f
 	anl	a,(_display_buffer + 0x0002)
 	mov	(_display_buffer + 0x0002),a
-;	../fsm.c:512: if(menu_state == BUTTON_PRESSED)
+;	src/fsm.c:512: if(menu_state == BUTTON_PRESSED)
 	mov	a,r7
 	jnz	00161$
-;	../fsm.c:513: if(++curstate == fsm_config_end)
-	inc	_fsm_config_fn_curstate_1_303
+;	src/fsm.c:513: if(++curstate == fsm_config_end)
+	inc	_fsm_config_fn_curstate_65536_308
 	mov	a,#0x0f
-	cjne	a,_fsm_config_fn_curstate_1_303,00161$
-;	../fsm.c:514: curstate = fsm_config_auto_mmss;
-	mov	_fsm_config_fn_curstate_1_303,#0x07
+	cjne	a,_fsm_config_fn_curstate_65536_308,00161$
+;	src/fsm.c:514: curstate = fsm_config_auto_mmss;
+	mov	_fsm_config_fn_curstate_65536_308,#0x07
 00161$:
-;	../fsm.c:515: if(menu_state == BUTTON_LONG_PRESSED)
+;	src/fsm.c:515: if(menu_state == BUTTON_LONG_PRESSED)
 	cjne	r7,#0x01,00164$
-;	../fsm.c:516: curstate = fsm_config_display_label;
-	mov	_fsm_config_fn_curstate_1_303,#0x06
-;	../fsm.c:518: }
+;	src/fsm.c:516: curstate = fsm_config_display_label;
+	mov	_fsm_config_fn_curstate_65536_308,#0x06
+;	src/fsm.c:518: }
 00164$:
-;	../fsm.c:520: return fsm_repeat;
+;	src/fsm.c:520: return fsm_repeat;
 	mov	dpl,#0x01
+;	src/fsm.c:521: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

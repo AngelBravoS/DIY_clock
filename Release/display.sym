@@ -259,8 +259,8 @@ Symbol Table
     _INT_IP_PT1                                                 =  0000BB G
     _INT_IP_PX0                                                 =  0000B8 G
     _INT_IP_PX1                                                 =  0000BA G
- 18 _ISR_PCA                                                       000185 GR
-  6 _ISR_PCA_flash_prescaler_1_149                                 000009 R
+ 18 _ISR_PCA                                                       0001A0 GR
+  6 _ISR_PCA_flash_prescaler_65536_154                             000009 R
     _OV                                                         =  0000D2 G
     _P                                                          =  0000D0 G
     _PCA_C                                                      =  00F9E9 G
@@ -347,7 +347,7 @@ Symbol Table
     _PORT_P5_4                                                  =  0000CC G
     _PORT_P5_5                                                  =  0000CD G
     _PORT_P5_6                                                  =  0000CE G
-    _PORT_P5_7                                                  =  0000CD G
+    _PORT_P5_7                                                  =  0000CF G
     _PSW                                                        =  0000D0 G
     _RS0                                                        =  0000D3 G
     _RS1                                                        =  0000D4 G
@@ -376,7 +376,7 @@ Symbol Table
     _UART_SADEN                                                 =  0000B9 G
     _UART_SBUF                                                  =  000099 G
     _UART_SCON                                                  =  000098 G
-    _UART_SM0                                                   =  00009E G
+    _UART_SM0                                                   =  00009F G
     _UART_SM1                                                   =  00009E G
     _UART_SM2                                                   =  00009D G
     _UART_TB8                                                   =  00009B G
@@ -389,11 +389,11 @@ Symbol Table
   6 _display_index                                                 000004 GR
  18 _display_putbcd                                                00003B GR
   7 _display_putbcd_PARM_2                                         000000 GR
- 18 _display_putbool                                               000108 GR
- 18 _display_putdate                                               0000B9 GR
+ 18 _display_putbool                                               00011A GR
+ 18 _display_putdate                                               0000CD GR
  18 _display_puts                                                  000000 GR
- 18 _display_puttemp                                               00012F GR
- 18 _display_puttime                                               00006A GR
+ 18 _display_puttemp                                               000140 GR
+ 18 _display_puttime                                               00007F GR
   6 _display_puttime_PARM_2                                        000008 GR
     _ds1302                                                        ****** GX
     _ds1302_sram_data                                              ****** GX
@@ -634,7 +634,7 @@ Area Table
   15 GSINIT5                                    size      0   flags   20
   16 GSINIT                                     size     1B   flags   20
   17 GSFINAL                                    size      0   flags   20
-  18 CSEG                                       size    1F2   flags   20
+  18 CSEG                                       size    210   flags   20
   19 CONST                                      size      0   flags   20
   1A XINIT                                      size      0   flags   20
   1B CABS                                       size      0   flags   28

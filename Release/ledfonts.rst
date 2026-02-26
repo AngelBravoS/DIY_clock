@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module ledfonts
                                       6 	.optsdcc -mmcs51 --model-small
@@ -31,7 +31,7 @@
                                      31 ;--------------------------------------------------------
                                      32 	.area DSEG    (DATA)
                                      33 ;--------------------------------------------------------
-                                     34 ; overlayable items in internal ram 
+                                     34 ; overlayable items in internal ram
                                      35 ;--------------------------------------------------------
                                      36 ;--------------------------------------------------------
                                      37 ; indirectly addressable internal ram data

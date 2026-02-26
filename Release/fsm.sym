@@ -355,7 +355,7 @@ Symbol Table
     _PORT_P5_4                                                  =  0000CC G
     _PORT_P5_5                                                  =  0000CD G
     _PORT_P5_6                                                  =  0000CE G
-    _PORT_P5_7                                                  =  0000CD G
+    _PORT_P5_7                                                  =  0000CF G
     _PSW                                                        =  0000D0 G
     _RS0                                                        =  0000D3 G
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 7.
@@ -384,7 +384,7 @@ Symbol Table
     _UART_SADEN                                                 =  0000B9 G
     _UART_SBUF                                                  =  000099 G
     _UART_SCON                                                  =  000098 G
-    _UART_SM0                                                   =  00009E G
+    _UART_SM0                                                   =  00009F G
     _UART_SM1                                                   =  00009E G
     _UART_SM2                                                   =  00009D G
     _UART_TB8                                                   =  00009B G
@@ -428,17 +428,17 @@ Symbol Table
     _ds1302_sram_data                                              ****** GX
     _ds1302_start                                                  ****** GX
     _ds1302_write_SRAM                                             ****** GX
- 16 _fsm_alarm_fn                                                  000817 GR
-  5 _fsm_alarm_fn_curstate_1_257                                   000005 R
-  5 _fsm_alarm_fn_sub_curstate_1_257                               000006 R
- 16 _fsm_config_fn                                                 000B77 GR
-  5 _fsm_config_fn_config_tmp_1_303                                000008 R
-  5 _fsm_config_fn_curstate_1_303                                  000007 R
+ 16 _fsm_alarm_fn                                                  000818 GR
+  5 _fsm_alarm_fn_curstate_65536_262                               000005 R
+  5 _fsm_alarm_fn_sub_curstate_65536_262                           000006 R
+ 16 _fsm_config_fn                                                 000B75 GR
+  5 _fsm_config_fn_config_tmp_65536_308                            000008 R
+  5 _fsm_config_fn_curstate_65536_308                              000007 R
     _fsm_home_auto                                              =  00001E G
  16 _fsm_home_fn                                                   000000 GR
-  5 _fsm_home_fn_curstate_1_169                                    000003 R
- 16 _fsm_set_fn                                                    000689 GR
-  5 _fsm_set_fn_curstate_1_245                                     000004 R
+  5 _fsm_home_fn_curstate_65536_174                                000003 R
+ 16 _fsm_set_fn                                                    00068D GR
+  5 _fsm_set_fn_curstate_65536_250                                 000004 R
  1A _fsm_transition_table_fp                                       003300 GR
  1B _fsm_transition_table_s                                        003318 GR
     _ledfonts_numeric_normal                                       ****** GX
@@ -672,7 +672,7 @@ Area Table
   13 GSINIT5                                    size      0   flags   20
   14 GSINIT                                     size     17   flags   20
   15 GSFINAL                                    size      0   flags   20
-  16 CSEG                                       size    DDB   flags   20
+  16 CSEG                                       size    DDE   flags   20
   17 CONST                                      size      0   flags   20
   18 XINIT                                      size      0   flags   20
   19 CABS                                       size      0   flags   28

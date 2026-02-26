@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.6.9 #9959 (Linux)
+; Version 4.2.0 #13081 (Linux)
 ;--------------------------------------------------------
 	.module main
 	.optsdcc -mmcs51 --model-small
@@ -323,7 +323,7 @@ _PORT_P5_3	=	0x00cb
 _PORT_P5_4	=	0x00cc
 _PORT_P5_5	=	0x00cd
 _PORT_P5_6	=	0x00ce
-_PORT_P5_7	=	0x00cd
+_PORT_P5_7	=	0x00cf
 _INT_IE_EX0	=	0x00a8
 _INT_IE_ET0	=	0x00a9
 _INT_IE_EX1	=	0x00aa
@@ -360,7 +360,7 @@ _UART_TB8	=	0x009b
 _UART_REN	=	0x009c
 _UART_SM2	=	0x009d
 _UART_SM1	=	0x009e
-_UART_SM0	=	0x009e
+_UART_SM0	=	0x009f
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
@@ -372,17 +372,17 @@ _UART_SM0	=	0x009e
 	.area DSEG    (DATA)
 _DS1302_DATA	=	0x0021
 _BUTTON_DATA	=	0x0022
-_main_fsm_runstate_1_170:
+_main_fsm_runstate_65536_175:
 	.ds 1
-_main_ticks_now_4_199:
+_main_ticks_now_262144_204:
 	.ds 2
-_main_ticks_now_5_205:
+_main_ticks_now_327680_210:
 	.ds 2
 ;--------------------------------------------------------
-; overlayable items in internal ram 
+; overlayable items in internal ram
 ;--------------------------------------------------------
 ;--------------------------------------------------------
-; Stack segment in internal ram 
+; Stack segment in internal ram
 ;--------------------------------------------------------
 	.area	SSEG
 __start__stack:
@@ -447,7 +447,7 @@ _alarms	=	0x0004
 	.area GSFINAL (CODE)
 	.area CSEG    (CODE)
 ;--------------------------------------------------------
-; interrupt vector 
+; interrupt vector
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 __interrupt_vect:
@@ -509,17 +509,17 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;fsm_curstate              Allocated to registers r7 
 ;fsm_fp                    Allocated to registers r5 r6 
-;fsm_runstate              Allocated with name '_main_fsm_runstate_1_170'
-;__00020024                Allocated to registers 
+;fsm_runstate              Allocated with name '_main_fsm_runstate_65536_175'
+;__1310720024              Allocated to registers 
 ;index                     Allocated to registers 
-;__00020042                Allocated to registers 
+;__1310720042              Allocated to registers 
 ;cs                        Allocated to registers 
-;ticks_now                 Allocated with name '_main_ticks_now_4_199'
-;__00030045                Allocated to registers 
+;ticks_now                 Allocated with name '_main_ticks_now_262144_204'
+;__1966080045              Allocated to registers 
 ;cs                        Allocated to registers 
-;ticks_now                 Allocated with name '_main_ticks_now_5_205'
+;ticks_now                 Allocated with name '_main_ticks_now_327680_210'
 ;------------------------------------------------------------
-;	../main.c:15: void main(void)
+;	src/main.c:16: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -532,42 +532,39 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-	mov	a,sp
-	add	a,#0x04
-	mov	sp,a
-;	../main.c:18: enum fsm_states_highlevel fsm_curstate = fsm_home;
+;	src/main.c:19: enum fsm_states_highlevel fsm_curstate = fsm_home;
 	mov	r7,#0x00
-;	../main.c:19: enum fsm_return (*fsm_fp)(void) = fsm_home_fn;
+;	src/main.c:20: enum fsm_return (*fsm_fp)(void) = fsm_home_fn;
 	mov	r5,#_fsm_home_fn
 	mov	r6,#(_fsm_home_fn >> 8)
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:167: INT_IE2 &= 0xfb;	//TMR2 Interrupt disabled
+;	include/alarm.h:167: INT_IE2 &= 0xfb;	//TMR2 Interrupt disabled
 	anl	_INT_IE2,#0xfb
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:168: AUXR &= 0xe2;		//TMR2: 12T, STOP, TIMER, NOT BAUD GENERATOR
+;	include/alarm.h:168: AUXR &= 0xe2;		//TMR2: 12T, STOP, TIMER, NOT BAUD GENERATOR
 	anl	_AUXR,#0xe2
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:169: TMR_T2 = 0x102a;	//TMR2 Starts from 0x0fd7, overflow rate at 12T is ~30Hz
+;	include/alarm.h:169: TMR_T2 = 0x102a;	//TMR2 Starts from 0x0fd7, overflow rate at 12T is ~30Hz
 	mov	((_TMR_T2 >> 0) & 0xFF),#0x2a
 	mov	((_TMR_T2 >> 8) & 0xFF),#0x10
-;	/home/shenghao/workspace/TESTMCS51/alarm.h:170: AUXR |= 0x10;		//TMR2: RUN
+;	include/alarm.h:170: AUXR |= 0x10;		//TMR2: RUN
 	orl	_AUXR,#0x10
-;	../main.c:25: ALARM_BUZZER = 0;
+;	src/main.c:26: ALARM_BUZZER = 0;
 ;	assignBit
 	clr	_PORT_P1_5
-;	/home/shenghao/workspace/TESTMCS51/adc.h:44: | (0x01 << ADC_THERMISTOR_PIN));		//Set both thermistor and LDR input pins as High-Z
+;	include/adc.h:44: | (0x01 << ADC_THERMISTOR_PIN));		//Set both thermistor and LDR input pins as High-Z
 	orl	_PORT_P1M1,#0xc0
-;	/home/shenghao/workspace/TESTMCS51/adc.h:46: | (0x01 << ADC_THERMISTOR_PIN));		//Set both thermistor and LDR input pins as ADC input pins, block digital functions
+;	include/adc.h:46: | (0x01 << ADC_THERMISTOR_PIN));		//Set both thermistor and LDR input pins as ADC input pins, block digital functions
 	orl	_ADC_P1ASF,#0xc0
-;	/home/shenghao/workspace/TESTMCS51/adc.h:47: ADC_CONTR = 0x80;		//Turn on the ADC power and set the ADC speed to min
+;	include/adc.h:47: ADC_CONTR = 0x80;		//Turn on the ADC power and set the ADC speed to min
 	mov	_ADC_CONTR,#0x80
-;	/home/shenghao/workspace/TESTMCS51/adc.h:48: PCON2	  |= 0x20;		//Sets up the ADC to return a right justified result
+;	include/adc.h:48: PCON2	  |= 0x20;		//Sets up the ADC to return a right justified result
 	orl	_PCON2,#0x20
-;	/home/shenghao/workspace/TESTMCS51/adc.h:49: ADC_RES = 0x0000;		//Clear the ADC result
+;	include/adc.h:49: ADC_RES = 0x0000;		//Clear the ADC result
 	clr	a
 	mov	((_ADC_RES >> 0) & 0xFF),a
 	mov	((_ADC_RES >> 8) & 0xFF),a
-;	/home/shenghao/workspace/TESTMCS51/adc.h:50: INT_IE_EADC = 1;		//Enable ADC interrupt
+;	include/adc.h:50: INT_IE_EADC = 1;		//Enable ADC interrupt
 ;	assignBit
 	setb	_INT_IE_EADC
-;	/home/shenghao/workspace/TESTMCS51/adc.h:60: __endasm; 					 //Wait for ADC power on
+;	include/adc.h:60: __endasm; 					 //Wait for ADC power on
 	nop
 	nop
 	nop
@@ -576,83 +573,83 @@ _main:
 	nop
 	nop
 	nop
-;	/home/shenghao/workspace/TESTMCS51/adc.h:61: ADC_CONTR = ADC_SETUP_LDR;   //Write initial trigger source so that timer interrupt triggers another ADC conversion
+;	include/adc.h:61: ADC_CONTR = ADC_SETUP_LDR;   //Write initial trigger source so that timer interrupt triggers another ADC conversion
 	mov	_ADC_CONTR,#0xe6
-;	/home/shenghao/workspace/TESTMCS51/timer.h:26: TMR_TMOD = 0x00; //Set Timer 0 as 16-bit auto reload TC
+;	include/timer.h:26: TMR_TMOD = 0x00; //Set Timer 0 as 16-bit auto reload TC
 	mov	_TMR_TMOD,#0x00
-;	/home/shenghao/workspace/TESTMCS51/timer.h:27: TMR_T0 = 0xb800; //Set Initial value for Timer 0 auto reload
+;	include/timer.h:27: TMR_T0 = 0xb800; //Set Initial value for Timer 0 auto reload
 	mov	((_TMR_T0 >> 0) & 0xFF),#0x00
 	mov	((_TMR_T0 >> 8) & 0xFF),#0xb8
-;	/home/shenghao/workspace/TESTMCS51/timer.h:28: TMR_TCON = 0x00; //Reset timer TCON
+;	include/timer.h:28: TMR_TCON = 0x00; //Reset timer TCON
 	mov	_TMR_TCON,#0x00
-;	/home/shenghao/workspace/TESTMCS51/timer.h:29: AUXR &= 0b01111111; //Set Timer 0 to count up once every 12 ticks
+;	include/timer.h:29: AUXR &= 0b01111111; //Set Timer 0 to count up once every 12 ticks
 	anl	_AUXR,#0x7f
-;	/home/shenghao/workspace/TESTMCS51/timer.h:30: INT_IE_ET0 = 1;  //Enable timer 0 interrupt
+;	include/timer.h:30: INT_IE_ET0 = 1;  //Enable timer 0 interrupt
 ;	assignBit
 	setb	_INT_IE_ET0
-;	/home/shenghao/workspace/TESTMCS51/timer.h:31: TMR_TCON_TR0 = 1;//Run timer 0 and start 100Hz ticks
+;	include/timer.h:31: TMR_TCON_TR0 = 1;//Run timer 0 and start 100Hz ticks
 ;	assignBit
 	setb	_TMR_TCON_TR0
-;	/home/shenghao/workspace/TESTMCS51/board_config.h:65: PORT_P2M1 = 0xff; //Configure display port for open-drain operation mode
+;	include/board_config.h:65: PORT_P2M1 = 0xff; //Configure display port for open-drain operation mode
 	mov	_PORT_P2M1,#0xff
-;	/home/shenghao/workspace/TESTMCS51/board_config.h:66: PORT_P2M0 = 0xff; //Set the mode register 0 first to transition through high-z mode instead of push-pull mode
+;	include/board_config.h:66: PORT_P2M0 = 0xff; //Set the mode register 0 first to transition through high-z mode instead of push-pull mode
 	mov	_PORT_P2M0,#0xff
-;	/home/shenghao/workspace/TESTMCS51/display.h:78: PCA_CMOD = 0x09; //Run at SysClk, enable overflow interrupt.
+;	include/display.h:78: PCA_CMOD = 0x09; //Run at SysClk, enable overflow interrupt.
 	mov	_PCA_CMOD,#0x09
-;	/home/shenghao/workspace/TESTMCS51/display.h:79: PCA_CCON = 0x00; //Reset the interrupt bits for the PCA
-;	/home/shenghao/workspace/TESTMCS51/display.h:80: PCA_C = 0x0000;  //Reset PCA
+;	include/display.h:79: PCA_CCON = 0x00; //Reset the interrupt bits for the PCA
+;	include/display.h:80: PCA_C = 0x0000;  //Reset PCA
 	clr	a
 	mov	_PCA_CCON,a
 	mov	((_PCA_C >> 0) & 0xFF),a
 	mov	((_PCA_C >> 8) & 0xFF),a
-;	/home/shenghao/workspace/TESTMCS51/display.h:81: PCA_CCAP0 = display_counts; //Set module 0 compare register
+;	include/display.h:81: PCA_CCAP0 = display_counts; //Set module 0 compare register
 	mov	((_PCA_CCAP0 >> 0) & 0xFF),_display_counts
 	mov	((_PCA_CCAP0 >> 8) & 0xFF),(_display_counts + 1)
-;	/home/shenghao/workspace/TESTMCS51/display.h:82: PCA_CCAPM0 = 0x49;  //Set module 0 compare mode - software timer
+;	include/display.h:82: PCA_CCAPM0 = 0x49;  //Set module 0 compare mode - software timer
 	mov	_PCA_CCAPM0,#0x49
-;	/home/shenghao/workspace/TESTMCS51/display.h:83: PCA_CR = 1;		 //Run PCA
+;	include/display.h:83: PCA_CR = 1;		 //Run PCA
 ;	assignBit
 	setb	_PCA_CR
-;	/home/shenghao/workspace/TESTMCS51/display.h:84: INT_IP_PPCA = 1; //Set PCA interrupt to be high priority
+;	include/display.h:84: INT_IP_PPCA = 1; //Set PCA interrupt to be high priority
 ;	assignBit
 	setb	_INT_IP_PPCA
-;	/home/shenghao/workspace/TESTMCS51/display.h:85: INT_IE_EA = 1;	 //Enable global interrupts
+;	include/display.h:85: INT_IE_EA = 1;	 //Enable global interrupts
 ;	assignBit
 	setb	_INT_IE_EA
-;	/home/shenghao/workspace/TESTMCS51/display.h:87: PORT_P2 = display_buffer[3];
+;	include/display.h:87: PORT_P2 = display_buffer[3];
 	mov	_PORT_P2,(_display_buffer + 0x0003)
-;	/home/shenghao/workspace/TESTMCS51/board_config.h:46: PORT_P3 &= ~(0x04 << index);
+;	include/board_config.h:46: PORT_P3 &= ~(0x04 << index);
 	anl	_PORT_P3,#0xdf
-;	/home/shenghao/workspace/TESTMCS51/display.h:102: display_autobrightness = 1; //Enable display automatic brightness adjust
+;	include/display.h:102: display_autobrightness = 1; //Enable display automatic brightness adjust
 ;	assignBit
 	setb	_display_autobrightness
-;	/home/shenghao/workspace/TESTMCS51/button.h:58: BUTTON_MENU_STATE = 0x00;	//Reset menu button state tracker
+;	include/button.h:58: BUTTON_MENU_STATE = 0x00;	//Reset menu button state tracker
 	mov	_BUTTON_MENU_STATE,#0x00
-;	/home/shenghao/workspace/TESTMCS51/button.h:59: BUTTON_SELECT_STATE = 0x00; //Reset select button state tracker
+;	include/button.h:59: BUTTON_SELECT_STATE = 0x00; //Reset select button state tracker
 	mov	_BUTTON_SELECT_STATE,#0x00
-;	/home/shenghao/workspace/TESTMCS51/button.h:60: BUTTON_DATA = 0x00;			//Reset button data state
+;	include/button.h:60: BUTTON_DATA = 0x00;			//Reset button data state
 	mov	_BUTTON_DATA,#0x00
-;	/home/shenghao/workspace/TESTMCS51/button.h:61: BUTTON_MENU_CNT = 0x00;		//Reset menu counter
+;	include/button.h:61: BUTTON_MENU_CNT = 0x00;		//Reset menu counter
 	mov	_BUTTON_MENU_CNT,#0x00
-;	/home/shenghao/workspace/TESTMCS51/button.h:62: BUTTON_SELECT_CNT = 0x00;	//Reset select counter
+;	include/button.h:62: BUTTON_SELECT_CNT = 0x00;	//Reset select counter
 	mov	_BUTTON_SELECT_CNT,#0x00
-;	/home/shenghao/workspace/TESTMCS51/timer.h:19: INT_IE_ET0 = 0; //Disable timer interrupt
+;	include/timer.h:19: INT_IE_ET0 = 0; //Disable timer interrupt
 ;	assignBit
 	clr	_INT_IE_ET0
-;	/home/shenghao/workspace/TESTMCS51/timer.h:20: ticks_now = ticks_10ms;
-	mov	_main_ticks_now_4_199,_ticks_10ms
-	mov	(_main_ticks_now_4_199 + 1),(_ticks_10ms + 1)
-;	/home/shenghao/workspace/TESTMCS51/timer.h:21: INT_IE_ET0 = 1; //Enable timer interrupt
+;	include/timer.h:20: ticks_now = ticks_10ms;
+	mov	_main_ticks_now_262144_204,_ticks_10ms
+	mov	(_main_ticks_now_262144_204 + 1),(_ticks_10ms + 1)
+;	include/timer.h:21: INT_IE_ET0 = 1; //Enable timer interrupt
 ;	assignBit
 	setb	_INT_IE_ET0
-;	/home/shenghao/workspace/TESTMCS51/timer.h:22: while((ticks_10ms - ticks_now) < cs); //Wait
+;	include/timer.h:22: while((ticks_10ms - ticks_now) < cs); //Wait
 00116$:
 	mov	a,_ticks_10ms
 	clr	c
-	subb	a,_main_ticks_now_4_199
+	subb	a,_main_ticks_now_262144_204
 	mov	r2,a
 	mov	a,(_ticks_10ms + 1)
-	subb	a,(_main_ticks_now_4_199 + 1)
+	subb	a,(_main_ticks_now_262144_204 + 1)
 	mov	r4,a
 	clr	c
 	mov	a,r2
@@ -660,30 +657,30 @@ _main:
 	mov	a,r4
 	subb	a,#0x00
 	jc	00116$
-;	../main.c:35: ALARM_BUZZER = 1;
+;	src/main.c:36: ALARM_BUZZER = 1;
 ;	assignBit
 	setb	_PORT_P1_5
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:76: PORT_P1   &= 0xf8;
+;	include/ds1302.h:76: PORT_P1   &= 0xf8;
 	anl	_PORT_P1,#0xf8
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:78: PORT_P1M1 |= 0x02;	//Set high-z first before set to open drain
+;	include/ds1302.h:78: PORT_P1M1 |= 0x02;	//Set high-z first before set to open drain
 	orl	_PORT_P1M1,#0x02
-;	/home/shenghao/workspace/TESTMCS51/ds1302.h:79: PORT_P1M0 |= 0x07;
+;	include/ds1302.h:79: PORT_P1M0 |= 0x07;
 	orl	_PORT_P1M0,#0x07
-;	../main.c:38: ds1302_reset();
+;	src/main.c:39: ds1302_reset();
 	push	ar7
 	push	ar6
 	push	ar5
 	lcall	_ds1302_reset
-;	../main.c:39: ds1302_read_SRAM();
+;	src/main.c:40: ds1302_read_SRAM();
 	lcall	_ds1302_read_SRAM
-;	../main.c:40: if(!ds1302_check_SRAM() ||
+;	src/main.c:41: if(!ds1302_check_SRAM() ||
 	lcall	_ds1302_check_SRAM
 	mov	a,dpl
 	pop	ar5
 	pop	ar6
 	pop	ar7
 	jz	00101$
-;	../main.c:41: ((button_read_and_clear_menu() == BUTTON_HELD_DOWN)
+;	src/main.c:42: ((button_read_and_clear_menu() == BUTTON_HELD_DOWN)
 	push	ar7
 	push	ar6
 	push	ar5
@@ -693,7 +690,7 @@ _main:
 	pop	ar6
 	pop	ar7
 	cjne	r4,#0x02,00102$
-;	../main.c:42: && (button_read_and_clear_select() == BUTTON_HELD_DOWN)))
+;	src/main.c:43: && (button_read_and_clear_select() == BUTTON_HELD_DOWN)))
 	push	ar7
 	push	ar6
 	push	ar5
@@ -704,7 +701,7 @@ _main:
 	pop	ar7
 	cjne	r4,#0x02,00102$
 00101$:
-;	../main.c:43: ds1302_power_loss_reset();
+;	src/main.c:44: ds1302_power_loss_reset();
 	push	ar7
 	push	ar6
 	push	ar5
@@ -713,26 +710,26 @@ _main:
 	pop	ar6
 	pop	ar7
 00102$:
-;	../main.c:45: display_autobrightness = 1;
+;	src/main.c:46: display_autobrightness = 1;
 ;	assignBit
 	setb	_display_autobrightness
-;	../main.c:46: fsm_home_auto = 0;
+;	src/main.c:47: fsm_home_auto = 0;
 ;	assignBit
 	clr	_fsm_home_auto
-;	../main.c:48: while(1){
+;	src/main.c:49: while(1){
 00106$:
-;	../main.c:49: fsm_runstate = fsm_fp();
+;	src/main.c:50: fsm_runstate = fsm_fp();
 	push	ar7
 	push	ar6
 	push	ar5
 	mov	dpl,r5
 	mov	dph,r6
 	lcall	__sdcc_call_dptr
-	mov	_main_fsm_runstate_1_170,dpl
+	mov	_main_fsm_runstate_65536_175,dpl
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	../main.c:50: fsm_fp = fsm_transition_table_fp[fsm_curstate][fsm_runstate];
+;	src/main.c:51: fsm_fp = fsm_transition_table_fp[fsm_curstate][fsm_runstate];
 	mov	a,r7
 	mov	b,#0x06
 	mul	ab
@@ -741,8 +738,8 @@ _main:
 	mov	a,#(_fsm_transition_table_fp >> 8)
 	addc	a,b
 	mov	r3,a
-	mov	a,_main_fsm_runstate_1_170
-	add	a,_main_fsm_runstate_1_170
+	mov	a,_main_fsm_runstate_65536_175
+	add	a,_main_fsm_runstate_65536_175
 	add	a,r2
 	mov	dpl,a
 	clr	a
@@ -755,7 +752,7 @@ _main:
 	clr	a
 	movc	a,@a+dptr
 	mov	r6,a
-;	../main.c:51: fsm_curstate = fsm_transition_table_s[fsm_curstate][fsm_runstate];
+;	src/main.c:52: fsm_curstate = fsm_transition_table_s[fsm_curstate][fsm_runstate];
 	mov	a,r7
 	mov	b,#0x03
 	mul	ab
@@ -764,7 +761,7 @@ _main:
 	mov	a,#(_fsm_transition_table_s >> 8)
 	addc	a,b
 	mov	r4,a
-	mov	a,_main_fsm_runstate_1_170
+	mov	a,_main_fsm_runstate_65536_175
 	add	a,r3
 	mov	dpl,a
 	clr	a
@@ -773,23 +770,23 @@ _main:
 	clr	a
 	movc	a,@a+dptr
 	mov	r7,a
-;	/home/shenghao/workspace/TESTMCS51/timer.h:19: INT_IE_ET0 = 0; //Disable timer interrupt
+;	include/timer.h:19: INT_IE_ET0 = 0; //Disable timer interrupt
 ;	assignBit
 	clr	_INT_IE_ET0
-;	/home/shenghao/workspace/TESTMCS51/timer.h:20: ticks_now = ticks_10ms;
-	mov	_main_ticks_now_5_205,_ticks_10ms
-	mov	(_main_ticks_now_5_205 + 1),(_ticks_10ms + 1)
-;	/home/shenghao/workspace/TESTMCS51/timer.h:21: INT_IE_ET0 = 1; //Enable timer interrupt
+;	include/timer.h:20: ticks_now = ticks_10ms;
+	mov	_main_ticks_now_327680_210,_ticks_10ms
+	mov	(_main_ticks_now_327680_210 + 1),(_ticks_10ms + 1)
+;	include/timer.h:21: INT_IE_ET0 = 1; //Enable timer interrupt
 ;	assignBit
 	setb	_INT_IE_ET0
-;	/home/shenghao/workspace/TESTMCS51/timer.h:22: while((ticks_10ms - ticks_now) < cs); //Wait
+;	include/timer.h:22: while((ticks_10ms - ticks_now) < cs); //Wait
 00121$:
 	mov	a,_ticks_10ms
 	clr	c
-	subb	a,_main_ticks_now_5_205
+	subb	a,_main_ticks_now_327680_210
 	mov	r2,a
 	mov	a,(_ticks_10ms + 1)
-	subb	a,(_main_ticks_now_5_205 + 1)
+	subb	a,(_main_ticks_now_327680_210 + 1)
 	mov	r4,a
 	clr	c
 	mov	a,r2
@@ -797,7 +794,8 @@ _main:
 	mov	a,r4
 	subb	a,#0x00
 	jc	00121$
-;	../main.c:52: delay_centiseconds(10); 			//Delay 100ms, update state machine @ 10Hz
+;	src/main.c:53: delay_centiseconds(10); 			//Delay 100ms, update state machine @ 10Hz
+;	src/main.c:55: }
 	sjmp	00106$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

@@ -349,7 +349,7 @@ Symbol Table
     _PORT_P5_4                                                  =  0000CC G
     _PORT_P5_5                                                  =  0000CD G
     _PORT_P5_6                                                  =  0000CE G
-    _PORT_P5_7                                                  =  0000CD G
+    _PORT_P5_7                                                  =  0000CF G
     _PSW                                                        =  0000D0 G
     _RS0                                                        =  0000D3 G
     _RS1                                                        =  0000D4 G
@@ -378,7 +378,7 @@ Symbol Table
     _UART_SADEN                                                 =  0000B9 G
     _UART_SBUF                                                  =  000099 G
     _UART_SCON                                                  =  000098 G
-    _UART_SM0                                                   =  00009E G
+    _UART_SM0                                                   =  00009F G
     _UART_SM1                                                   =  00009E G
     _UART_SM2                                                   =  00009D G
     _UART_TB8                                                   =  00009B G

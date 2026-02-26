@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module display
                                       6 	.optsdcc -mmcs51 --model-small
@@ -318,7 +318,7 @@
                            0000CC   318 _PORT_P5_4	=	0x00cc
                            0000CD   319 _PORT_P5_5	=	0x00cd
                            0000CE   320 _PORT_P5_6	=	0x00ce
-                           0000CD   321 _PORT_P5_7	=	0x00cd
+                           0000CF   321 _PORT_P5_7	=	0x00cf
                            0000A8   322 _INT_IE_EX0	=	0x00a8
                            0000A9   323 _INT_IE_ET0	=	0x00a9
                            0000AA   324 _INT_IE_EX1	=	0x00aa
@@ -355,7 +355,7 @@
                            00009C   355 _UART_REN	=	0x009c
                            00009D   356 _UART_SM2	=	0x009d
                            00009E   357 _UART_SM1	=	0x009e
-                           00009E   358 _UART_SM0	=	0x009e
+                           00009F   358 _UART_SM0	=	0x009f
                                     359 ;--------------------------------------------------------
                                     360 ; overlayable register banks
                                     361 ;--------------------------------------------------------
@@ -368,25 +368,25 @@
                                     368 ;--------------------------------------------------------
                                     369 	.area DSEG    (DATA)
                            000021   370 _DS1302_DATA	=	0x0021
-      00003B                        371 _display_buffer::
-      00003B                        372 	.ds 4
-      00003F                        373 _display_index::
-      00003F                        374 	.ds 1
-      000040                        375 _display_flash::
-      000040                        376 	.ds 1
-      000041                        377 _display_counts::
-      000041                        378 	.ds 2
-      000043                        379 _display_puttime_PARM_2:
-      000043                        380 	.ds 1
-      000044                        381 _ISR_PCA_flash_prescaler_1_149:
-      000044                        382 	.ds 1
+      000042                        371 _display_buffer::
+      000042                        372 	.ds 4
+      000046                        373 _display_index::
+      000046                        374 	.ds 1
+      000047                        375 _display_flash::
+      000047                        376 	.ds 1
+      000048                        377 _display_counts::
+      000048                        378 	.ds 2
+      00004A                        379 _display_puttime_PARM_2:
+      00004A                        380 	.ds 1
+      00004B                        381 _ISR_PCA_flash_prescaler_65536_154:
+      00004B                        382 	.ds 1
                                     383 ;--------------------------------------------------------
-                                    384 ; overlayable items in internal ram 
+                                    384 ; overlayable items in internal ram
                                     385 ;--------------------------------------------------------
                                     386 	.area	OSEG    (OVR,DATA)
                                     387 	.area	OSEG    (OVR,DATA)
-      00005E                        388 _display_putbcd_PARM_2:
-      00005E                        389 	.ds 1
+      000060                        388 _display_putbcd_PARM_2:
+      000060                        389 	.ds 1
                                     390 	.area	OSEG    (OVR,DATA)
                                     391 	.area	OSEG    (OVR,DATA)
                                     392 ;--------------------------------------------------------
@@ -447,24 +447,24 @@
                                     447 ;------------------------------------------------------------
                                     448 ;Allocation info for local variables in function 'ISR_PCA'
                                     449 ;------------------------------------------------------------
-                                    450 ;flash_prescaler           Allocated with name '_ISR_PCA_flash_prescaler_1_149'
-                                    451 ;__00030031                Allocated to registers r7 
+                                    450 ;flash_prescaler           Allocated with name '_ISR_PCA_flash_prescaler_65536_154'
+                                    451 ;__1966080031              Allocated to registers r7 
                                     452 ;index                     Allocated to registers 
                                     453 ;------------------------------------------------------------
-                                    454 ;	../display.c:80: static uint8_t flash_prescaler = 0x10;
-      0000C7 75 44 10         [24]  455 	mov	_ISR_PCA_flash_prescaler_1_149,#0x10
-                                    456 ;	../display.c:12: volatile uint8_t display_buffer[4] = {0x00,0x00,0x00,0x00};
-      0000CA 75 3B 00         [24]  457 	mov	_display_buffer,#0x00
-      0000CD 75 3C 00         [24]  458 	mov	(_display_buffer + 0x0001),#0x00
-      0000D0 75 3D 00         [24]  459 	mov	(_display_buffer + 0x0002),#0x00
-      0000D3 75 3E 00         [24]  460 	mov	(_display_buffer + 0x0003),#0x00
-                                    461 ;	../display.c:13: volatile uint8_t display_index = 0x03;
-      0000D6 75 3F 03         [24]  462 	mov	_display_index,#0x03
-                                    463 ;	../display.c:14: volatile uint8_t display_flash = 0x00;
-      0000D9 75 40 00         [24]  464 	mov	_display_flash,#0x00
-                                    465 ;	../display.c:15: volatile uint16_t display_counts = 0xff00;
-      0000DC 75 41 00         [24]  466 	mov	_display_counts,#0x00
-      0000DF 75 42 FF         [24]  467 	mov	(_display_counts + 1),#0xff
+                                    454 ;	src/display.c:80: static uint8_t flash_prescaler = 0x10;
+      0000C7 75 4B 10         [24]  455 	mov	_ISR_PCA_flash_prescaler_65536_154,#0x10
+                                    456 ;	src/display.c:12: volatile uint8_t display_buffer[4] = {0x00,0x00,0x00,0x00};
+      0000CA 75 42 00         [24]  457 	mov	_display_buffer,#0x00
+      0000CD 75 43 00         [24]  458 	mov	(_display_buffer + 0x0001),#0x00
+      0000D0 75 44 00         [24]  459 	mov	(_display_buffer + 0x0002),#0x00
+      0000D3 75 45 00         [24]  460 	mov	(_display_buffer + 0x0003),#0x00
+                                    461 ;	src/display.c:13: volatile uint8_t display_index = 0x03;
+      0000D6 75 46 03         [24]  462 	mov	_display_index,#0x03
+                                    463 ;	src/display.c:14: volatile uint8_t display_flash = 0x00;
+      0000D9 75 47 00         [24]  464 	mov	_display_flash,#0x00
+                                    465 ;	src/display.c:15: volatile uint16_t display_counts = 0xff00;
+      0000DC 75 48 00         [24]  466 	mov	_display_counts,#0x00
+      0000DF 75 49 FF         [24]  467 	mov	(_display_counts + 1),#0xff
                                     468 ;--------------------------------------------------------
                                     469 ; Home
                                     470 ;--------------------------------------------------------
@@ -479,11 +479,11 @@
                                     479 ;------------------------------------------------------------
                                     480 ;s                         Allocated to registers r6 r7 
                                     481 ;------------------------------------------------------------
-                                    482 ;	../display.c:17: void display_puts(__code const char* s) {
+                                    482 ;	src/display.c:17: void display_puts(__code const char* s) {
                                     483 ;	-----------------------------------------
                                     484 ;	 function display_puts
                                     485 ;	-----------------------------------------
-      00058F                        486 _display_puts:
+      0006F8                        486 _display_puts:
                            000007   487 	ar7 = 0x07
                            000006   488 	ar6 = 0x06
                            000005   489 	ar5 = 0x05
@@ -492,437 +492,461 @@
                            000002   492 	ar2 = 0x02
                            000001   493 	ar1 = 0x01
                            000000   494 	ar0 = 0x00
-                                    495 ;	../display.c:18: display_buffer[0] = ledfonts_numeric_normal[*s];
-      00058F AE 82            [24]  496 	mov	r6,dpl
-      000591 AF 83            [24]  497 	mov  r7,dph
-      000593 E4               [12]  498 	clr	a
-      000594 93               [24]  499 	movc	a,@a+dptr
-      000595 90 30 00         [24]  500 	mov	dptr,#_ledfonts_numeric_normal
-      000598 93               [24]  501 	movc	a,@a+dptr
-      000599 FD               [12]  502 	mov	r5,a
-      00059A 8D 3B            [24]  503 	mov	_display_buffer,r5
-                                    504 ;	../display.c:19: display_buffer[1] = ledfonts_numeric_normal[*(s+1)];
-      00059C 8E 82            [24]  505 	mov	dpl,r6
-      00059E 8F 83            [24]  506 	mov	dph,r7
-      0005A0 A3               [24]  507 	inc	dptr
-      0005A1 E4               [12]  508 	clr	a
-      0005A2 93               [24]  509 	movc	a,@a+dptr
-      0005A3 90 30 00         [24]  510 	mov	dptr,#_ledfonts_numeric_normal
-      0005A6 93               [24]  511 	movc	a,@a+dptr
-      0005A7 FD               [12]  512 	mov	r5,a
-      0005A8 8D 3C            [24]  513 	mov	(_display_buffer + 0x0001),r5
-                                    514 ;	../display.c:20: display_buffer[2] = ledfonts_numeric_flipped[*(s+2)];
-      0005AA 8E 82            [24]  515 	mov	dpl,r6
-      0005AC 8F 83            [24]  516 	mov	dph,r7
-      0005AE A3               [24]  517 	inc	dptr
-      0005AF A3               [24]  518 	inc	dptr
-      0005B0 E4               [12]  519 	clr	a
-      0005B1 93               [24]  520 	movc	a,@a+dptr
-      0005B2 90 30 80         [24]  521 	mov	dptr,#_ledfonts_numeric_flipped
-      0005B5 93               [24]  522 	movc	a,@a+dptr
-      0005B6 FD               [12]  523 	mov	r5,a
-      0005B7 8D 3D            [24]  524 	mov	(_display_buffer + 0x0002),r5
-                                    525 ;	../display.c:21: display_buffer[3] = ledfonts_numeric_normal[*(s+3)];
-      0005B9 8E 82            [24]  526 	mov	dpl,r6
-      0005BB 8F 83            [24]  527 	mov	dph,r7
-      0005BD A3               [24]  528 	inc	dptr
-      0005BE A3               [24]  529 	inc	dptr
-      0005BF A3               [24]  530 	inc	dptr
-      0005C0 E4               [12]  531 	clr	a
-      0005C1 93               [24]  532 	movc	a,@a+dptr
-      0005C2 90 30 00         [24]  533 	mov	dptr,#_ledfonts_numeric_normal
-      0005C5 93               [24]  534 	movc	a,@a+dptr
-      0005C6 FF               [12]  535 	mov	r7,a
-      0005C7 8F 3E            [24]  536 	mov	(_display_buffer + 0x0003),r7
-      0005C9 22               [24]  537 	ret
-                                    538 ;------------------------------------------------------------
-                                    539 ;Allocation info for local variables in function 'display_putbcd'
-                                    540 ;------------------------------------------------------------
-                                    541 ;v2                        Allocated with name '_display_putbcd_PARM_2'
-                                    542 ;v1                        Allocated to registers r7 
-                                    543 ;------------------------------------------------------------
-                                    544 ;	../display.c:24: void display_putbcd(uint8_t v1, uint8_t v2) {
-                                    545 ;	-----------------------------------------
-                                    546 ;	 function display_putbcd
-                                    547 ;	-----------------------------------------
-      0005CA                        548 _display_putbcd:
-                                    549 ;	../display.c:25: display_buffer[0] = ledfonts_numeric_normal[(v1 >> 0x04)];
-      0005CA E5 82            [12]  550 	mov	a,dpl
-      0005CC FF               [12]  551 	mov	r7,a
-      0005CD C4               [12]  552 	swap	a
-      0005CE 54 0F            [12]  553 	anl	a,#0x0f
-      0005D0 90 30 00         [24]  554 	mov	dptr,#_ledfonts_numeric_normal
-      0005D3 93               [24]  555 	movc	a,@a+dptr
-      0005D4 FE               [12]  556 	mov	r6,a
-      0005D5 8E 3B            [24]  557 	mov	_display_buffer,r6
-                                    558 ;	../display.c:26: display_buffer[1] = ledfonts_numeric_normal[(v1 & 0x0f)];
-      0005D7 74 0F            [12]  559 	mov	a,#0x0f
-      0005D9 5F               [12]  560 	anl	a,r7
-      0005DA 90 30 00         [24]  561 	mov	dptr,#_ledfonts_numeric_normal
-      0005DD 93               [24]  562 	movc	a,@a+dptr
-      0005DE FF               [12]  563 	mov	r7,a
-      0005DF 8F 3C            [24]  564 	mov	(_display_buffer + 0x0001),r7
-                                    565 ;	../display.c:27: display_buffer[2] = ledfonts_numeric_flipped[(v2 >> 0x04)];
-      0005E1 E5 5E            [12]  566 	mov	a,_display_putbcd_PARM_2
-      0005E3 C4               [12]  567 	swap	a
-      0005E4 54 0F            [12]  568 	anl	a,#0x0f
-      0005E6 90 30 80         [24]  569 	mov	dptr,#_ledfonts_numeric_flipped
-      0005E9 93               [24]  570 	movc	a,@a+dptr
-      0005EA FF               [12]  571 	mov	r7,a
-      0005EB 8F 3D            [24]  572 	mov	(_display_buffer + 0x0002),r7
-                                    573 ;	../display.c:28: display_buffer[3] = ledfonts_numeric_normal[(v2 & 0x0f)];
-      0005ED 74 0F            [12]  574 	mov	a,#0x0f
-      0005EF 55 5E            [12]  575 	anl	a,_display_putbcd_PARM_2
-      0005F1 90 30 00         [24]  576 	mov	dptr,#_ledfonts_numeric_normal
-      0005F4 93               [24]  577 	movc	a,@a+dptr
-      0005F5 FF               [12]  578 	mov	r7,a
-      0005F6 8F 3E            [24]  579 	mov	(_display_buffer + 0x0003),r7
-      0005F8 22               [24]  580 	ret
-                                    581 ;------------------------------------------------------------
-                                    582 ;Allocation info for local variables in function 'display_puttime'
-                                    583 ;------------------------------------------------------------
-                                    584 ;minute                    Allocated with name '_display_puttime_PARM_2'
-                                    585 ;hour                      Allocated to registers r7 
-                                    586 ;------------------------------------------------------------
-                                    587 ;	../display.c:31: void display_puttime(uint8_t hour, uint8_t minute) {
-                                    588 ;	-----------------------------------------
-                                    589 ;	 function display_puttime
-                                    590 ;	-----------------------------------------
-      0005F9                        591 _display_puttime:
-      0005F9 AF 82            [24]  592 	mov	r7,dpl
-                                    593 ;	../display.c:32: if(TIME_DISPLAY_12) {
-      0005FB 90 00 03         [24]  594 	mov	dptr,#(_ds1302_sram_data + 0x0003)
-      0005FE E0               [24]  595 	movx	a,@dptr
-      0005FF 23               [12]  596 	rl	a
-      000600 23               [12]  597 	rl	a
-      000601 54 01            [12]  598 	anl	a,#0x01
-      000603 FE               [12]  599 	mov	r6,a
-      000604 60 20            [24]  600 	jz	00104$
-                                    601 ;	../display.c:33: display_putbcd(convert_24h_to_12h(hour),minute);
-      000606 8F 82            [24]  602 	mov	dpl,r7
-      000608 C0 07            [24]  603 	push	ar7
-      00060A 12 0A 0E         [24]  604 	lcall	_convert_24h_to_12h
-      00060D D0 07            [24]  605 	pop	ar7
-      00060F 85 43 5E         [24]  606 	mov	_display_putbcd_PARM_2,_display_puttime_PARM_2
-      000612 C0 07            [24]  607 	push	ar7
-      000614 12 05 CA         [24]  608 	lcall	_display_putbcd
-      000617 D0 07            [24]  609 	pop	ar7
-                                    610 ;	../display.c:34: if(hour > 0x11)
-      000619 EF               [12]  611 	mov	a,r7
-      00061A 24 EE            [12]  612 	add	a,#0xff - 0x11
-      00061C 50 10            [24]  613 	jnc	00105$
-                                    614 ;	/home/shenghao/workspace/TESTMCS51/display.h:175: display_buffer[3] &= 0x7f;
-      00061E 74 7F            [12]  615 	mov	a,#0x7f
-      000620 55 3E            [12]  616 	anl	a,(_display_buffer + 0x0003)
-      000622 F5 3E            [12]  617 	mov	(_display_buffer + 0x0003),a
-                                    618 ;	../display.c:35: display_ampmon();
-      000624 80 08            [24]  619 	sjmp	00105$
-      000626                        620 00104$:
-                                    621 ;	../display.c:37: display_putbcd(hour,minute);
-      000626 85 43 5E         [24]  622 	mov	_display_putbcd_PARM_2,_display_puttime_PARM_2
-      000629 8F 82            [24]  623 	mov	dpl,r7
-      00062B 12 05 CA         [24]  624 	lcall	_display_putbcd
-      00062E                        625 00105$:
-                                    626 ;	../display.c:40: if(DISPLAY_REMOVE_LEADING_ZEROES &&
-      00062E 90 00 02         [24]  627 	mov	dptr,#(_ds1302_sram_data + 0x0002)
-      000631 E0               [24]  628 	movx	a,@dptr
-      000632 FF               [12]  629 	mov	r7,a
-      000633 30 E0 11         [24]  630 	jnb	acc.0,00110$
-                                    631 ;	../display.c:41: (display_buffer[0] == ledfonts_numeric_normal['0']))
-      000636 90 30 30         [24]  632 	mov	dptr,#(_ledfonts_numeric_normal + 0x0030)
-      000639 E4               [12]  633 	clr	a
-      00063A 93               [24]  634 	movc	a,@a+dptr
-      00063B FF               [12]  635 	mov	r7,a
-      00063C B5 3B 08         [24]  636 	cjne	a,_display_buffer,00110$
-                                    637 ;	../display.c:42: display_buffer[0] = ledfonts_numeric_normal[' '];
-      00063F 90 30 20         [24]  638 	mov	dptr,#(_ledfonts_numeric_normal + 0x0020)
-      000642 E4               [12]  639 	clr	a
-      000643 93               [24]  640 	movc	a,@a+dptr
-      000644 FF               [12]  641 	mov	r7,a
-      000645 8F 3B            [24]  642 	mov	_display_buffer,r7
-      000647                        643 00110$:
-      000647 22               [24]  644 	ret
-                                    645 ;------------------------------------------------------------
-                                    646 ;Allocation info for local variables in function 'display_putdate'
-                                    647 ;------------------------------------------------------------
-                                    648 ;	../display.c:45: void display_putdate(void) {
-                                    649 ;	-----------------------------------------
-                                    650 ;	 function display_putdate
-                                    651 ;	-----------------------------------------
-      000648                        652 _display_putdate:
-                                    653 ;	../display.c:46: if(DATE_DISPLAY_MMDD)
-      000648 90 00 03         [24]  654 	mov	dptr,#(_ds1302_sram_data + 0x0003)
-      00064B E0               [24]  655 	movx	a,@dptr
-      00064C 23               [12]  656 	rl	a
-      00064D 54 01            [12]  657 	anl	a,#0x01
-      00064F FF               [12]  658 	mov	r7,a
-      000650 60 0B            [24]  659 	jz	00102$
-                                    660 ;	../display.c:47: display_putbcd(ds1302.month,ds1302.date);
-      000652 85 49 82         [24]  661 	mov	dpl,(_ds1302 + 0x0004)
-      000655 85 48 5E         [24]  662 	mov	_display_putbcd_PARM_2,(_ds1302 + 0x0003)
-      000658 12 05 CA         [24]  663 	lcall	_display_putbcd
-      00065B 80 09            [24]  664 	sjmp	00103$
-      00065D                        665 00102$:
-                                    666 ;	../display.c:49: display_putbcd(ds1302.date,ds1302.month);
-      00065D 85 48 82         [24]  667 	mov	dpl,(_ds1302 + 0x0003)
-      000660 85 49 5E         [24]  668 	mov	_display_putbcd_PARM_2,(_ds1302 + 0x0004)
-      000663 12 05 CA         [24]  669 	lcall	_display_putbcd
-      000666                        670 00103$:
-                                    671 ;	/home/shenghao/workspace/TESTMCS51/display.h:146: display_buffer[1] &= 0x7f;
-      000666 74 7F            [12]  672 	mov	a,#0x7f
-      000668 55 3C            [12]  673 	anl	a,(_display_buffer + 0x0001)
-      00066A F5 3C            [12]  674 	mov	(_display_buffer + 0x0001),a
-                                    675 ;	../display.c:52: if(DISPLAY_REMOVE_LEADING_ZEROES){
-      00066C 90 00 02         [24]  676 	mov	dptr,#(_ds1302_sram_data + 0x0002)
-      00066F E0               [24]  677 	movx	a,@dptr
-      000670 FF               [12]  678 	mov	r7,a
-      000671 30 E0 22         [24]  679 	jnb	acc.0,00111$
-                                    680 ;	../display.c:53: if(display_buffer[0] == ledfonts_numeric_normal['0'])
-      000674 90 30 30         [24]  681 	mov	dptr,#(_ledfonts_numeric_normal + 0x0030)
-      000677 E4               [12]  682 	clr	a
-      000678 93               [24]  683 	movc	a,@a+dptr
-      000679 FF               [12]  684 	mov	r7,a
-      00067A B5 3B 08         [24]  685 	cjne	a,_display_buffer,00105$
-                                    686 ;	../display.c:54: display_buffer[0] = ledfonts_numeric_normal[' '];
-      00067D 90 30 20         [24]  687 	mov	dptr,#(_ledfonts_numeric_normal + 0x0020)
-      000680 E4               [12]  688 	clr	a
-      000681 93               [24]  689 	movc	a,@a+dptr
-      000682 FF               [12]  690 	mov	r7,a
-      000683 8F 3B            [24]  691 	mov	_display_buffer,r7
-      000685                        692 00105$:
-                                    693 ;	../display.c:55: if(display_buffer[2] == ledfonts_numeric_flipped['0'])
-      000685 90 30 B0         [24]  694 	mov	dptr,#(_ledfonts_numeric_flipped + 0x0030)
-      000688 E4               [12]  695 	clr	a
-      000689 93               [24]  696 	movc	a,@a+dptr
-      00068A FF               [12]  697 	mov	r7,a
-      00068B B5 3D 08         [24]  698 	cjne	a,(_display_buffer + 0x0002),00111$
-                                    699 ;	../display.c:56: display_buffer[2] = ledfonts_numeric_flipped[' '];
-      00068E 90 30 A0         [24]  700 	mov	dptr,#(_ledfonts_numeric_flipped + 0x0020)
-      000691 E4               [12]  701 	clr	a
-      000692 93               [24]  702 	movc	a,@a+dptr
-      000693 FF               [12]  703 	mov	r7,a
-      000694 8F 3D            [24]  704 	mov	(_display_buffer + 0x0002),r7
-      000696                        705 00111$:
-      000696 22               [24]  706 	ret
-                                    707 ;------------------------------------------------------------
-                                    708 ;Allocation info for local variables in function 'display_putbool'
-                                    709 ;------------------------------------------------------------
-                                    710 ;v                         Allocated to registers r7 
-                                    711 ;------------------------------------------------------------
-                                    712 ;	../display.c:60: void display_putbool(uint8_t v) {
-                                    713 ;	-----------------------------------------
-                                    714 ;	 function display_putbool
-                                    715 ;	-----------------------------------------
-      000697                        716 _display_putbool:
-                                    717 ;	../display.c:61: if(v) {
-      000697 E5 82            [12]  718 	mov	a,dpl
-      000699 FF               [12]  719 	mov	r7,a
-      00069A 60 11            [24]  720 	jz	00102$
-                                    721 ;	../display.c:62: display_buffer[2] = ledfonts_numeric_flipped['O'];
-      00069C 90 30 CF         [24]  722 	mov	dptr,#(_ledfonts_numeric_flipped + 0x004f)
-      00069F E4               [12]  723 	clr	a
-      0006A0 93               [24]  724 	movc	a,@a+dptr
-      0006A1 FF               [12]  725 	mov	r7,a
-      0006A2 8F 3D            [24]  726 	mov	(_display_buffer + 0x0002),r7
-                                    727 ;	../display.c:63: display_buffer[3] = ledfonts_numeric_normal['N'];
-      0006A4 90 30 4E         [24]  728 	mov	dptr,#(_ledfonts_numeric_normal + 0x004e)
-      0006A7 E4               [12]  729 	clr	a
-      0006A8 93               [24]  730 	movc	a,@a+dptr
-      0006A9 FF               [12]  731 	mov	r7,a
-      0006AA 8F 3E            [24]  732 	mov	(_display_buffer + 0x0003),r7
-      0006AC 22               [24]  733 	ret
-      0006AD                        734 00102$:
-                                    735 ;	../display.c:65: display_buffer[2] = ledfonts_numeric_flipped['O'];
-      0006AD 90 30 CF         [24]  736 	mov	dptr,#(_ledfonts_numeric_flipped + 0x004f)
-      0006B0 E4               [12]  737 	clr	a
-      0006B1 93               [24]  738 	movc	a,@a+dptr
-      0006B2 FF               [12]  739 	mov	r7,a
-      0006B3 8F 3D            [24]  740 	mov	(_display_buffer + 0x0002),r7
-                                    741 ;	../display.c:66: display_buffer[3] = ledfonts_numeric_normal['F'];
-      0006B5 90 30 46         [24]  742 	mov	dptr,#(_ledfonts_numeric_normal + 0x0046)
-      0006B8 E4               [12]  743 	clr	a
-      0006B9 93               [24]  744 	movc	a,@a+dptr
-      0006BA FF               [12]  745 	mov	r7,a
-      0006BB 8F 3E            [24]  746 	mov	(_display_buffer + 0x0003),r7
-      0006BD 22               [24]  747 	ret
-                                    748 ;------------------------------------------------------------
-                                    749 ;Allocation info for local variables in function 'display_puttemp'
-                                    750 ;------------------------------------------------------------
-                                    751 ;v                         Allocated to registers r6 r7 
-                                    752 ;------------------------------------------------------------
-                                    753 ;	../display.c:70: void display_puttemp(uint16_t v) {
-                                    754 ;	-----------------------------------------
-                                    755 ;	 function display_puttemp
-                                    756 ;	-----------------------------------------
-      0006BE                        757 _display_puttemp:
-      0006BE AE 82            [24]  758 	mov	r6,dpl
-      0006C0 AF 83            [24]  759 	mov	r7,dph
-                                    760 ;	../display.c:71: display_buffer[0] = ledfonts_numeric_normal[(v >> 0x08) & 0x0f];
-      0006C2 8F 05            [24]  761 	mov	ar5,r7
-      0006C4 74 0F            [12]  762 	mov	a,#0x0f
-      0006C6 5D               [12]  763 	anl	a,r5
-      0006C7 90 30 00         [24]  764 	mov	dptr,#_ledfonts_numeric_normal
-      0006CA 93               [24]  765 	movc	a,@a+dptr
-      0006CB FD               [12]  766 	mov	r5,a
-      0006CC 8D 3B            [24]  767 	mov	_display_buffer,r5
-                                    768 ;	../display.c:72: display_buffer[1] = ledfonts_numeric_normal[(v >> 0x04) & 0x0f];
-      0006CE 8E 04            [24]  769 	mov	ar4,r6
-      0006D0 EF               [12]  770 	mov	a,r7
-      0006D1 C4               [12]  771 	swap	a
-      0006D2 CC               [12]  772 	xch	a,r4
-      0006D3 C4               [12]  773 	swap	a
-      0006D4 54 0F            [12]  774 	anl	a,#0x0f
-      0006D6 6C               [12]  775 	xrl	a,r4
-      0006D7 CC               [12]  776 	xch	a,r4
-      0006D8 54 0F            [12]  777 	anl	a,#0x0f
-      0006DA CC               [12]  778 	xch	a,r4
-      0006DB 6C               [12]  779 	xrl	a,r4
-      0006DC CC               [12]  780 	xch	a,r4
-      0006DD 53 04 0F         [24]  781 	anl	ar4,#0x0f
-      0006E0 7D 00            [12]  782 	mov	r5,#0x00
-      0006E2 EC               [12]  783 	mov	a,r4
-      0006E3 24 00            [12]  784 	add	a,#_ledfonts_numeric_normal
-      0006E5 F5 82            [12]  785 	mov	dpl,a
-      0006E7 ED               [12]  786 	mov	a,r5
-      0006E8 34 30            [12]  787 	addc	a,#(_ledfonts_numeric_normal >> 8)
-      0006EA F5 83            [12]  788 	mov	dph,a
-      0006EC E4               [12]  789 	clr	a
-      0006ED 93               [24]  790 	movc	a,@a+dptr
-      0006EE FD               [12]  791 	mov	r5,a
-      0006EF 8D 3C            [24]  792 	mov	(_display_buffer + 0x0001),r5
-                                    793 ;	../display.c:73: display_buffer[2] = ledfonts_numeric_flipped[v & 0x0f];
-      0006F1 53 06 0F         [24]  794 	anl	ar6,#0x0f
-      0006F4 7F 00            [12]  795 	mov	r7,#0x00
-      0006F6 EE               [12]  796 	mov	a,r6
-      0006F7 24 80            [12]  797 	add	a,#_ledfonts_numeric_flipped
-      0006F9 F5 82            [12]  798 	mov	dpl,a
-      0006FB EF               [12]  799 	mov	a,r7
-      0006FC 34 30            [12]  800 	addc	a,#(_ledfonts_numeric_flipped >> 8)
-      0006FE F5 83            [12]  801 	mov	dph,a
-      000700 E4               [12]  802 	clr	a
-      000701 93               [24]  803 	movc	a,@a+dptr
-      000702 FF               [12]  804 	mov	r7,a
-      000703 8F 3D            [24]  805 	mov	(_display_buffer + 0x0002),r7
-                                    806 ;	../display.c:74: display_buffer[3] = ledfonts_numeric_normal['C'];
-      000705 90 30 43         [24]  807 	mov	dptr,#(_ledfonts_numeric_normal + 0x0043)
-      000708 E4               [12]  808 	clr	a
-      000709 93               [24]  809 	movc	a,@a+dptr
-      00070A FF               [12]  810 	mov	r7,a
-      00070B 8F 3E            [24]  811 	mov	(_display_buffer + 0x0003),r7
-                                    812 ;	/home/shenghao/workspace/TESTMCS51/display.h:146: display_buffer[1] &= 0x7f;
-      00070D 74 7F            [12]  813 	mov	a,#0x7f
-      00070F 55 3C            [12]  814 	anl	a,(_display_buffer + 0x0001)
-      000711 F5 3C            [12]  815 	mov	(_display_buffer + 0x0001),a
-                                    816 ;	../display.c:75: display_periodon();
-      000713 22               [24]  817 	ret
-                                    818 ;------------------------------------------------------------
-                                    819 ;Allocation info for local variables in function 'ISR_PCA'
-                                    820 ;------------------------------------------------------------
-                                    821 ;flash_prescaler           Allocated with name '_ISR_PCA_flash_prescaler_1_149'
-                                    822 ;__00030031                Allocated to registers r7 
-                                    823 ;index                     Allocated to registers 
-                                    824 ;------------------------------------------------------------
-                                    825 ;	../display.c:78: void ISR_PCA(void) __interrupt(INT_PCA) __using(1)
-                                    826 ;	-----------------------------------------
-                                    827 ;	 function ISR_PCA
-                                    828 ;	-----------------------------------------
-      000714                        829 _ISR_PCA:
-                           00000F   830 	ar7 = 0x0f
-                           00000E   831 	ar6 = 0x0e
-                           00000D   832 	ar5 = 0x0d
-                           00000C   833 	ar4 = 0x0c
-                           00000B   834 	ar3 = 0x0b
-                           00000A   835 	ar2 = 0x0a
-                           000009   836 	ar1 = 0x09
-                           000008   837 	ar0 = 0x08
-      000714 C0 E0            [24]  838 	push	acc
-      000716 C0 F0            [24]  839 	push	b
-      000718 C0 D0            [24]  840 	push	psw
-      00071A 75 D0 08         [24]  841 	mov	psw,#0x08
-                                    842 ;	../display.c:81: if(PCA_CF) {
-                                    843 ;	../display.c:87: PCA_CF = 0;										//Disable interrupt flag
-                                    844 ;	assignBit
-      00071D 10 DF 02         [24]  845 	jbc	_PCA_CF,00132$
-      000720 80 3D            [24]  846 	sjmp	00106$
-      000722                        847 00132$:
-                                    848 ;	../display.c:88: PCA_CCAP0_L = (display_counts & 0x0f); 			//Setup new compare value - Note that the low register MUST be written first to stop the comparison operation!
-      000722 AF 41            [24]  849 	mov	r7,_display_counts
-      000724 74 0F            [12]  850 	mov	a,#0x0f
-      000726 5F               [12]  851 	anl	a,r7
-      000727 F5 EA            [12]  852 	mov	_PCA_CCAP0_L,a
-                                    853 ;	../display.c:89: PCA_CCAP0_H = (display_counts >> 8);			//Setup new compare value
-      000729 85 42 FA         [24]  854 	mov	_PCA_CCAP0_H,(_display_counts + 1)
-                                    855 ;	../display.c:90: PORT_P2 = display_buffer[display_index];		//Write segment buffer
-      00072C E5 3F            [12]  856 	mov	a,_display_index
-      00072E 24 3B            [12]  857 	add	a,#_display_buffer
-      000730 F9               [12]  858 	mov	r1,a
-      000731 87 A0            [24]  859 	mov	_PORT_P2,@r1
-                                    860 ;	../display.c:93: if((flash_prescaler < 0x08) && ((display_flash >> display_index) & 0x01))
-      000733 74 F8            [12]  861 	mov	a,#0x100 - 0x08
-      000735 25 44            [12]  862 	add	a,_ISR_PCA_flash_prescaler_1_149
-      000737 40 11            [24]  863 	jc	00102$
-      000739 85 3F F0         [24]  864 	mov	b,_display_index
-      00073C 05 F0            [12]  865 	inc	b
-      00073E E5 40            [12]  866 	mov	a,_display_flash
-      000740 80 02            [24]  867 	sjmp	00135$
-      000742                        868 00134$:
-      000742 C3               [12]  869 	clr	c
-      000743 13               [12]  870 	rrc	a
-      000744                        871 00135$:
-      000744 D5 F0 FB         [24]  872 	djnz	b,00134$
-      000747 20 E0 30         [24]  873 	jb	acc.0,00115$
-      00074A                        874 00102$:
-                                    875 ;	../display.c:96: display_drive_common(display_index);
-      00074A AF 3F            [24]  876 	mov	r7,_display_index
-                                    877 ;	/home/shenghao/workspace/TESTMCS51/board_config.h:46: PORT_P3 &= ~(0x04 << index);
-      00074C 8F F0            [24]  878 	mov	b,r7
-      00074E 05 F0            [12]  879 	inc	b
-      000750 74 04            [12]  880 	mov	a,#0x04
-      000752 80 02            [24]  881 	sjmp	00139$
-      000754                        882 00137$:
-      000754 25 E0            [12]  883 	add	a,acc
-      000756                        884 00139$:
-      000756 D5 F0 FB         [24]  885 	djnz	b,00137$
-      000759 F4               [12]  886 	cpl	a
-      00075A FF               [12]  887 	mov	r7,a
-      00075B 52 B0            [12]  888 	anl	_PORT_P3,a
-                                    889 ;	../display.c:96: display_drive_common(display_index);
-                                    890 ;	../display.c:98: return;
-      00075D 80 1B            [24]  891 	sjmp	00115$
-      00075F                        892 00106$:
-                                    893 ;	../display.c:101: if(PCA_CCF0) {
-                                    894 ;	../display.c:106: PCA_CCF0 = 0;				//Disable interrupt flag
-                                    895 ;	assignBit
-      00075F 10 D8 02         [24]  896 	jbc	_PCA_CCF0,00140$
-      000762 80 16            [24]  897 	sjmp	00115$
-      000764                        898 00140$:
-                                    899 ;	/home/shenghao/workspace/TESTMCS51/board_config.h:57: PORT_P3 |= (0x3c);
-      000764 43 B0 3C         [24]  900 	orl	_PORT_P3,#0x3c
-                                    901 ;	../display.c:108: if(!display_index){
-      000767 E5 3F            [12]  902 	mov	a,_display_index
-      000769 70 0D            [24]  903 	jnz	00110$
-                                    904 ;	../display.c:110: if(!(flash_prescaler--))
-      00076B AF 44            [24]  905 	mov	r7,_ISR_PCA_flash_prescaler_1_149
-      00076D 15 44            [12]  906 	dec	_ISR_PCA_flash_prescaler_1_149
-      00076F EF               [12]  907 	mov	a,r7
-      000770 70 03            [24]  908 	jnz	00108$
-                                    909 ;	../display.c:111: flash_prescaler = 0x10;
-      000772 75 44 10         [24]  910 	mov	_ISR_PCA_flash_prescaler_1_149,#0x10
-      000775                        911 00108$:
-                                    912 ;	../display.c:112: display_index = 0x04;
-      000775 75 3F 04         [24]  913 	mov	_display_index,#0x04
-      000778                        914 00110$:
-                                    915 ;	../display.c:114: display_index--;			//Decrement display index
-      000778 15 3F            [12]  916 	dec	_display_index
-                                    917 ;	../display.c:116: return;
-      00077A                        918 00115$:
-      00077A D0 D0            [24]  919 	pop	psw
-      00077C D0 F0            [24]  920 	pop	b
-      00077E D0 E0            [24]  921 	pop	acc
-      000780 32               [24]  922 	reti
-                                    923 ;	eliminated unneeded push/pop dpl
-                                    924 ;	eliminated unneeded push/pop dph
-                                    925 	.area CSEG    (CODE)
-                                    926 	.area CONST   (CODE)
-                                    927 	.area XINIT   (CODE)
-                                    928 	.area CABS    (ABS,CODE)
+                                    495 ;	src/display.c:18: display_buffer[0] = ledfonts_numeric_normal[*s];
+      0006F8 AE 82            [24]  496 	mov	r6,dpl
+      0006FA AF 83            [24]  497 	mov  r7,dph
+      0006FC E4               [12]  498 	clr	a
+      0006FD 93               [24]  499 	movc	a,@a+dptr
+      0006FE 90 30 00         [24]  500 	mov	dptr,#_ledfonts_numeric_normal
+      000701 93               [24]  501 	movc	a,@a+dptr
+      000702 FD               [12]  502 	mov	r5,a
+      000703 8D 42            [24]  503 	mov	_display_buffer,r5
+                                    504 ;	src/display.c:19: display_buffer[1] = ledfonts_numeric_normal[*(s+1)];
+      000705 8E 82            [24]  505 	mov	dpl,r6
+      000707 8F 83            [24]  506 	mov	dph,r7
+      000709 A3               [24]  507 	inc	dptr
+      00070A E4               [12]  508 	clr	a
+      00070B 93               [24]  509 	movc	a,@a+dptr
+      00070C 90 30 00         [24]  510 	mov	dptr,#_ledfonts_numeric_normal
+      00070F 93               [24]  511 	movc	a,@a+dptr
+      000710 FD               [12]  512 	mov	r5,a
+      000711 8D 43            [24]  513 	mov	(_display_buffer + 0x0001),r5
+                                    514 ;	src/display.c:20: display_buffer[2] = ledfonts_numeric_flipped[*(s+2)];
+      000713 8E 82            [24]  515 	mov	dpl,r6
+      000715 8F 83            [24]  516 	mov	dph,r7
+      000717 A3               [24]  517 	inc	dptr
+      000718 A3               [24]  518 	inc	dptr
+      000719 E4               [12]  519 	clr	a
+      00071A 93               [24]  520 	movc	a,@a+dptr
+      00071B 90 30 80         [24]  521 	mov	dptr,#_ledfonts_numeric_flipped
+      00071E 93               [24]  522 	movc	a,@a+dptr
+      00071F FD               [12]  523 	mov	r5,a
+      000720 8D 44            [24]  524 	mov	(_display_buffer + 0x0002),r5
+                                    525 ;	src/display.c:21: display_buffer[3] = ledfonts_numeric_normal[*(s+3)];
+      000722 8E 82            [24]  526 	mov	dpl,r6
+      000724 8F 83            [24]  527 	mov	dph,r7
+      000726 A3               [24]  528 	inc	dptr
+      000727 A3               [24]  529 	inc	dptr
+      000728 A3               [24]  530 	inc	dptr
+      000729 E4               [12]  531 	clr	a
+      00072A 93               [24]  532 	movc	a,@a+dptr
+      00072B 90 30 00         [24]  533 	mov	dptr,#_ledfonts_numeric_normal
+      00072E 93               [24]  534 	movc	a,@a+dptr
+      00072F FF               [12]  535 	mov	r7,a
+      000730 8F 45            [24]  536 	mov	(_display_buffer + 0x0003),r7
+                                    537 ;	src/display.c:22: }
+      000732 22               [24]  538 	ret
+                                    539 ;------------------------------------------------------------
+                                    540 ;Allocation info for local variables in function 'display_putbcd'
+                                    541 ;------------------------------------------------------------
+                                    542 ;v2                        Allocated with name '_display_putbcd_PARM_2'
+                                    543 ;v1                        Allocated to registers r7 
+                                    544 ;------------------------------------------------------------
+                                    545 ;	src/display.c:24: void display_putbcd(uint8_t v1, uint8_t v2) {
+                                    546 ;	-----------------------------------------
+                                    547 ;	 function display_putbcd
+                                    548 ;	-----------------------------------------
+      000733                        549 _display_putbcd:
+                                    550 ;	src/display.c:25: display_buffer[0] = ledfonts_numeric_normal[(v1 >> 0x04)];
+      000733 E5 82            [12]  551 	mov	a,dpl
+      000735 FF               [12]  552 	mov	r7,a
+      000736 C4               [12]  553 	swap	a
+      000737 54 0F            [12]  554 	anl	a,#0x0f
+      000739 90 30 00         [24]  555 	mov	dptr,#_ledfonts_numeric_normal
+      00073C 93               [24]  556 	movc	a,@a+dptr
+      00073D FE               [12]  557 	mov	r6,a
+      00073E 8E 42            [24]  558 	mov	_display_buffer,r6
+                                    559 ;	src/display.c:26: display_buffer[1] = ledfonts_numeric_normal[(v1 & 0x0f)];
+      000740 53 07 0F         [24]  560 	anl	ar7,#0x0f
+      000743 7E 00            [12]  561 	mov	r6,#0x00
+      000745 EF               [12]  562 	mov	a,r7
+      000746 24 00            [12]  563 	add	a,#_ledfonts_numeric_normal
+      000748 F5 82            [12]  564 	mov	dpl,a
+      00074A EE               [12]  565 	mov	a,r6
+      00074B 34 30            [12]  566 	addc	a,#(_ledfonts_numeric_normal >> 8)
+      00074D F5 83            [12]  567 	mov	dph,a
+      00074F E4               [12]  568 	clr	a
+      000750 93               [24]  569 	movc	a,@a+dptr
+      000751 FF               [12]  570 	mov	r7,a
+      000752 8F 43            [24]  571 	mov	(_display_buffer + 0x0001),r7
+                                    572 ;	src/display.c:27: display_buffer[2] = ledfonts_numeric_flipped[(v2 >> 0x04)];
+      000754 E5 60            [12]  573 	mov	a,_display_putbcd_PARM_2
+      000756 C4               [12]  574 	swap	a
+      000757 54 0F            [12]  575 	anl	a,#0x0f
+      000759 90 30 80         [24]  576 	mov	dptr,#_ledfonts_numeric_flipped
+      00075C 93               [24]  577 	movc	a,@a+dptr
+      00075D FF               [12]  578 	mov	r7,a
+      00075E 8F 44            [24]  579 	mov	(_display_buffer + 0x0002),r7
+                                    580 ;	src/display.c:28: display_buffer[3] = ledfonts_numeric_normal[(v2 & 0x0f)];
+      000760 AE 60            [24]  581 	mov	r6,_display_putbcd_PARM_2
+      000762 53 06 0F         [24]  582 	anl	ar6,#0x0f
+      000765 7F 00            [12]  583 	mov	r7,#0x00
+      000767 EE               [12]  584 	mov	a,r6
+      000768 24 00            [12]  585 	add	a,#_ledfonts_numeric_normal
+      00076A F5 82            [12]  586 	mov	dpl,a
+      00076C EF               [12]  587 	mov	a,r7
+      00076D 34 30            [12]  588 	addc	a,#(_ledfonts_numeric_normal >> 8)
+      00076F F5 83            [12]  589 	mov	dph,a
+      000771 E4               [12]  590 	clr	a
+      000772 93               [24]  591 	movc	a,@a+dptr
+      000773 FF               [12]  592 	mov	r7,a
+      000774 8F 45            [24]  593 	mov	(_display_buffer + 0x0003),r7
+                                    594 ;	src/display.c:29: }
+      000776 22               [24]  595 	ret
+                                    596 ;------------------------------------------------------------
+                                    597 ;Allocation info for local variables in function 'display_puttime'
+                                    598 ;------------------------------------------------------------
+                                    599 ;minute                    Allocated with name '_display_puttime_PARM_2'
+                                    600 ;hour                      Allocated to registers r7 
+                                    601 ;------------------------------------------------------------
+                                    602 ;	src/display.c:31: void display_puttime(uint8_t hour, uint8_t minute) {
+                                    603 ;	-----------------------------------------
+                                    604 ;	 function display_puttime
+                                    605 ;	-----------------------------------------
+      000777                        606 _display_puttime:
+      000777 AF 82            [24]  607 	mov	r7,dpl
+                                    608 ;	src/display.c:32: if(TIME_DISPLAY_12) {
+      000779 90 00 03         [24]  609 	mov	dptr,#(_ds1302_sram_data + 0x0003)
+      00077C E0               [24]  610 	movx	a,@dptr
+      00077D 23               [12]  611 	rl	a
+      00077E 23               [12]  612 	rl	a
+      00077F 54 01            [12]  613 	anl	a,#0x01
+      000781 60 20            [24]  614 	jz	00104$
+                                    615 ;	src/display.c:33: display_putbcd(convert_24h_to_12h(hour),minute);
+      000783 8F 82            [24]  616 	mov	dpl,r7
+      000785 C0 07            [24]  617 	push	ar7
+      000787 12 0B 95         [24]  618 	lcall	_convert_24h_to_12h
+      00078A D0 07            [24]  619 	pop	ar7
+      00078C 85 4A 60         [24]  620 	mov	_display_putbcd_PARM_2,_display_puttime_PARM_2
+      00078F C0 07            [24]  621 	push	ar7
+      000791 12 07 33         [24]  622 	lcall	_display_putbcd
+      000794 D0 07            [24]  623 	pop	ar7
+                                    624 ;	src/display.c:34: if(hour > 0x11)
+      000796 EF               [12]  625 	mov	a,r7
+      000797 24 EE            [12]  626 	add	a,#0xff - 0x11
+      000799 50 10            [24]  627 	jnc	00105$
+                                    628 ;	include/display.h:175: display_buffer[3] &= 0x7f;
+      00079B 74 7F            [12]  629 	mov	a,#0x7f
+      00079D 55 45            [12]  630 	anl	a,(_display_buffer + 0x0003)
+      00079F F5 45            [12]  631 	mov	(_display_buffer + 0x0003),a
+                                    632 ;	src/display.c:35: display_ampmon();
+      0007A1 80 08            [24]  633 	sjmp	00105$
+      0007A3                        634 00104$:
+                                    635 ;	src/display.c:37: display_putbcd(hour,minute);
+      0007A3 85 4A 60         [24]  636 	mov	_display_putbcd_PARM_2,_display_puttime_PARM_2
+      0007A6 8F 82            [24]  637 	mov	dpl,r7
+      0007A8 12 07 33         [24]  638 	lcall	_display_putbcd
+      0007AB                        639 00105$:
+                                    640 ;	src/display.c:40: if(DISPLAY_REMOVE_LEADING_ZEROES &&
+      0007AB 90 00 02         [24]  641 	mov	dptr,#(_ds1302_sram_data + 0x0002)
+      0007AE E0               [24]  642 	movx	a,@dptr
+      0007AF FF               [12]  643 	mov	r7,a
+      0007B0 30 E0 11         [24]  644 	jnb	acc.0,00110$
+                                    645 ;	src/display.c:41: (display_buffer[0] == ledfonts_numeric_normal['0']))
+      0007B3 90 30 30         [24]  646 	mov	dptr,#(_ledfonts_numeric_normal + 0x0030)
+      0007B6 E4               [12]  647 	clr	a
+      0007B7 93               [24]  648 	movc	a,@a+dptr
+      0007B8 FF               [12]  649 	mov	r7,a
+      0007B9 B5 42 08         [24]  650 	cjne	a,_display_buffer,00110$
+                                    651 ;	src/display.c:42: display_buffer[0] = ledfonts_numeric_normal[' '];
+      0007BC 90 30 20         [24]  652 	mov	dptr,#(_ledfonts_numeric_normal + 0x0020)
+      0007BF E4               [12]  653 	clr	a
+      0007C0 93               [24]  654 	movc	a,@a+dptr
+      0007C1 FF               [12]  655 	mov	r7,a
+      0007C2 8F 42            [24]  656 	mov	_display_buffer,r7
+      0007C4                        657 00110$:
+                                    658 ;	src/display.c:43: }
+      0007C4 22               [24]  659 	ret
+                                    660 ;------------------------------------------------------------
+                                    661 ;Allocation info for local variables in function 'display_putdate'
+                                    662 ;------------------------------------------------------------
+                                    663 ;	src/display.c:45: void display_putdate(void) {
+                                    664 ;	-----------------------------------------
+                                    665 ;	 function display_putdate
+                                    666 ;	-----------------------------------------
+      0007C5                        667 _display_putdate:
+                                    668 ;	src/display.c:46: if(DATE_DISPLAY_MMDD)
+      0007C5 90 00 03         [24]  669 	mov	dptr,#(_ds1302_sram_data + 0x0003)
+      0007C8 E0               [24]  670 	movx	a,@dptr
+      0007C9 23               [12]  671 	rl	a
+      0007CA 54 01            [12]  672 	anl	a,#0x01
+      0007CC 60 0B            [24]  673 	jz	00102$
+                                    674 ;	src/display.c:47: display_putbcd(ds1302.month,ds1302.date);
+      0007CE 85 50 82         [24]  675 	mov	dpl,(_ds1302 + 0x0004)
+      0007D1 85 4F 60         [24]  676 	mov	_display_putbcd_PARM_2,(_ds1302 + 0x0003)
+      0007D4 12 07 33         [24]  677 	lcall	_display_putbcd
+      0007D7 80 09            [24]  678 	sjmp	00103$
+      0007D9                        679 00102$:
+                                    680 ;	src/display.c:49: display_putbcd(ds1302.date,ds1302.month);
+      0007D9 85 4F 82         [24]  681 	mov	dpl,(_ds1302 + 0x0003)
+      0007DC 85 50 60         [24]  682 	mov	_display_putbcd_PARM_2,(_ds1302 + 0x0004)
+      0007DF 12 07 33         [24]  683 	lcall	_display_putbcd
+      0007E2                        684 00103$:
+                                    685 ;	include/display.h:146: display_buffer[1] &= 0x7f;
+      0007E2 74 7F            [12]  686 	mov	a,#0x7f
+      0007E4 55 43            [12]  687 	anl	a,(_display_buffer + 0x0001)
+      0007E6 F5 43            [12]  688 	mov	(_display_buffer + 0x0001),a
+                                    689 ;	src/display.c:52: if(DISPLAY_REMOVE_LEADING_ZEROES){
+      0007E8 90 00 02         [24]  690 	mov	dptr,#(_ds1302_sram_data + 0x0002)
+      0007EB E0               [24]  691 	movx	a,@dptr
+      0007EC FF               [12]  692 	mov	r7,a
+      0007ED 30 E0 21         [24]  693 	jnb	acc.0,00111$
+                                    694 ;	src/display.c:53: if(display_buffer[0] == ledfonts_numeric_normal['0'])
+      0007F0 90 30 30         [24]  695 	mov	dptr,#(_ledfonts_numeric_normal + 0x0030)
+      0007F3 E4               [12]  696 	clr	a
+      0007F4 93               [24]  697 	movc	a,@a+dptr
+      0007F5 B5 42 08         [24]  698 	cjne	a,_display_buffer,00105$
+                                    699 ;	src/display.c:54: display_buffer[0] = ledfonts_numeric_normal[' '];
+      0007F8 90 30 20         [24]  700 	mov	dptr,#(_ledfonts_numeric_normal + 0x0020)
+      0007FB E4               [12]  701 	clr	a
+      0007FC 93               [24]  702 	movc	a,@a+dptr
+      0007FD FF               [12]  703 	mov	r7,a
+      0007FE 8F 42            [24]  704 	mov	_display_buffer,r7
+      000800                        705 00105$:
+                                    706 ;	src/display.c:55: if(display_buffer[2] == ledfonts_numeric_flipped['0'])
+      000800 90 30 B0         [24]  707 	mov	dptr,#(_ledfonts_numeric_flipped + 0x0030)
+      000803 E4               [12]  708 	clr	a
+      000804 93               [24]  709 	movc	a,@a+dptr
+      000805 FF               [12]  710 	mov	r7,a
+      000806 B5 44 08         [24]  711 	cjne	a,(_display_buffer + 0x0002),00111$
+                                    712 ;	src/display.c:56: display_buffer[2] = ledfonts_numeric_flipped[' '];
+      000809 90 30 A0         [24]  713 	mov	dptr,#(_ledfonts_numeric_flipped + 0x0020)
+      00080C E4               [12]  714 	clr	a
+      00080D 93               [24]  715 	movc	a,@a+dptr
+      00080E FF               [12]  716 	mov	r7,a
+      00080F 8F 44            [24]  717 	mov	(_display_buffer + 0x0002),r7
+      000811                        718 00111$:
+                                    719 ;	src/display.c:58: }
+      000811 22               [24]  720 	ret
+                                    721 ;------------------------------------------------------------
+                                    722 ;Allocation info for local variables in function 'display_putbool'
+                                    723 ;------------------------------------------------------------
+                                    724 ;v                         Allocated to registers r7 
+                                    725 ;------------------------------------------------------------
+                                    726 ;	src/display.c:60: void display_putbool(uint8_t v) {
+                                    727 ;	-----------------------------------------
+                                    728 ;	 function display_putbool
+                                    729 ;	-----------------------------------------
+      000812                        730 _display_putbool:
+                                    731 ;	src/display.c:61: if(v) {
+      000812 E5 82            [12]  732 	mov	a,dpl
+      000814 60 11            [24]  733 	jz	00102$
+                                    734 ;	src/display.c:62: display_buffer[2] = ledfonts_numeric_flipped['O'];
+      000816 90 30 CF         [24]  735 	mov	dptr,#(_ledfonts_numeric_flipped + 0x004f)
+      000819 E4               [12]  736 	clr	a
+      00081A 93               [24]  737 	movc	a,@a+dptr
+      00081B FF               [12]  738 	mov	r7,a
+      00081C 8F 44            [24]  739 	mov	(_display_buffer + 0x0002),r7
+                                    740 ;	src/display.c:63: display_buffer[3] = ledfonts_numeric_normal['N'];
+      00081E 90 30 4E         [24]  741 	mov	dptr,#(_ledfonts_numeric_normal + 0x004e)
+      000821 E4               [12]  742 	clr	a
+      000822 93               [24]  743 	movc	a,@a+dptr
+      000823 FF               [12]  744 	mov	r7,a
+      000824 8F 45            [24]  745 	mov	(_display_buffer + 0x0003),r7
+      000826 22               [24]  746 	ret
+      000827                        747 00102$:
+                                    748 ;	src/display.c:65: display_buffer[2] = ledfonts_numeric_flipped['O'];
+      000827 90 30 CF         [24]  749 	mov	dptr,#(_ledfonts_numeric_flipped + 0x004f)
+      00082A E4               [12]  750 	clr	a
+      00082B 93               [24]  751 	movc	a,@a+dptr
+      00082C FF               [12]  752 	mov	r7,a
+      00082D 8F 44            [24]  753 	mov	(_display_buffer + 0x0002),r7
+                                    754 ;	src/display.c:66: display_buffer[3] = ledfonts_numeric_normal['F'];
+      00082F 90 30 46         [24]  755 	mov	dptr,#(_ledfonts_numeric_normal + 0x0046)
+      000832 E4               [12]  756 	clr	a
+      000833 93               [24]  757 	movc	a,@a+dptr
+      000834 FF               [12]  758 	mov	r7,a
+      000835 8F 45            [24]  759 	mov	(_display_buffer + 0x0003),r7
+                                    760 ;	src/display.c:68: }
+      000837 22               [24]  761 	ret
+                                    762 ;------------------------------------------------------------
+                                    763 ;Allocation info for local variables in function 'display_puttemp'
+                                    764 ;------------------------------------------------------------
+                                    765 ;v                         Allocated to registers r6 r7 
+                                    766 ;------------------------------------------------------------
+                                    767 ;	src/display.c:70: void display_puttemp(uint16_t v) {
+                                    768 ;	-----------------------------------------
+                                    769 ;	 function display_puttemp
+                                    770 ;	-----------------------------------------
+      000838                        771 _display_puttemp:
+      000838 AE 82            [24]  772 	mov	r6,dpl
+      00083A AF 83            [24]  773 	mov	r7,dph
+                                    774 ;	src/display.c:71: display_buffer[0] = ledfonts_numeric_normal[(v >> 0x08) & 0x0f];
+      00083C 8F 05            [24]  775 	mov	ar5,r7
+      00083E 53 05 0F         [24]  776 	anl	ar5,#0x0f
+      000841 7C 00            [12]  777 	mov	r4,#0x00
+      000843 ED               [12]  778 	mov	a,r5
+      000844 24 00            [12]  779 	add	a,#_ledfonts_numeric_normal
+      000846 F5 82            [12]  780 	mov	dpl,a
+      000848 EC               [12]  781 	mov	a,r4
+      000849 34 30            [12]  782 	addc	a,#(_ledfonts_numeric_normal >> 8)
+      00084B F5 83            [12]  783 	mov	dph,a
+      00084D E4               [12]  784 	clr	a
+      00084E 93               [24]  785 	movc	a,@a+dptr
+      00084F FD               [12]  786 	mov	r5,a
+      000850 8D 42            [24]  787 	mov	_display_buffer,r5
+                                    788 ;	src/display.c:72: display_buffer[1] = ledfonts_numeric_normal[(v >> 0x04) & 0x0f];
+      000852 8E 04            [24]  789 	mov	ar4,r6
+      000854 EF               [12]  790 	mov	a,r7
+      000855 C4               [12]  791 	swap	a
+      000856 CC               [12]  792 	xch	a,r4
+      000857 C4               [12]  793 	swap	a
+      000858 54 0F            [12]  794 	anl	a,#0x0f
+      00085A 6C               [12]  795 	xrl	a,r4
+      00085B CC               [12]  796 	xch	a,r4
+      00085C 54 0F            [12]  797 	anl	a,#0x0f
+      00085E CC               [12]  798 	xch	a,r4
+      00085F 6C               [12]  799 	xrl	a,r4
+      000860 CC               [12]  800 	xch	a,r4
+      000861 53 04 0F         [24]  801 	anl	ar4,#0x0f
+      000864 7D 00            [12]  802 	mov	r5,#0x00
+      000866 EC               [12]  803 	mov	a,r4
+      000867 24 00            [12]  804 	add	a,#_ledfonts_numeric_normal
+      000869 F5 82            [12]  805 	mov	dpl,a
+      00086B ED               [12]  806 	mov	a,r5
+      00086C 34 30            [12]  807 	addc	a,#(_ledfonts_numeric_normal >> 8)
+      00086E F5 83            [12]  808 	mov	dph,a
+      000870 E4               [12]  809 	clr	a
+      000871 93               [24]  810 	movc	a,@a+dptr
+      000872 FD               [12]  811 	mov	r5,a
+      000873 8D 43            [24]  812 	mov	(_display_buffer + 0x0001),r5
+                                    813 ;	src/display.c:73: display_buffer[2] = ledfonts_numeric_flipped[v & 0x0f];
+      000875 53 06 0F         [24]  814 	anl	ar6,#0x0f
+      000878 7F 00            [12]  815 	mov	r7,#0x00
+      00087A EE               [12]  816 	mov	a,r6
+      00087B 24 80            [12]  817 	add	a,#_ledfonts_numeric_flipped
+      00087D F5 82            [12]  818 	mov	dpl,a
+      00087F EF               [12]  819 	mov	a,r7
+      000880 34 30            [12]  820 	addc	a,#(_ledfonts_numeric_flipped >> 8)
+      000882 F5 83            [12]  821 	mov	dph,a
+      000884 E4               [12]  822 	clr	a
+      000885 93               [24]  823 	movc	a,@a+dptr
+      000886 FF               [12]  824 	mov	r7,a
+      000887 8F 44            [24]  825 	mov	(_display_buffer + 0x0002),r7
+                                    826 ;	src/display.c:74: display_buffer[3] = ledfonts_numeric_normal['C'];
+      000889 90 30 43         [24]  827 	mov	dptr,#(_ledfonts_numeric_normal + 0x0043)
+      00088C E4               [12]  828 	clr	a
+      00088D 93               [24]  829 	movc	a,@a+dptr
+      00088E FF               [12]  830 	mov	r7,a
+      00088F 8F 45            [24]  831 	mov	(_display_buffer + 0x0003),r7
+                                    832 ;	include/display.h:146: display_buffer[1] &= 0x7f;
+      000891 74 7F            [12]  833 	mov	a,#0x7f
+      000893 55 43            [12]  834 	anl	a,(_display_buffer + 0x0001)
+      000895 F5 43            [12]  835 	mov	(_display_buffer + 0x0001),a
+                                    836 ;	src/display.c:75: display_periodon();
+                                    837 ;	src/display.c:76: }
+      000897 22               [24]  838 	ret
+                                    839 ;------------------------------------------------------------
+                                    840 ;Allocation info for local variables in function 'ISR_PCA'
+                                    841 ;------------------------------------------------------------
+                                    842 ;flash_prescaler           Allocated with name '_ISR_PCA_flash_prescaler_65536_154'
+                                    843 ;__1966080031              Allocated to registers r7 
+                                    844 ;index                     Allocated to registers 
+                                    845 ;------------------------------------------------------------
+                                    846 ;	src/display.c:78: void ISR_PCA(void) __interrupt(INT_PCA) __using(1)
+                                    847 ;	-----------------------------------------
+                                    848 ;	 function ISR_PCA
+                                    849 ;	-----------------------------------------
+      000898                        850 _ISR_PCA:
+                           00000F   851 	ar7 = 0x0f
+                           00000E   852 	ar6 = 0x0e
+                           00000D   853 	ar5 = 0x0d
+                           00000C   854 	ar4 = 0x0c
+                           00000B   855 	ar3 = 0x0b
+                           00000A   856 	ar2 = 0x0a
+                           000009   857 	ar1 = 0x09
+                           000008   858 	ar0 = 0x08
+      000898 C0 E0            [24]  859 	push	acc
+      00089A C0 F0            [24]  860 	push	b
+      00089C C0 D0            [24]  861 	push	psw
+      00089E 75 D0 08         [24]  862 	mov	psw,#0x08
+                                    863 ;	src/display.c:81: if(PCA_CF) {
+                                    864 ;	src/display.c:87: PCA_CF = 0;										//Disable interrupt flag
+                                    865 ;	assignBit
+      0008A1 10 DF 02         [24]  866 	jbc	_PCA_CF,00137$
+      0008A4 80 3D            [24]  867 	sjmp	00106$
+      0008A6                        868 00137$:
+                                    869 ;	src/display.c:88: PCA_CCAP0_L = (display_counts & 0x0f); 			//Setup new compare value - Note that the low register MUST be written first to stop the comparison operation!
+      0008A6 AF 48            [24]  870 	mov	r7,_display_counts
+      0008A8 74 0F            [12]  871 	mov	a,#0x0f
+      0008AA 5F               [12]  872 	anl	a,r7
+      0008AB F5 EA            [12]  873 	mov	_PCA_CCAP0_L,a
+                                    874 ;	src/display.c:89: PCA_CCAP0_H = (display_counts >> 8);			//Setup new compare value
+      0008AD 85 49 FA         [24]  875 	mov	_PCA_CCAP0_H,(_display_counts + 1)
+                                    876 ;	src/display.c:90: PORT_P2 = display_buffer[display_index];		//Write segment buffer
+      0008B0 E5 46            [12]  877 	mov	a,_display_index
+      0008B2 24 42            [12]  878 	add	a,#_display_buffer
+      0008B4 F9               [12]  879 	mov	r1,a
+      0008B5 87 A0            [24]  880 	mov	_PORT_P2,@r1
+                                    881 ;	src/display.c:93: if((flash_prescaler < 0x08) && ((display_flash >> display_index) & 0x01))
+      0008B7 74 F8            [12]  882 	mov	a,#0x100 - 0x08
+      0008B9 25 4B            [12]  883 	add	a,_ISR_PCA_flash_prescaler_65536_154
+      0008BB 40 11            [24]  884 	jc	00102$
+      0008BD 85 46 F0         [24]  885 	mov	b,_display_index
+      0008C0 05 F0            [12]  886 	inc	b
+      0008C2 E5 47            [12]  887 	mov	a,_display_flash
+      0008C4 80 02            [24]  888 	sjmp	00140$
+      0008C6                        889 00139$:
+      0008C6 C3               [12]  890 	clr	c
+      0008C7 13               [12]  891 	rrc	a
+      0008C8                        892 00140$:
+      0008C8 D5 F0 FB         [24]  893 	djnz	b,00139$
+      0008CB 20 E0 33         [24]  894 	jb	acc.0,00115$
+      0008CE                        895 00102$:
+                                    896 ;	src/display.c:96: display_drive_common(display_index);
+      0008CE AF 46            [24]  897 	mov	r7,_display_index
+                                    898 ;	include/board_config.h:46: PORT_P3 &= ~(0x04 << index);
+      0008D0 8F F0            [24]  899 	mov	b,r7
+      0008D2 05 F0            [12]  900 	inc	b
+      0008D4 74 04            [12]  901 	mov	a,#0x04
+      0008D6 80 02            [24]  902 	sjmp	00144$
+      0008D8                        903 00142$:
+      0008D8 25 E0            [12]  904 	add	a,acc
+      0008DA                        905 00144$:
+      0008DA D5 F0 FB         [24]  906 	djnz	b,00142$
+      0008DD F4               [12]  907 	cpl	a
+      0008DE FF               [12]  908 	mov	r7,a
+      0008DF 52 B0            [12]  909 	anl	_PORT_P3,a
+                                    910 ;	src/display.c:96: display_drive_common(display_index);
+                                    911 ;	src/display.c:98: return;
+      0008E1 80 1E            [24]  912 	sjmp	00115$
+      0008E3                        913 00106$:
+                                    914 ;	src/display.c:101: if(PCA_CCF0) {
+                                    915 ;	src/display.c:106: PCA_CCF0 = 0;				//Disable interrupt flag
+                                    916 ;	assignBit
+      0008E3 10 D8 02         [24]  917 	jbc	_PCA_CCF0,00145$
+      0008E6 80 19            [24]  918 	sjmp	00115$
+      0008E8                        919 00145$:
+                                    920 ;	include/board_config.h:57: PORT_P3 |= (0x3c);
+      0008E8 43 B0 3C         [24]  921 	orl	_PORT_P3,#0x3c
+                                    922 ;	src/display.c:108: if(!display_index){
+      0008EB E5 46            [12]  923 	mov	a,_display_index
+      0008ED 70 0D            [24]  924 	jnz	00110$
+                                    925 ;	src/display.c:110: if(!(flash_prescaler--))
+      0008EF AF 4B            [24]  926 	mov	r7,_ISR_PCA_flash_prescaler_65536_154
+      0008F1 15 4B            [12]  927 	dec	_ISR_PCA_flash_prescaler_65536_154
+      0008F3 EF               [12]  928 	mov	a,r7
+      0008F4 70 03            [24]  929 	jnz	00108$
+                                    930 ;	src/display.c:111: flash_prescaler = 0x10;
+      0008F6 75 4B 10         [24]  931 	mov	_ISR_PCA_flash_prescaler_65536_154,#0x10
+      0008F9                        932 00108$:
+                                    933 ;	src/display.c:112: display_index = 0x04;
+      0008F9 75 46 04         [24]  934 	mov	_display_index,#0x04
+      0008FC                        935 00110$:
+                                    936 ;	src/display.c:114: display_index--;			//Decrement display index
+      0008FC E5 46            [12]  937 	mov	a,_display_index
+      0008FE 14               [12]  938 	dec	a
+      0008FF F5 46            [12]  939 	mov	_display_index,a
+                                    940 ;	src/display.c:116: return;
+      000901                        941 00115$:
+                                    942 ;	src/display.c:118: }
+      000901 D0 D0            [24]  943 	pop	psw
+      000903 D0 F0            [24]  944 	pop	b
+      000905 D0 E0            [24]  945 	pop	acc
+      000907 32               [24]  946 	reti
+                                    947 ;	eliminated unneeded push/pop dpl
+                                    948 ;	eliminated unneeded push/pop dph
+                                    949 	.area CSEG    (CODE)
+                                    950 	.area CONST   (CODE)
+                                    951 	.area XINIT   (CODE)
+                                    952 	.area CABS    (ABS,CODE)

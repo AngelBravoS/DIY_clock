@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
-                                      3 ; Version 3.6.9 #9959 (Linux)
+                                      3 ; Version 4.2.0 #13081 (Linux)
                                       4 ;--------------------------------------------------------
                                       5 	.module uart
                                       6 	.optsdcc -mmcs51 --model-small
@@ -295,7 +295,7 @@
                            0000CC   295 _PORT_P5_4	=	0x00cc
                            0000CD   296 _PORT_P5_5	=	0x00cd
                            0000CE   297 _PORT_P5_6	=	0x00ce
-                           0000CD   298 _PORT_P5_7	=	0x00cd
+                           0000CF   298 _PORT_P5_7	=	0x00cf
                            0000A8   299 _INT_IE_EX0	=	0x00a8
                            0000A9   300 _INT_IE_ET0	=	0x00a9
                            0000AA   301 _INT_IE_EX1	=	0x00aa
@@ -332,7 +332,7 @@
                            00009C   332 _UART_REN	=	0x009c
                            00009D   333 _UART_SM2	=	0x009d
                            00009E   334 _UART_SM1	=	0x009e
-                           00009E   335 _UART_SM0	=	0x009e
+                           00009F   335 _UART_SM0	=	0x009f
                                     336 ;--------------------------------------------------------
                                     337 ; overlayable register banks
                                     338 ;--------------------------------------------------------
@@ -343,7 +343,7 @@
                                     343 ;--------------------------------------------------------
                                     344 	.area DSEG    (DATA)
                                     345 ;--------------------------------------------------------
-                                    346 ; overlayable items in internal ram 
+                                    346 ; overlayable items in internal ram
                                     347 ;--------------------------------------------------------
                                     348 	.area	OSEG    (OVR,DATA)
                                     349 ;--------------------------------------------------------
@@ -406,11 +406,11 @@
                                     406 ;------------------------------------------------------------
                                     407 ;c                         Allocated to registers 
                                     408 ;------------------------------------------------------------
-                                    409 ;	../uart.c:10: void putchar(uint8_t c) {
+                                    409 ;	src/uart.c:10: void putchar(uint8_t c) {
                                     410 ;	-----------------------------------------
                                     411 ;	 function putchar
                                     412 ;	-----------------------------------------
-      001AA4                        413 _putchar:
+      001ADF                        413 _putchar:
                            000007   414 	ar7 = 0x07
                            000006   415 	ar6 = 0x06
                            000005   416 	ar5 = 0x05
@@ -419,16 +419,17 @@
                            000002   419 	ar2 = 0x02
                            000001   420 	ar1 = 0x01
                            000000   421 	ar0 = 0x00
-      001AA4 85 82 99         [24]  422 	mov	_UART_SBUF,dpl
-                                    423 ;	../uart.c:12: while(!UART_TI); // Wait for transmission to complete
-      001AA7                        424 00101$:
-                                    425 ;	../uart.c:13: UART_TI = 0;	 // Clear transmit flag
+      001ADF 85 82 99         [24]  422 	mov	_UART_SBUF,dpl
+                                    423 ;	src/uart.c:12: while(!UART_TI); // Wait for transmission to complete
+      001AE2                        424 00101$:
+                                    425 ;	src/uart.c:13: UART_TI = 0;	 // Clear transmit flag
                                     426 ;	assignBit
-      001AA7 10 99 02         [24]  427 	jbc	_UART_TI,00112$
-      001AAA 80 FB            [24]  428 	sjmp	00101$
-      001AAC                        429 00112$:
-      001AAC 22               [24]  430 	ret
-                                    431 	.area CSEG    (CODE)
-                                    432 	.area CONST   (CODE)
-                                    433 	.area XINIT   (CODE)
-                                    434 	.area CABS    (ABS,CODE)
+      001AE2 10 99 02         [24]  427 	jbc	_UART_TI,00114$
+      001AE5 80 FB            [24]  428 	sjmp	00101$
+      001AE7                        429 00114$:
+                                    430 ;	src/uart.c:14: }
+      001AE7 22               [24]  431 	ret
+                                    432 	.area CSEG    (CODE)
+                                    433 	.area CONST   (CODE)
+                                    434 	.area XINIT   (CODE)
+                                    435 	.area CABS    (ABS,CODE)

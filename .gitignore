@@ -1,2 +1,6 @@
-/doc/
 *~lock*
+.vscode/
+doc/
+/Release/
+*.d
+*.rel
