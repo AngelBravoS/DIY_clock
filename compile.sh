@@ -16,7 +16,7 @@ for src in $SOURCES; do
 done
 
 echo "Linking..."
-$CC --data-loc 0x24 -o Binary/stc_led_clock_8k.ihx Release/*.rel
+$CC --data-loc 0x24 -o Binary/DIY_Firmware_13k.ihx Release/*.rel
 
 echo "Done!"
 ./check_size.sh
