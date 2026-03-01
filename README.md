@@ -2,6 +2,8 @@
 
 Firmware optimizado para relojes LED DIY basados en microcontroladores STC15, específicamente adaptado para el modelo **CAI-082-V4** con migración de STC15W408AS a **AP15W413AS**.
 
+![CAI-082-V4](CAI-082-V4m.jpg)
+
 ---
 
 ## Hardware
@@ -248,44 +250,6 @@ Ver documentación detallada en `Binary/Memory_Allocation.pdf`
 
 ---
 
-## Bugs Corregidos
-
-Este fork incluye correcciones críticas del firmware original:
-
-### Bug #1 (ALTO) - `stc15w408as.h:122`
-**Problema:** `PORT_P5_7` con dirección duplicada 0xcd (igual que P5_5)  
-**Solución:** Corregido a 0xcf  
-**Impacto:** P5 no usado, sin efectos visibles  
-
-### Bug #2 (MEDIO) - `stc15w408as.h:240`
-**Problema:** `UART_SM0` compartía dirección 0x9e con `UART_SM1`  
-**Solución:** Corregido a 0x9f  
-**Impacto:** UART solo para debug, sin efectos en uso normal  
-
-### Bug #3 (ALTO) - `adc.h:106`
-**Problema:** `adc_read_thermistor()` llamaba a `adc_trigger_ldr()` (copy-paste error)  
-**Solución:** Corregido a `adc_trigger_thermistor()`  
-**Impacto:** Función no usada (modo interrupción), pero error latente  
-
-### Bug #4 (CRÍTICO) - `ds1302.c:~215`
-**Problema:** Tabla `lut_24h_to_12h` en 0x3227 causaba overlap con otras tablas  
-**Solución:** Reubicada a 0x3250 (zona segura)  
-**Impacto:** Riesgo de corrupción de datos con AP15W413AS (13KB)  
-
-### Bug #5 (MEDIO) - `eeprom.c:51`
-**Problema:** `eeprom_erase()` no escribía `IAP_ADDRL`  
-**Solución:** Añadido `IAP_ADDRL = 0x00`  
-**Impacto:** Funcionaba por casualidad (retenía valor previo)  
-
-### Bug #6 (CRÍTICO) - `timer.c:107,110`
-**Problema:** Detección `HELD_DOWN` usaba `==` en vez de `>=`  
-**Solución:** Cambiado a `>=` para detección confiable  
-**Impacto:** Pulsación larga no funcionaba correctamente  
-
-**Nota:** Bug #6 adicional (display.c) - modificación buffer sin protección interrupciones - NO CRÍTICO, no corregido (impacto visual mínimo)
-
----
-
 ## Compilación
 
 ### Requisitos
@@ -399,7 +363,7 @@ stcgal -P stc15 -p /dev/ttyACM0 -t 22118.4 \
 
 ### Primer Arranque
 
-**CRÍTICO:** Al primer encendido después de flashear:
+Después de flashear:
 
 ```bash
 # 1. Presionar AMBOS botones simultáneamente al conectar alimentación
@@ -435,67 +399,6 @@ stcgal -P stc15 -p /dev/ttyACM0 -t 22118.4 \
 | EEPROM | ~5KB | ~5KB | ✅ Compatible |
 | Voltaje | 2.4-5.5V | 2.4-5.5V | ✅ Idéntico |
 | SFRs | Estándar | Estándar | ✅ Compatible |
-
-**Conclusión:** Drop-in replacement - solo cambiar chip físicamente
-
-### Procedimiento de Migración
-
-1. **Desmontar reloj** y extraer STC15W408AS
-2. **Soldar AP15W413AS** en el mismo zócalo (28 pines)
-3. **Compilar firmware** con bugs corregidos
-4. **Flashear** según instrucciones arriba
-5. **Calibrar** brillo en primer arranque
-
----
-
-## Configuración Avanzada
-
-### Ajustar Timeouts
-
-Editar `include/fsm.h`:
-
-```c
-// Tiempo de vuelta a HH:MM desde otras pantallas (centisegundos)
-#define FSM_HOME_RESET_TICKS 0x01f4  // 500cs = 5s (actual)
-// Cambiar a: 0x03e8 (10s), 0x07d0 (20s), etc.
-
-// Tiempo entre auto-scroll de pantallas
-#define FSM_HOME_AUTO_SCROLL_TICKS 0xc8  // 200cs = 2s
-
-// Tiempo en HH:MM antes de activar auto-scroll
-#define FSM_HOME_AUTO_ENABLE_TICKS 0x03e8  // 1000cs = 10s
-```
-
-### Cambiar Año Base
-
-Editar `src/ds1302.c` línea ~24:
-
-```c
-__code __at(0x3200) const ds1302_data ds1302_init = {
-    0x00,    // Seconds
-    0x11,    // Minutes
-    0x10,    // Hour
-    0x29,    // Date
-    0x07,    // Month
-    0x06,    // Day
-    0x26,    // Year (0x26 = 2026) ← MODIFICAR AQUÍ
-    0x00,    // Write-protect
-};
-```
-
-### Ajustar Sensibilidad Botones
-
-Editar `include/button.h`:
-
-```c
-// Umbral para pulsación larga (320ms actual)
-#define BUTTON_LONG_PRESS_COUNT 0x20  // 32 × 10ms = 320ms
-// Incrementar para más tiempo: 0x32 (500ms), 0x64 (1000ms)
-
-// Umbral para mantenido (1500ms actual)
-#define BUTTON_HELD_DOWN_COUNT 0x96   // 150 × 10ms = 1500ms
-// Cambiar a: 0xC8 (2000ms), 0xFA (2500ms)
-```
 
 ---
 
@@ -545,20 +448,12 @@ Si encuentras bugs o tienes sugerencias:
 
 Ver archivo `LICENSE` para términos completos.
 
-Este fork mantiene la licencia del proyecto original y añade mejoras específicas para la comunidad hispanohablante.
+Este fork mantiene la licencia del proyecto original.
 
 ---
 
 ## Agradecimientos
 
-- **Autor original:** shenghao - Por el firmware base
-- **Comunidad STC MCU:** Por documentación y herramientas
-- **stcgal:** Por el excelente programmer open-source
+- **Autor original:** shenghao - Por el firmware base.
 
 ---
-
-**Versión:** DIY_Firmware_13k_1.0.0  
-**Fecha:** Febrero 2026  
-**Hardware:** CAI-082-V4 con AP15W413AS  
-**Compilado con:** SDCC 4.2.0  
-**Estado:** Estable y probado

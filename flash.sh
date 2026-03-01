@@ -1,5 +1,11 @@
+cd ..
 source stcgal-env/bin/activate
-cd DIY_clock/Release/
+cd DIY_clock/Binary/
+
 sudo chmod 666 /dev/ttyACM0
 
-stcgal -P stc15 -p /dev/ttyACM0 -t 22118.4 -o eeprom_erase_enabled=True DIY_Firmware_13k.ihx
+stcgal -P stc15 \
+       -p /dev/ttyACM0 \
+       -t 22118.4 \
+       -o eeprom_erase_enabled=True \
+       main.hex

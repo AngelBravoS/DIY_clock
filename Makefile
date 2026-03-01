@@ -15,7 +15,7 @@ REL_FILES = $(addprefix $(REL_DIR)/,$(SOURCES:.c=.rel))
 
 TARGET = DIY_Firmware_13k
 
-.PHONY: all clean size flash help
+.PHONY: all clean size help
 
 all: $(BIN_DIR)/$(TARGET).ihx
 
@@ -30,20 +30,19 @@ $(REL_DIR)/%.rel: $(SRC_DIR)/%.c | $(REL_DIR)
 
 $(REL_DIR):
 	@mkdir -p $(REL_DIR)
+	@touch $(REL_DIR)/.gitkeep
 
 $(BIN_DIR):
 	@mkdir -p $(BIN_DIR)
+	@touch $(BIN_DIR)/.gitkeep
 
 clean:
-	@rm -rf $(REL_DIR)/* $(BIN_DIR)/*
+	@rm -f $(REL_DIR)/*.rel
+	@rm -f $(BIN_DIR)/*.ihx
 	@echo 'Clean done'
 
 size: $(BIN_DIR)/$(TARGET).ihx
 	@./check_size.sh
 
-flash: $(BIN_DIR)/$(TARGET).ihx
-	@sudo chmod 666 /dev/ttyACM0 2>/dev/null || true
-	@stcgal -P stc15 -p /dev/ttyACM0 -t 22118.4 -o eeprom_erase_enabled=True $
-
 help:
-	@echo 'Targets: all, clean, size, flash, help'
+	@echo 'Targets: all, clean, size, help'
