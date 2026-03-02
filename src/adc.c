@@ -10,48 +10,6 @@
 #undef ADC_C_
 
 
-void adc_calibrate_LDR(uint16_t ldr_min,uint16_t ldr_max) {
-	/* Bresenham/DDA linear interpolation - pure 16-bit, no library needed.
-	 * pwm decrements from COUNTS_MAX to COUNTS_MIN across [ldr_min, ldr_max].
-	 * step     = COUNTS_RANGE / ldr_range  (integer step per ADC count)
-	 * err_step = COUNTS_RANGE % ldr_range  (fractional remainder, Bresenham)
-	 * Max error vs float: 1 count out of 59604 range - negligible.
-	 */
-	uint16_t ldr_range = ldr_max - ldr_min;
-	uint16_t step      = DISPLAY_COUNTS_RANGE / ldr_range;
-	uint16_t err_step  = DISPLAY_COUNTS_RANGE % ldr_range;
-	uint16_t err_acc   = 0;
-	uint16_t pwm_val   = DISPLAY_COUNTS_MAX;
-	uint16_t i;
-
-	eeprom_start();
-	eeprom_erase(0x00);
-	eeprom_erase(0x02);
-	eeprom_erase(0x04);
-	eeprom_erase(0x08);
-	for(i=0;i<1024;i++){
-		if((i >= ldr_min) && (i <= ldr_max)){
-			eeprom_write(2*i,   pwm_val & 0x00ff);
-			eeprom_write((2*i)+1, pwm_val >> 8);
-			pwm_val -= step;
-			err_acc += err_step;
-			if(err_acc >= ldr_range){
-				pwm_val--;
-				err_acc -= ldr_range;
-			}
-			continue;
-		}
-		if(i < ldr_min){
-			eeprom_write((2*i),   DISPLAY_COUNTS_MAX & 0x00ff);
-			eeprom_write((2*i)+1, DISPLAY_COUNTS_MAX >> 8);
-			continue;
-		}
-		eeprom_write((2*i),   DISPLAY_COUNTS_MIN & 0x00ff);
-		eeprom_write((2*i)+1, DISPLAY_COUNTS_MIN >> 8);
-	}
-	eeprom_end();
-}
-
 /*!
  * \brief ADC ISR
  *

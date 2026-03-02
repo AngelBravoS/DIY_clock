@@ -12,7 +12,8 @@
 #include "alarm.h"
 #include "fsm.h"
 
-void main(void) {
+void main(void)
+{
 	/* FSM variables */
 	enum fsm_states_highlevel fsm_curstate = fsm_home;
 	enum fsm_return (*fsm_fp)(void) = fsm_home_fn;
@@ -41,7 +42,15 @@ void main(void) {
 					&& (button_read_and_clear_select() == BUTTON_HELD_DOWN)))
 		ds1302_power_loss_reset();
 	/* Perform miscellaneous setup tasks */
-	display_autobrightness = 1;
+	/* Apply saved brightness level */
+	if(BR_LEVEL == 0 || BR_LEVEL > 10) {
+		display_autobrightness = 1;				//Auto brightness (default)
+	} else {
+		display_autobrightness = 0;
+		INT_IE_EA = 0;
+		display_counts = DISPLAY_COUNTS_MIN + (uint16_t)(BR_LEVEL - 1) * (DISPLAY_COUNTS_RANGE / 9);
+		INT_IE_EA = 1;
+	}
 	fsm_home_auto = 0;
 	/* Run main state machine */
 	while(1){

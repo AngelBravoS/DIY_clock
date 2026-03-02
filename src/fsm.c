@@ -45,14 +45,10 @@ enum fsm_return fsm_home_fn() {
 		}
 
 		if(select_state == BUTTON_PRESSED){
-			if(display_autobrightness){
-				display_autobrightness = 0;
-				INT_IE_EA = 0;
-				display_counts = DISPLAY_COUNTS_MAX;
-				INT_IE_EA = 1;
-			} else {
-				display_autobrightness = 1;
-			}
+			/* Select button pressed: jump to temperature display */
+			transition_ticks = centiseconds();
+			fsm_home_auto = 0;
+			curstate = fsm_home_temp;
 		}
 
 		if(curstate != fsm_home_start) {
@@ -420,40 +416,36 @@ enum fsm_return fsm_config_fn() {
 			curstate++;
 		display_puts(ledstrings[ledstrings_conf]);
 		break;
-	case fsm_config_ldr_calib_label:
+	case fsm_config_br:
+		if(menu_state == BUTTON_LONG_PRESSED) {
+			curstate = fsm_config_label;
+			return fsm_ok;
+		}
 		if(menu_state == BUTTON_PRESSED)
 			curstate = fsm_config_thermistor_calib_label;
-		if(select_state == BUTTON_PRESSED)
-			curstate = fsm_config_ldr_calib_low;
-		display_puts(ledstrings[ledstrings_lcal]);
-		break;
-	case fsm_config_ldr_calib_low:
-	case fsm_config_ldr_calib_high:
-		display_autobrightness = 0;
-
-		if(menu_state == BUTTON_LONG_PRESSED)
-			curstate = fsm_config_ldr_calib_label;
-		if(select_state == BUTTON_PRESSED){
-			if(curstate == fsm_config_ldr_calib_low) {
-				config_tmp = adc_get_ldr();
-				curstate++;
-			} else {
-				adc_calibrate_LDR(adc_get_ldr(),config_tmp);
-				curstate = fsm_config_ldr_calib_label;
-				display_autobrightness = 1;
-			}
+		if(select_state == BUTTON_PRESSED || select_state == BUTTON_HELD_DOWN) {
+			if(++BR_LEVEL > 10) BR_LEVEL = 0;
 		}
-		if(curstate == fsm_config_ldr_calib_low) {
-			display_puts(ledstrings[ledstrings_cllo]);
-			INT_IE_EA = 0;
-			display_counts = DISPLAY_COUNTS_MIN;
-			INT_IE_EA = 1;
+		/* Apply brightness */
+		if(BR_LEVEL == 0) {
+			display_autobrightness = 1;
 		} else {
-			display_puts(ledstrings[ledstrings_clhi]);
+			display_autobrightness = 0;
 			INT_IE_EA = 0;
-			display_counts = DISPLAY_COUNTS_MAX;
+			display_counts = DISPLAY_COUNTS_MIN + (uint16_t)(BR_LEVEL - 1) * (DISPLAY_COUNTS_RANGE / 9);
 			INT_IE_EA = 1;
 		}
+		/* Display: "br 0" .. "br10" */
+		display_buffer[0] = ledfonts_numeric_normal['b'];
+		display_buffer[1] = ledfonts_numeric_normal['r'];
+		if(BR_LEVEL == 10) {
+			display_buffer[2] = ledfonts_numeric_flipped['1'];
+			display_buffer[3] = ledfonts_numeric_normal['0'];
+		} else {
+			display_buffer[2] = ledfonts_numeric_flipped[' '];
+			display_buffer[3] = ledfonts_numeric_normal['0' + BR_LEVEL];
+		}
+		display_colonon();
 		break;
 	case fsm_config_thermistor_calib_label:
 		if(menu_state == BUTTON_PRESSED)
@@ -497,11 +489,11 @@ enum fsm_return fsm_config_fn() {
 	case fsm_config_display_12h:
 	case fsm_config_display_mmdd:
 	case fsm_config_display_remove_lzeroes:
-		display_puts(ledstrings[curstate + 0x0b]);
+		display_puts(ledstrings[curstate + 0x0a]);
 		if(curstate != fsm_config_display_remove_lzeroes) {
-			display_putbool((SC_1 >> (curstate - 0x06)) & 0x01);
+			display_putbool((SC_1 >> (curstate - 0x04)) & 0x01);
 			if(select_state == BUTTON_PRESSED)
-				SC_1 ^= (0x01 << (curstate - 0x06));
+				SC_1 ^= (0x01 << (curstate - 0x04));
 		} else {
 			display_putbool(DISPLAY_REMOVE_LEADING_ZEROES);
 			if(select_state == BUTTON_PRESSED)

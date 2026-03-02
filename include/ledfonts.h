@@ -20,10 +20,7 @@ enum ledstrings_key {
 	ledstrings_alon,
 	ledstrings_alof,
 	ledstrings_conf,
-	ledstrings_lcal,
-	ledstrings_cldn,
-	ledstrings_cllo,
-	ledstrings_clhi,
+	ledstrings_brig,		///<  "br  " brightness menu
 	ledstrings_tcal,
 	ledstrings_disp,
 };

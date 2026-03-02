@@ -138,22 +138,20 @@ enum fsm_substates_alarm {
 enum fsm_states_config {
 	fsm_config_label = 0,					///< Configuration state label display
 	fsm_config_start = 1,					///< FSM configuration sub-state machine start location
-	fsm_config_ldr_calib_label = 1, 		///< Configuration: Brightness calibration label
-	fsm_config_ldr_calib_low = 2,			///< Configuration: calibrate LDR lowest brightness (max LDR ADC input readout)
-	fsm_config_ldr_calib_high = 3, 			///< Configuration: calibrate LDR highest brightness (minimum LDR ADC input readout)
-	fsm_config_thermistor_calib_label = 4,	///< Configuration: Thermistor calibration label
-	fsm_config_thermistor_calib = 5,		///< Configuration: Calibrate thermistor
-	fsm_config_display_label = 6, 			///< Configuration: Display configuration label
-	fsm_config_auto_mmss = 7,				///< Configure automatic display of mmss
-	fsm_config_auto_temp = 8,				///< Configure automatic display of temperature
-	fsm_config_auto_dow = 9,				///< Configure automatic display of day-of-week
-	fsm_config_auto_date = 10,				///< Configure automatic display of date
-	fsm_config_auto_year = 11,				///< Configure automatic display of year
-	fsm_config_display_12h = 12, 			///< Configure time display format (12h or 24h)
-	fsm_config_display_mmdd = 13, 			///< Configure date display format (mmdd or ddmm)
-	fsm_config_display_remove_lzeroes = 14, ///< Configure whether to remove leading zeroes from display
+	fsm_config_br = 1,						///< Configuration: Brightness level (0=auto, 1-10=manual)
+	fsm_config_thermistor_calib_label = 2,	///< Configuration: Thermistor calibration label
+	fsm_config_thermistor_calib = 3,		///< Configuration: Calibrate thermistor
+	fsm_config_display_label = 4,			///< Configuration: Display configuration label
+	fsm_config_auto_mmss = 5,				///< Configure automatic display of mmss
+	fsm_config_auto_temp = 6,				///< Configure automatic display of temperature
+	fsm_config_auto_dow = 7,				///< Configure automatic display of day-of-week
+	fsm_config_auto_date = 8,				///< Configure automatic display of date
+	fsm_config_auto_year = 9,				///< Configure automatic display of year
+	fsm_config_display_12h = 10,			///< Configure time display format (12h or 24h)
+	fsm_config_display_mmdd = 11,			///< Configure date display format (mmdd or ddmm)
+	fsm_config_display_remove_lzeroes = 12,	///< Configure whether to remove leading zeroes from display
 	fsm_config_end,							///< FSM configuration sub-state machine end location
-};
+	};
 
 /* FSM states */
 
