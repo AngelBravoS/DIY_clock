@@ -80,7 +80,7 @@ enum fsm_states_highlevel {
 enum fsm_states_home {
 	fsm_home_start = 0,	///< FSM home state machine repetitive start location
 	fsm_home_time = 0,	///< Home state displaying time (hour, minutes)
-	fsm_home_mmss = 1,	///< Home state displaying time (minutes, seconds)
+	fsm_home_chrono = 1,	///< Home state displaying time (minutes, seconds)
 	fsm_home_temp = 2,	///< Home state displaying temperature
 	fsm_home_dow  = 3,	///< Home state displaying day of week
 	fsm_home_date = 4,	///< Home state displaying short date

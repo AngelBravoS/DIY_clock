@@ -11,6 +11,11 @@
 uint8_t alarm_lastpoll = 0;					  ///< Time alarm was last polled (minutes)
 uint16_t transition_ticks = 0;				  ///< 10ms timer ticks at last transition
 
+/* Chronometer state */
+static uint16_t chrono_seconds = 0;		  ///< Total elapsed seconds (0-3599)
+static uint16_t chrono_base = 0;			  ///< centiseconds() at last second tick
+static uint8_t  chrono_running = 0;		  ///< 1=running, 0=stopped
+
 enum fsm_return fsm_home_fn() {
 	static enum fsm_states_home curstate = fsm_home_start;
 	uint8_t alarm_index = 0;
@@ -20,6 +25,25 @@ enum fsm_return fsm_home_fn() {
 	enum button_states select_state;
 	menu_state = button_read_and_clear_menu();
 	select_state = button_read_and_clear_select();
+
+	/* Chrono-specific button handling: intercept before generic handlers */
+	if(curstate == fsm_home_chrono) {
+		if(select_state == BUTTON_PRESSED) {
+			if(!chrono_running) {
+				chrono_base = centiseconds();
+				chrono_running = 1;
+			} else {
+				chrono_running = 0;
+			}
+			select_state = BUTTON_NONE; /* consume */
+		}
+		if(select_state == BUTTON_LONG_PRESSED) {
+			chrono_seconds = 0;
+			chrono_running = 0;
+			select_state = BUTTON_NONE; /* consume */
+		}
+		/* MENU short/long and MENU+SELECT long fall through to generic handlers */
+	}
 
 	if(curstate != fsm_home_alarm){
 		if((menu_state == BUTTON_LONG_PRESSED) && (select_state == BUTTON_LONG_PRESSED)){
@@ -53,8 +77,10 @@ enum fsm_return fsm_home_fn() {
 
 		if(curstate != fsm_home_start) {
 			if(fsm_home_auto){
-				/* Automatic scroll timeout */
-				if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_SCROLL_TICKS){
+				/* Automatic scroll timeout — chrono is never autoscrolled */
+				if(curstate == fsm_home_chrono) {
+					fsm_home_auto = 0;
+				} else if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_SCROLL_TICKS){
 					/* Perform automatic scrolling */
 					find_auto_target:
 					while(++curstate != fsm_home_end){
@@ -68,10 +94,12 @@ enum fsm_return fsm_home_fn() {
 					transition_ticks = centiseconds();
 					fsm_home_auto = 0;
 					curstate = fsm_home_start;
+					//}
 				}
 			} else {
-				/* Manual display timeout */
-				if(((centiseconds() - transition_ticks) > FSM_HOME_RESET_TICKS)) {
+				/* Manual display timeout — not applied to chrono */
+				if(((centiseconds() - transition_ticks) > FSM_HOME_RESET_TICKS)
+						&& (curstate != fsm_home_chrono)) {
 					/* Reset state back to start screen */
 					transition_ticks = centiseconds();
 					curstate = fsm_home_start;
@@ -129,12 +157,28 @@ enum fsm_return fsm_home_fn() {
 		if(ds1302.seconds % 2)
 			display_colonon();
 		break;
-	case fsm_home_mmss:
-		/* Display mmss time */
-		display_putbcd(ds1302.minutes,ds1302.seconds);
-		if(ds1302.seconds % 2)
+	case fsm_home_chrono: /* Chronometer */
+	{
+		uint8_t mm, ss;
+		if(chrono_running) {
+			/* Advance seconds each time 100 centiseconds elapse */
+			if((uint16_t)(centiseconds() - chrono_base) >= 100) {
+				chrono_base += 100;
+				chrono_seconds++;
+				if(chrono_seconds >= 3600) {	/* 59:59 exceeded → reset and stop */
+					chrono_seconds = 0;
+					chrono_running = 0;
+				}
+			}
+		}
+		mm = chrono_seconds / 60;
+		ss = chrono_seconds % 60;
+		display_putbcd(((mm / 10) << 4) | (mm % 10),
+		               ((ss / 10) << 4) | (ss % 10));
+		if(chrono_running && (ss & 0x01))
 			display_colonon();
 		break;
+	}
 	case fsm_home_temp:
 		temp_cache = EEPROM_TEMP_FROM_THERMISTOR_TABLE[adc_get_thermistor()];
 		temp_cache = bcd_add_16(temp_cache,(ds1302_sram_data[DS1302_BBSRAM_SIZE-2] |
@@ -255,6 +299,7 @@ enum fsm_return fsm_set_fn() {
 
 	return fsm_repeat;
 }
+
 enum fsm_return fsm_alarm_fn() {
 	static enum fsm_states_alarm curstate = fsm_alarm_label;
 	static enum fsm_substates_alarm sub_curstate = fsm_alarm_substate_toggle;
@@ -387,7 +432,6 @@ enum fsm_return fsm_alarm_fn() {
 
 	return fsm_repeat;
 }
-
 
 enum fsm_return fsm_config_fn() {
 	static enum fsm_states_config curstate = fsm_config_label;
