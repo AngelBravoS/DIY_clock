@@ -417,7 +417,7 @@ Después de flashear:
 
 ### Proyecto Original
 
-- **Fork basado en:** [Proyecto original en GitHub]
+- **Fork basado en:** [https://github.com/shenghaoyang/stc_led_clock_8k]
 - **Autor original:** shenghao
 - **Licencia:** Ver LICENSE file
 

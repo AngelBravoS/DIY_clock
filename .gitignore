@@ -1,6 +1,8 @@
 *~lock*
+Backup&Files/
 .vscode/
 doc/
 /Release/
 *.d
 *.rel
+Makefile.txt

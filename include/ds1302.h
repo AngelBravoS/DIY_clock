@@ -436,7 +436,7 @@ uint16_t bcd_add_16(uint16_t op1,uint16_t op2);
  * \retval 0 data inside SRAM is not valid
  * \retval 1 data inside SRAM is valid
  */
-uint8_t ds1302_check_SRAM() __reentrant;
+uint8_t ds1302_check_SRAM();
 
 /*!
  * \brief Calculates a new CRC value for the ds1302 BBSRAM cache and writes it to
@@ -445,7 +445,7 @@ uint8_t ds1302_check_SRAM() __reentrant;
  * The CRC checksum used here is CRC-CCITT, stored at address 0x00 and 0x01 in
  * little endian byte order.
  */
-void ds1302_calculate_CRC() __reentrant;
+void ds1302_calculate_CRC();
 
 /*!
  * \brief Performs a cold-reset of the DS1302, resetting it from battery loss

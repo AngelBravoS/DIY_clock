@@ -8,7 +8,6 @@
 #ifndef DISPLAY_H_
 #define DISPLAY_H_
 #include <stdint.h>
-#include <stdio.h>
 #include "stc15w408as.h"
 #include "ledfonts.h"
 #include "ds1302.h"

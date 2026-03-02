@@ -1,7 +1,7 @@
 # Makefile para STC15 LED Clock
 
 CC = sdcc
-CFLAGS = --std-sdcc11 --opt-code-size --fomit-frame-pointer --data-loc 0x24 --model-small --iram-size 256 --xram-size 256 --code-size 8192 --stack-size 128
+CFLAGS = --std-sdcc11 --code-size 13312 --iram-size 256
 INCLUDES = -Iinclude -I/usr/share/sdcc/include/mcs51 -I/usr/share/sdcc/include
 
 SRC_DIR = src
@@ -9,7 +9,7 @@ INC_DIR = include
 REL_DIR = Release
 BIN_DIR = Binary
 
-SOURCES = main.c adc.c alarm.c button.c crc.c display.c ds1302.c eeprom.c fsm.c ledfonts.c timer.c uart.c
+SOURCES = main.c eeprom.c adc.c alarm.c button.c crc.c display.c ds1302.c  fsm.c ledfonts.c timer.c
 SRC_FILES = $(addprefix $(SRC_DIR)/,$(SOURCES))
 REL_FILES = $(addprefix $(REL_DIR)/,$(SOURCES:.c=.rel))
 
@@ -21,7 +21,7 @@ all: $(BIN_DIR)/$(TARGET).ihx
 
 $(BIN_DIR)/$(TARGET).ihx: $(REL_FILES) | $(BIN_DIR)
 	@echo 'Linking: $@'
-	$(CC) --data-loc 0x24 -o $@ $(REL_FILES)
+	$(CC) -o $@ $(REL_FILES)
 	@echo 'Done'
 
 $(REL_DIR)/%.rel: $(SRC_DIR)/%.c | $(REL_DIR)
@@ -38,7 +38,14 @@ $(BIN_DIR):
 
 clean:
 	@rm -f $(REL_DIR)/*.rel
+	@rm -f $(REL_DIR)/*.asm
+	@rm -f $(REL_DIR)/*.rst
+	@rm -f $(REL_DIR)/*.sym
+	@rm -f $(REL_DIR)/*.lst
 	@rm -f $(BIN_DIR)/*.ihx
+	@rm -f $(BIN_DIR)/*.lk
+	@rm -f $(BIN_DIR)/*.mem
+	@rm -f $(BIN_DIR)/*.map
 	@echo 'Clean done'
 
 size: $(BIN_DIR)/$(TARGET).ihx

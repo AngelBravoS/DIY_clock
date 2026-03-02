@@ -11,28 +11,43 @@
 
 
 void adc_calibrate_LDR(uint16_t ldr_min,uint16_t ldr_max) {
-	float gradient = (((float)(DISPLAY_COUNTS_RANGE))/((-1.00f)*(float)(ldr_max - ldr_min)));
-	float intercept = ((float)DISPLAY_COUNTS_MAX - gradient*((float)ldr_min));
+	/* Bresenham/DDA linear interpolation - pure 16-bit, no library needed.
+	 * pwm decrements from COUNTS_MAX to COUNTS_MIN across [ldr_min, ldr_max].
+	 * step     = COUNTS_RANGE / ldr_range  (integer step per ADC count)
+	 * err_step = COUNTS_RANGE % ldr_range  (fractional remainder, Bresenham)
+	 * Max error vs float: 1 count out of 59604 range - negligible.
+	 */
+	uint16_t ldr_range = ldr_max - ldr_min;
+	uint16_t step      = DISPLAY_COUNTS_RANGE / ldr_range;
+	uint16_t err_step  = DISPLAY_COUNTS_RANGE % ldr_range;
+	uint16_t err_acc   = 0;
+	uint16_t pwm_val   = DISPLAY_COUNTS_MAX;
 	uint16_t i;
 
 	eeprom_start();
-	eeprom_erase(0x00);	//Erase EEPROM sectors holding LDR lookup table
-	eeprom_erase(0x02);	//Erase EEPROM sectors holding LDR lookup table
-	eeprom_erase(0x04);	//Erase EEPROM sectors holding LDR lookup table
-	eeprom_erase(0x08);	//Erase EEPROM sectors holding LDR lookup table
+	eeprom_erase(0x00);
+	eeprom_erase(0x02);
+	eeprom_erase(0x04);
+	eeprom_erase(0x08);
 	for(i=0;i<1024;i++){
 		if((i >= ldr_min) && (i <= ldr_max)){
-			eeprom_write(2*i,((uint16_t)((gradient*(float)(i)) + intercept)) & 0x00ff);
-			eeprom_write((2*i)+1,((uint16_t)((gradient*(float)(i)) + intercept)) >> 8);
+			eeprom_write(2*i,   pwm_val & 0x00ff);
+			eeprom_write((2*i)+1, pwm_val >> 8);
+			pwm_val -= step;
+			err_acc += err_step;
+			if(err_acc >= ldr_range){
+				pwm_val--;
+				err_acc -= ldr_range;
+			}
 			continue;
 		}
 		if(i < ldr_min){
-			eeprom_write((2*i),DISPLAY_COUNTS_MAX & 0x00ff);
-			eeprom_write((2*i)+1,DISPLAY_COUNTS_MAX >> 8);
+			eeprom_write((2*i),   DISPLAY_COUNTS_MAX & 0x00ff);
+			eeprom_write((2*i)+1, DISPLAY_COUNTS_MAX >> 8);
 			continue;
 		}
-		eeprom_write((2*i),DISPLAY_COUNTS_MIN & 0x00ff);
-		eeprom_write((2*i)+1,DISPLAY_COUNTS_MIN >> 8);
+		eeprom_write((2*i),   DISPLAY_COUNTS_MIN & 0x00ff);
+		eeprom_write((2*i)+1, DISPLAY_COUNTS_MIN >> 8);
 	}
 	eeprom_end();
 }
@@ -49,9 +64,7 @@ void adc_calibrate_LDR(uint16_t ldr_min,uint16_t ldr_max) {
  * ADC_CONTR register to determine what channel the ADC was triggered on, and
  * updates the global variables.
  *
- * \warning The ADC ISR uses non-reentrant floating point operations. If
- * floating point operations are to be used in the main program, disable the ADC
- * ISR or disable display auto-brightness to prevent re-entrancy issues.
+ * \note The ADC ISR uses integer arithmetic only (IIR filter with bitshift).
  *
  */
 void ISR_ADC(void) __interrupt(INT_ADC) __using(3) {
@@ -63,8 +76,12 @@ void ISR_ADC(void) __interrupt(INT_ADC) __using(3) {
 	} else {
 		adc_ldr_reading = ADC_RES;
 		if(display_autobrightness) {
-			/* Perform brightness adjustment if the automatic adjustment is enabled */
-			display_counts_buffer = (((float)EEPROM_PWM_FROM_LDR_TABLE[adc_ldr_reading]/100.0) + ((99.00) *((float)display_counts/100.0)));
+			/* Perform brightness adjustment - IIR filter alpha=1/64, integer only */
+			uint16_t target = EEPROM_PWM_FROM_LDR_TABLE[adc_ldr_reading];
+			if(target > display_counts)
+				display_counts_buffer = display_counts + ((target - display_counts) >> 6);
+			else
+				display_counts_buffer = display_counts - ((display_counts - target) >> 6);
 			INT_IP_PPCA = 0; //Block PCA interrupt from stacking on top of ADC ISR
 			display_counts = display_counts_buffer;
 			INT_IP_PPCA = 1; //Re-enable PCA interrupt high priority

@@ -11,7 +11,7 @@
 uint8_t alarm_lastpoll = 0;					  ///< Time alarm was last polled (minutes)
 uint16_t transition_ticks = 0;				  ///< 10ms timer ticks at last transition
 
-enum fsm_return fsm_home_fn() __reentrant {
+enum fsm_return fsm_home_fn() {
 	static enum fsm_states_home curstate = fsm_home_start;
 	uint8_t alarm_index = 0;
 	uint16_t temp_cache;
@@ -163,7 +163,7 @@ enum fsm_return fsm_home_fn() __reentrant {
 	return fsm_repeat;	//Return repeat so we come back to this state.
 }
 
-enum fsm_return fsm_set_fn() __reentrant {
+enum fsm_return fsm_set_fn() {
 	static enum fsm_states_set curstate = fsm_set_label; //Default display hhmm
 	uint8_t fsm_set_temp;						 		 //Set time FSM temporary variable
 	/* Populate button state cache */
@@ -259,7 +259,7 @@ enum fsm_return fsm_set_fn() __reentrant {
 
 	return fsm_repeat;
 }
-enum fsm_return fsm_alarm_fn() __reentrant {
+enum fsm_return fsm_alarm_fn() {
 	static enum fsm_states_alarm curstate = fsm_alarm_label;
 	static enum fsm_substates_alarm sub_curstate = fsm_alarm_substate_toggle;
 	uint8_t alarm_temp;
@@ -393,7 +393,7 @@ enum fsm_return fsm_alarm_fn() __reentrant {
 }
 
 
-enum fsm_return fsm_config_fn() __reentrant {
+enum fsm_return fsm_config_fn() {
 	static enum fsm_states_config curstate = fsm_config_label;
 	static uint16_t config_tmp;
 	uint16_t config_tmp2;

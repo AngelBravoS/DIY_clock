@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdint.h>
 
 #include "stc15w408as.h"
@@ -13,8 +12,7 @@
 #include "alarm.h"
 #include "fsm.h"
 
-void main(void)
-{
+void main(void) {
 	/* FSM variables */
 	enum fsm_states_highlevel fsm_curstate = fsm_home;
 	enum fsm_return (*fsm_fp)(void) = fsm_home_fn;

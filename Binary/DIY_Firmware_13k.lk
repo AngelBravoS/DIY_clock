@@ -2,7 +2,6 @@
 -i Binary/DIY_Firmware_13k.ihx
 -M
 -b HOME = 0x0000
--b DSEG = 0x0024
 -b XSEG = 0x0001
 -b PSEG = 0x0001
 -b ISEG = 0x0000
@@ -15,16 +14,15 @@
 -l liblong
 -l libfloat
 Release/main.rel
+Release/eeprom.rel
 Release/adc.rel
 Release/alarm.rel
 Release/button.rel
 Release/crc.rel
 Release/display.rel
 Release/ds1302.rel
-Release/eeprom.rel
 Release/fsm.rel
 Release/ledfonts.rel
 Release/timer.rel
-Release/uart.rel
 
 -e

@@ -84,10 +84,8 @@ void ds1302_reset() {
 }
 
 void ds1302_start(uint8_t command) {
-	DS1302_DATA = command;
-
-	DS1302_IO = DS1302_DATA_0;				 //Write first data bit
-	DS1302_CE = 1;							 //Raise CE
+	DS1302_IO = 0;
+	DS1302_CE = 1;					 //Raise CE and wait tCC before first CLK
 	__asm
 	nop
 	nop
@@ -109,81 +107,10 @@ void ds1302_start(uint8_t command) {
 	nop
 	nop
 	nop
-	nop
-	nop
-	__endasm;								 //Wait tCC
-	DS1302_CLK = 1;					     	 //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
-	DS1302_IO = DS1302_DATA_1;				 //Write bit
-	DS1302_CLK = 1;						     //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
-	DS1302_IO = DS1302_DATA_2;				 //Write bit
-	DS1302_CLK = 1;						     //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
-	DS1302_IO = DS1302_DATA_3;				 //Write bit
-	DS1302_CLK = 1;						     //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
-	DS1302_IO = DS1302_DATA_4;				 //Write bit
-	DS1302_CLK = 1;						     //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
-	DS1302_IO = DS1302_DATA_5;				 //Write bit
-	DS1302_CLK = 1;						     //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
-	DS1302_IO = DS1302_DATA_6;				 //Write bit
-	DS1302_CLK = 1;						     //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
-	DS1302_IO = DS1302_DATA_7;				 //Write bit
-	DS1302_CLK = 1;						     //Raise CLK
-	__asm
-	nop
-	nop
-	nop
-	nop
-	__endasm;						 		//Extend tCH
-	DS1302_CLK = 0;							 //Drop CLK
+	__endasm;
+	ds1302_write_byte_slow(command);	 //Write command byte
 }
+
 
 uint8_t ds1302_read_byte_slow() {
 	DS1302_IO = 1;		//Stop driving I/O line
@@ -431,7 +358,7 @@ void ds1302_write_SRAM() {
 	ds1302_end();			//Terminate burst write
 }
 
-uint8_t ds1302_check_SRAM() __reentrant {
+uint8_t ds1302_check_SRAM() {
 	uint16_t val = ((ds1302_sram_data[0]) | (ds1302_sram_data[1] << 8));
 	if(crcSlow(ds1302_sram_data + DS1302_CRC_SIZE,DS1302_BBSRAM_SIZE - DS1302_CRC_SIZE) == val)
 		return 1;
@@ -439,7 +366,7 @@ uint8_t ds1302_check_SRAM() __reentrant {
 		return 0;
 }
 
-void ds1302_calculate_CRC() __reentrant {
+void ds1302_calculate_CRC() {
 	uint16_t crcval = crcSlow(ds1302_sram_data + DS1302_CRC_SIZE,DS1302_BBSRAM_SIZE - DS1302_CRC_SIZE);
 	CRC_LSB = ((uint8_t)(crcval & 0x00ff));
 	CRC_MSB = ((uint8_t)(crcval >> 8));
@@ -451,52 +378,15 @@ void ds1302_power_loss_reset() {
 	ds1302_calculate_CRC();
 	ds1302_set_time();
 	ds1302_reset();
-	ds1302_set_time();
-	ds1302_reset();
 	ds1302_write_SRAM();
 }
 
 uint8_t convert_24h_to_12h(uint8_t h_24) {
-	static __code __at(0x3250) const uint8_t lut_24h_to_12h[0x24] = {
-		0x00,	//0x00
-		0x01,	//0x01
-		0x02,	//0x02
-		0x03,	//0x03
-		0x04,	//0x04
-		0x05,	//0x05
-		0x06,	//0x06
-		0x07,	//0x07
-		0x08,	//0x08
-		0x09,	//0x09
-		0x00,	//0x0a
-		0x00,	//0x0b
-		0x00,	//0x0c
-		0x00,	//0x0d
-		0x00,	//0x0e
-		0x00,	//0x0f
-		0x10,	//0x10
-		0x11,	//0x11
-		0x12,	//0x12
-		0x01,	//0x13
-		0x02,	//0x14
-		0x03,	//0x15
-		0x04,	//0x16
-		0x05,	//0x17
-		0x06,	//0x18
-		0x07,	//0x19
-		0x00,	//0x1a
-		0x00,	//0x1b
-		0x00,	//0x1c
-		0x00,	//0x1d
-		0x00,	//0x1e
-		0x00,	//0x1f
-		0x08,	//0x20
-		0x09,	//0x21
-		0x10,	//0x22
-		0x11,	//0x23
-	};
-	return lut_24h_to_12h[h_24];
+	if(h_24 == 0x00) return 0x12;			//Midnight displays as 12
+	if(h_24 > 0x12)  return bcd_add(h_24, 0x88);	//PM: subtract 12 in BCD
+	return h_24;							//AM 01-12 unchanged
 }
+
 
 uint8_t bcd_add(uint8_t v1,uint8_t v2) __naked {
 	__asm

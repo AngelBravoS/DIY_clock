@@ -8,4 +8,4 @@ stcgal -P stc15 \
        -p /dev/ttyACM0 \
        -t 22118.4 \
        -o eeprom_erase_enabled=True \
-       main.hex
+       DIY_Firmware_13k.ihx
