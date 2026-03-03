@@ -9,7 +9,7 @@ INC_DIR = include
 REL_DIR = Release
 BIN_DIR = Binary
 
-SOURCES = main.c eeprom.c adc.c alarm.c button.c crc.c display.c ds1302.c  fsm.c ledfonts.c timer.c
+SOURCES = main.c eeprom.c adc.c alarm.c button.c crc.c display.c ds1302.c fsm.c ledfonts.c timer.c
 SRC_FILES = $(addprefix $(SRC_DIR)/,$(SOURCES))
 REL_FILES = $(addprefix $(REL_DIR)/,$(SOURCES:.c=.rel))
 

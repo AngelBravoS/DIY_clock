@@ -51,6 +51,9 @@ void main(void)
 		display_counts = DISPLAY_COUNTS_MIN + (uint16_t)(BR_LEVEL - 1) * (DISPLAY_COUNTS_RANGE / 9);
 		INT_IE_EA = 1;
 	}
+	/* Apply saved alarm beep pattern */
+	if(ALARM_PATTERN == 0 || ALARM_PATTERN > 3) ALARM_PATTERN = 1;
+	alarm_bp = ALARM_PATTERN;
 	fsm_home_auto = 0;
 	/* Run main state machine */
 	while(1){

@@ -146,11 +146,11 @@ enum fsm_return fsm_home_fn() {
 		/* Display time */
 		if(curstate == fsm_home_alarm){
 			display_flash = 0x0f;
-			if((menu_state == BUTTON_LONG_PRESSED) && (select_state == BUTTON_LONG_PRESSED)){
+			if((menu_state != BUTTON_NONE) || (select_state != BUTTON_NONE)){
 				display_flash = 0x00;
 				alarm_buzzer_off();
 				display_autobrightness = 1;
-				curstate = fsm_home_start; //Reset state back to default
+				curstate = fsm_home_start;
 			}
 		}
 		display_puttime(ds1302.hour,ds1302.minutes);
@@ -346,6 +346,29 @@ enum fsm_return fsm_alarm_fn() {
 		if(menu_state == BUTTON_PRESSED){
 			++curstate;
 		}
+		break;
+	case fsm_alarm_pattern:
+		if(menu_state == BUTTON_LONG_PRESSED) {
+			alarm_buzzer_off();
+			curstate = fsm_alarm_label;
+			ds1302_calculate_CRC();
+			ds1302_write_SRAM();
+			return fsm_ok;
+		}
+		if(menu_state == BUTTON_PRESSED) {
+			alarm_buzzer_off();
+			curstate = fsm_alarm_end; /* avanza a A0 */
+		}
+		if(select_state == BUTTON_PRESSED || select_state == BUTTON_HELD_DOWN) {
+			if(++ALARM_PATTERN > 3) ALARM_PATTERN = 1;
+			alarm_bp = ALARM_PATTERN; /* actualiza ISR inmediatamente */
+			alarm_buzzer_on(); /* preview del patron */
+		}
+		/* Display: "bP 1" / "bP 2" / "bP 3" */
+		display_buffer[0] = ledfonts_numeric_normal['b'];
+		display_buffer[1] = ledfonts_numeric_normal['P'];
+		display_buffer[2] = ledfonts_numeric_flipped[' '];
+		display_buffer[3] = ledfonts_numeric_normal['0' + ALARM_PATTERN];
 		break;
 	default:
 		switch(sub_curstate){

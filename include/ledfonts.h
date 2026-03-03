@@ -23,6 +23,7 @@ enum ledstrings_key {
 	ledstrings_brig,		///<  "br  " brightness menu
 	ledstrings_tcal,
 	ledstrings_disp,
+	ledstrings_bp,			///< "bP  " beep pattern menu
 };
 
 #endif /* LEDFONTS_H_ */

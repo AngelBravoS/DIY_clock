@@ -32,6 +32,7 @@
  * the alarm buzzer has remained active.
  */
 extern volatile uint16_t alarm_counter;
+extern volatile uint8_t  alarm_bp; ///< Cached beep pattern (1-3), updated by FSM
 
 /*!
  * \brief Structure representing the configuration of one alarm
