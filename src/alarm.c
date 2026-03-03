@@ -15,7 +15,7 @@ void ISR_T2() __interrupt(INT_T2) __using(0) {
 	/*
 	 * Patrones a 30Hz (1 tick = ~33ms):
 	 *
-	 * bP1: beep(0-14) | silencio(15-74)               ciclo=75  (~2.5s)
+	 * bP1: beep(0-14) | silencio(15-104)              ciclo=105 (~3.5s)
 	 * bP2: beep(0-14) | gap(15-24) | beep(25-39) | silencio(40-99)  ciclo=100 (~3.3s)
 	 * bP3: beep(0-14) | gap(15-24) | beep(25-39) | silencio(40-69)  ciclo=70  (~2.3s)
 	 */
@@ -24,7 +24,7 @@ void ISR_T2() __interrupt(INT_T2) __using(0) {
 		cycle   = (alarm_bp == 2) ? 100 : 70;
 	} else {
 		beep_on = (tick < 15);
-		cycle   = 75;
+		cycle   = 105;
 	}
 
 	INT_IE_EA = 0;

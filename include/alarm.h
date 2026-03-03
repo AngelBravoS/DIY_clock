@@ -18,7 +18,7 @@
  *  alarms that can be safely instantiated is 7. At the minimum, one alarm
  *  must be instantiated.
  */
-#define NUM_ALARMS 7
+#define NUM_ALARMS 5
 /*!
  * \brief Maximum length of time the alarm will sound if not cancelled,
  * in units of (1/30) seconds.
