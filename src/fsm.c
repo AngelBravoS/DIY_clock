@@ -158,7 +158,7 @@ enum fsm_return fsm_home_fn() {
 		if(ds1302.seconds % 2)
 			display_colonon();
 		/* AM/PM dot: lit when any enabled alarm is set for today */
-		if(curstate == fsm_home_time) {
+		if(curstate == fsm_home_time){
 			uint8_t ai;
 			uint8_t alarm_today = 0;
 			for(ai = 0; ai < NUM_ALARMS; ai++)
@@ -199,7 +199,7 @@ enum fsm_return fsm_home_fn() {
 		display_periodon();
 		break;
 	case fsm_home_dow:
-		display_puts(ledstrings[ds1302.day-1]);
+		display_puts(ledstrings[LANGUAGE ? (ledstrings_es_mon + ds1302.day - 1) : (ds1302.day - 1)]);
 		break;
 	case fsm_home_date:
 		display_putdate();
@@ -303,7 +303,7 @@ enum fsm_return fsm_set_fn() {
 		if(ds1302.day > 0x07)
 			ds1302.day = 0x01; //DOW register only from 0x01 - 0x07
 		display_flash = 0x0f;
-		display_puts(ledstrings[ds1302.day-1]);
+		display_puts(ledstrings[LANGUAGE ? (ledstrings_es_mon + ds1302.day - 1) : (ds1302.day - 1)]);
 		break;
 	}
 
@@ -408,7 +408,7 @@ enum fsm_return fsm_alarm_fn() {
 			display_colonon();
 			break;
 
-		/* DALy: S·S toggle all days, S·L enter DOW, M·S skip to bP, M·L back to list */
+		/* DALy: S·L enter DOW cycle, M·S skip to bP, M·L back to list */
 		case fsm_alarm_substate_daly:
 			if(menu_state == BUTTON_LONG_PRESSED){
 				sub_curstate = fsm_alarm_substate_toggle;
@@ -418,24 +418,18 @@ enum fsm_return fsm_alarm_fn() {
 				sub_curstate = fsm_alarm_substate_bp;
 				break;
 			}
-			if(select_state == BUTTON_PRESSED){
-				if((alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0xfe) == 0xfe)
-					alarms[(curstate - fsm_alarm_end)].dow_and_enable &= 0x01;
-				else
-					alarms[(curstate - fsm_alarm_end)].dow_and_enable |= 0xfe;
-			}
 			if(select_state == BUTTON_LONG_PRESSED){
 				sub_curstate = fsm_alarm_substate_dow_mon;
 				break;
 			}
-			display_puts(ledstrings[ledstrings_daly]);
+			display_puts(ledstrings[LANGUAGE ? ledstrings_tod : ledstrings_all]);
 			if((alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0xfe) == 0xfe)
 				display_ampmon();
 			else
 				display_ampmoff();
 			break;
 
-		/* DOW MON-SUN: S·S toggle day, M·S next, M·L back to DALy */
+		/* DOW MON-SUN: S·S cycles to next day (SUN→tod), S·L toggles day, M·S to bP, M·L to DALy */
 		case fsm_alarm_substate_dow_mon:
 		case fsm_alarm_substate_dow_tue:
 		case fsm_alarm_substate_dow_wed:
@@ -443,17 +437,57 @@ enum fsm_return fsm_alarm_fn() {
 		case fsm_alarm_substate_dow_fri:
 		case fsm_alarm_substate_dow_sat:
 		case fsm_alarm_substate_dow_sun:
-			/* dow 1=MON..7=SUN = sub_curstate - fsm_alarm_substate_daly */
-			display_puts(ledstrings[(sub_curstate - fsm_alarm_substate_daly) - 1]);
+			if(LANGUAGE)
+				display_puts(ledstrings[ledstrings_es_mon + (sub_curstate - fsm_alarm_substate_dow_mon)]);
+			else
+				display_puts(ledstrings[(sub_curstate - fsm_alarm_substate_daly) - 1]);
 			if(alarm_dow_state(curstate - fsm_alarm_end, sub_curstate - fsm_alarm_substate_daly))
 				display_ampmon();
 			else
 				display_ampmoff();
-			if(alarm_temp)
+			if(select_state == BUTTON_PRESSED){
+				/* S·S = next day; SUN wraps to tod */
+				if(++sub_curstate > fsm_alarm_substate_dow_sun)
+					sub_curstate = fsm_alarm_substate_tod;
+				break;
+			}
+			if(select_state == BUTTON_LONG_PRESSED){
+				/* S·L = toggle this day */
 				alarm_dow_toggle(curstate - fsm_alarm_end, sub_curstate - fsm_alarm_substate_daly);
+				break;
+			}
 			if(menu_state == BUTTON_PRESSED){
-				if(++sub_curstate == fsm_alarm_substate_bp)
-					sub_curstate = fsm_alarm_substate_bp;
+				sub_curstate = fsm_alarm_substate_bp;
+				break;
+			}
+			if(menu_state == BUTTON_LONG_PRESSED){
+				sub_curstate = fsm_alarm_substate_daly;
+				break;
+			}
+			break;
+
+		/* tod/ALL: S·S wraps to MON, S·L toggle all days, M·S to bP, M·L to DALy */
+		case fsm_alarm_substate_tod:
+			display_puts(ledstrings[LANGUAGE ? ledstrings_tod : ledstrings_all]);
+			if((alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0xfe) == 0xfe)
+				display_ampmon();
+			else
+				display_ampmoff();
+			if(select_state == BUTTON_PRESSED){
+				/* S·S = wrap back to MON */
+				sub_curstate = fsm_alarm_substate_dow_mon;
+				break;
+			}
+			if(select_state == BUTTON_LONG_PRESSED){
+				/* S·L = toggle all days */
+				if((alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0xfe) == 0xfe)
+					alarms[(curstate - fsm_alarm_end)].dow_and_enable &= 0x01;
+				else
+					alarms[(curstate - fsm_alarm_end)].dow_and_enable |= 0xfe;
+				break;
+			}
+			if(menu_state == BUTTON_PRESSED){
+				sub_curstate = fsm_alarm_substate_bp;
 				break;
 			}
 			if(menu_state == BUTTON_LONG_PRESSED){
@@ -469,15 +503,15 @@ enum fsm_return fsm_alarm_fn() {
 				sub_curstate = fsm_alarm_substate_toggle;
 				break;
 			}
-			if(alarm_temp){
-				if(ALARM_PATTERNS[(curstate - fsm_alarm_end)] == 0)
+			if(select_state == BUTTON_PRESSED){
+				if(ALARM_PATTERNS[(curstate - fsm_alarm_end)] < 1 || ALARM_PATTERNS[(curstate - fsm_alarm_end)] > 3)
 					ALARM_PATTERNS[(curstate - fsm_alarm_end)] = 1;
-				if(++ALARM_PATTERNS[(curstate - fsm_alarm_end)] > 3)
+				else if(++ALARM_PATTERNS[(curstate - fsm_alarm_end)] > 3)
 					ALARM_PATTERNS[(curstate - fsm_alarm_end)] = 1;
 				alarm_bp = ALARM_PATTERNS[(curstate - fsm_alarm_end)];
 				alarm_buzzer_on();
 			}
-			if(ALARM_PATTERNS[(curstate - fsm_alarm_end)] == 0)
+			if(ALARM_PATTERNS[(curstate - fsm_alarm_end)] < 1 || ALARM_PATTERNS[(curstate - fsm_alarm_end)] > 3)
 				ALARM_PATTERNS[(curstate - fsm_alarm_end)] = 1;
 			display_buffer[0] = ledfonts_numeric_normal['b'];
 			display_buffer[1] = ledfonts_numeric_normal['P'];
@@ -551,7 +585,7 @@ enum fsm_return fsm_config_fn() {
 		break;
 	case fsm_config_thermistor_calib_label:
 		if(menu_state == BUTTON_PRESSED)
-			curstate = fsm_config_display_label;
+			curstate = fsm_config_language;
 		if(select_state == BUTTON_PRESSED) {
 			curstate = fsm_config_thermistor_calib;
 			config_tmp = (TEMP_OFFSET_LSB | (TEMP_OFFSET_MSB << 0x08));
@@ -608,6 +642,17 @@ enum fsm_return fsm_config_fn() {
 				curstate = fsm_config_auto_mmss;
 		if(menu_state == BUTTON_LONG_PRESSED)
 			curstate = fsm_config_display_label;
+		break;
+	case fsm_config_language:
+		if(menu_state == BUTTON_LONG_PRESSED) {
+			curstate = fsm_config_label;
+			return fsm_ok;
+		}
+		if(menu_state == BUTTON_PRESSED)
+			curstate = fsm_config_display_label;
+		if(select_state == BUTTON_PRESSED)
+			LANGUAGE ^= 0x01;
+		display_puts(ledstrings[LANGUAGE ? ledstrings_les : ledstrings_len]);
 		break;
 	}
 

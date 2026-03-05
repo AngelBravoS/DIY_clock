@@ -48,7 +48,7 @@ __code __at(0x3200 + sizeof(ds1302_init)) const uint8_t ds1302_sram_init[DS1302_
 		0x00,		//Alarm 6 minutes						0x17
 		0x00,		//Alarm 6 dow and enable				0x18
 		0x00,		//Reserved								0x19
-		0x00,		//Reserved								0x1a
+		0x01,		//Language: 0=EN, 1=ES (default ES)	0x1a
 		0x00,		//Reserved								0x1b
 		0x00,		//Reserved								0x1c
 		0x70,		//Temperature calibration LSB			0x1d

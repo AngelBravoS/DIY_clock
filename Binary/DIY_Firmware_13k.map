@@ -3,7 +3,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CABS4                               00000000    0000007D =         125. bytes (ABS,CON,CODE)
+CABS4                               00000000    000000B9 =         185. bytes (ABS,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -62,23 +62,23 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CABS4                               00000000    0000007D =         125. bytes (ABS,CON,CODE)
+CABS4                               00000000    000000B9 =         185. bytes (ABS,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   0000002A  l_GSINIT4                       
 C:   0000004A  l_GSINIT                        
-C:   0000005D  s_OSEG                          
-C:   00000068  s_SSEG                          
+C:   00000058  s_OSEG                          
+C:   00000063  s_SSEG                          
 C:   0000006B  l_HOME                          
 C:   0000006B  s_GSINIT0                       
 C:   0000006E  s_GSINIT1                       
 C:   0000006E  s_GSINIT2                       
 C:   00000078  s_GSINIT3                       
-C:   0000007D  l_CABS4                         
 C:   00000080  l_DSEG                          
-C:   00000098  l_SSEG                          
 C:   0000009A  s_GSINIT4                       
+C:   0000009D  l_SSEG                          
+C:   000000B9  l_CABS4                         
 C:   000000C4  s_GSINIT                        
 C:   000000C4  s_GSINIT5                       
 C:   00000100  l_IRAM                          
@@ -86,10 +86,10 @@ C:   0000010E  s_GSFINAL
 C:   00000111  s_CSEG                          
 C:   000008A0  l_CABS2                         
 C:   000008AB  l_CABS3                         
-C:   00001D89  l_CSEG                          
-C:   00001E9A  s_CONST                         
-C:   00001E9B  s_XINIT                         
+C:   00001F28  l_CSEG                          
 C:   00003100  _ledstrings                        ledfonts
+C:   000031F9  s_CONST                         
+C:   000031FA  s_XINIT                         
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -410,39 +410,39 @@ DSEG                                00000000    00000080 =         128. bytes (R
      0000003D  _ds1302                            ds1302
      00000045  _alarm_lastpoll                    fsm
      00000046  _transition_ticks                  fsm
-     0000005B  _ticks_10ms                        timer
+     00000056  _ticks_10ms                        timer
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 15.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-OSEG                                0000005D    0000000B =          11. bytes (REL,OVR)
+OSEG                                00000058    0000000B =          11. bytes (REL,OVR)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000005D  ___memcpy_PARM_2                   __memcpy
-     0000005D  __divsint_PARM_2                   _divuint
-     0000005D  __divuint_PARM_2                   _divuint
-     0000005D  __gptrput_PARM_2                   _gptrput
-     0000005D  __modsint_PARM_2                   _moduint
-     0000005D  __moduint_PARM_2                   _moduint
-     0000005D  __mulint_PARM_2                    _mulint
-     0000005D  _bcd_add_16_PARM_2                 ds1302
-     0000005D  _bcd_add_PARM_2                    ds1302
-     0000005D  _crcSlow_PARM_2                    crc
-     0000005D  _display_putbcd_PARM_2             display
-     00000060  ___memcpy_PARM_3                   __memcpy
+     00000058  ___memcpy_PARM_2                   __memcpy
+     00000058  __divsint_PARM_2                   _divuint
+     00000058  __divuint_PARM_2                   _divuint
+     00000058  __gptrput_PARM_2                   _gptrput
+     00000058  __modsint_PARM_2                   _moduint
+     00000058  __moduint_PARM_2                   _moduint
+     00000058  __mulint_PARM_2                    _mulint
+     00000058  _bcd_add_16_PARM_2                 ds1302
+     00000058  _bcd_add_PARM_2                    ds1302
+     00000058  _crcSlow_PARM_2                    crc
+     00000058  _display_putbcd_PARM_2             display
+     0000005B  ___memcpy_PARM_3                   __memcpy
 ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-SSEG                                00000068    00000098 =         152. bytes (REL,OVR)
+SSEG                                00000063    0000009D =         157. bytes (REL,OVR)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000068  __start__stack                     main
+     00000063  __start__stack                     main
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 17.
 Hexadecimal  [32-Bits]
@@ -522,7 +522,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000111    00001D89 =        7561. bytes (REL,CON,CODE)
+CSEG                                00000111    00001F28 =        7976. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -553,31 +553,31 @@ C:   0000091D  _convert_24h_to_12h                ds1302
 C:   00000936  _bcd_add                           ds1302
 C:   00000946  _bcd_add_16                        ds1302
 C:   0000095F  _fsm_home_fn                       fsm
-C:   00001170  _fsm_set_fn                        fsm
-C:   000012FB  _fsm_alarm_fn                      fsm
-C:   0000196D  _fsm_config_fn                     fsm
-C:   00001C15  _ISR_T0                            timer
-C:   00001CFE  _centiseconds                      timer
-C:   00001D09  __divuint                          _divuint
-C:   00001D32  ___memcpy                          __memcpy
-C:   00001D87  __gptrput                          _gptrput
-C:   00001DA2  __mulint                           _mulint
-C:   00001DA2  __mulint_dummy                     _mulint
-C:   00001DBF  __moduint                          _moduint
-C:   00001E0C  __gptrget                          _gptrget
-C:   00001E28  __modsint                          _modsint
-C:   00001E5E  __divsint                          _divsint
-C:   00001E96  __sdcc_external_startup            _startup
+C:   00001185  _fsm_set_fn                        fsm
+C:   00001325  _fsm_alarm_fn                      fsm
+C:   00001AC2  _fsm_config_fn                     fsm
+C:   00001DB4  _ISR_T0                            timer
+C:   00001E9D  _centiseconds                      timer
+C:   00001EA8  __divuint                          _divuint
+C:   00001ED1  ___memcpy                          __memcpy
+C:   00001F26  __gptrput                          _gptrput
+C:   00001F41  __mulint                           _mulint
+C:   00001F41  __mulint_dummy                     _mulint
+C:   00001F5E  __moduint                          _moduint
+C:   00001FAB  __gptrget                          _gptrget
+C:   00001FC7  __modsint                          _modsint
+C:   000031BD  __divsint                          _divsint
+C:   000031F5  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               00001E9A    00000001 =           1. bytes (REL,CON,CODE)
+CONST                               000031F9    00000001 =           1. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00001E9A  _ds1302_struct_addr                ds1302
+C:   000031F9  _ds1302_struct_addr                ds1302
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 

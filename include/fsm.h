@@ -129,7 +129,8 @@ enum fsm_substates_alarm {
 	fsm_alarm_substate_dow_fri = 8,  ///< Alarm set friday
 	fsm_alarm_substate_dow_sat = 9,  ///< Alarm set saturday
 	fsm_alarm_substate_dow_sun = 10, ///< Alarm set sunday
-	fsm_alarm_substate_bp      = 11, ///< Beep pattern per alarm (1-3)
+	fsm_alarm_substate_tod     = 11, ///< tod/ALL after sunday in cycle
+	fsm_alarm_substate_bp      = 12, ///< Beep pattern per alarm (1-3)
 	fsm_alarm_substate_end,          ///< FSM alarm sub-state machine end location
 };
 
@@ -151,6 +152,7 @@ enum fsm_states_config {
 	fsm_config_display_12h = 10,			///< Configure time display format (12h or 24h)
 	fsm_config_display_mmdd = 11,			///< Configure date display format (mmdd or ddmm)
 	fsm_config_display_remove_lzeroes = 12,	///< Configure whether to remove leading zeroes from display
+	fsm_config_language = 13,				///< Language setting (0=EN, 1=ES)
 	fsm_config_end,							///< FSM configuration sub-state machine end location
 	};
 

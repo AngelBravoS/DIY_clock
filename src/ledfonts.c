@@ -93,7 +93,7 @@ __code __at (0x3000) const uint8_t ledfonts_numeric_normal[] = {
 		0b11110001,
 		0b11111111,
 		0b11000111,
-		0b11111111,
+		0b11001000,	// M = ∏ (TOP+TL+TR+BR+BL)
 		0b10101011,
 		0b11000000,
 		0b10001100,
@@ -301,7 +301,19 @@ __code __at(0x3000+sizeof(ledfonts_numeric_normal)+sizeof(ledfonts_numeric_flipp
 		{'1','2',' ',' ','\0'},		//"12  " 0x14
 		{'N','D',' ',' ','\0'},		//"ND  " 0x15
 		{'R','0',' ',' ','\0'},		//"LZ  " 0x16
-		{'b','P',' ',' ','\0'},		//"bP  " beep pattern
-		{'d','A','L','Y','\0'},		//"dALY" daily
+		{'b','P',' ',' ','\0'},		//"bP  " beep pattern       0x17
+		{'d','A','L','Y','\0'},		//"dALY" daily EN            0x18
+		{'L','A','n',' ','\0'},		//"LAn " language menu       0x19
+		{'L','-','E','n','\0'},		//"L-En" English             0x1a
+		{'L','-','E','S','\0'},		//"L-ES" Spanish             0x1b
+		{'L','u','n',' ','\0'},		//"Lun " ES Monday           0x1c
+		{'M','A','r',' ','\0'},		//"MAr " ES Tuesday  (Mar)   0x1d  M=∏
+		{'M','I','E',' ','\0'},		//"MiE " ES Wednesday (Mie)  0x1e  M=∏
+		{'J','U','E',' ','\0'},		//"JuE " ES Thursday (Jue)   0x1f
+		{'U','I','E',' ','\0'},		//"UiE " ES Friday   (Vie)   0x20
+		{'S','A','b',' ','\0'},		//"SAb " ES Saturday (Sab)   0x21
+		{'0','o','N',' ','\0'},		//"doN " ES Sunday   (Dom)   0x22  N≈M flipped
+		{'A','L','L',' ','\0'},		//"ALL " EN all days         0x23
+		{'0','I','A',' ','\0'},		//"tod " ES all days (todos) 0x24
 	};
 
