@@ -128,6 +128,7 @@ enum fsm_return fsm_home_fn() {
 					alarms[alarm_index].dow_and_enable & 0x01)){
 				if((alarms[alarm_index].hour == ds1302.hour) &&
 						(alarms[alarm_index].minute == ds1302.minutes)){
+					alarm_bp = ALARM_PATTERNS[alarm_index] ? ALARM_PATTERNS[alarm_index] : 1;
 					alarm_buzzer_on();
 					display_autobrightness = 0;
 					INT_IE_EA = 0;
@@ -305,7 +306,6 @@ enum fsm_return fsm_alarm_fn() {
 	static enum fsm_substates_alarm sub_curstate = fsm_alarm_substate_toggle;
 	uint8_t alarm_temp;
 
-	/* Populate button state cache */
 	enum button_states menu_state;
 	enum button_states select_state;
 	menu_state = button_read_and_clear_menu();
@@ -316,92 +316,117 @@ enum fsm_return fsm_alarm_fn() {
 		alarm_temp = 1;
 
 	switch(curstate) {
+
 	case fsm_alarm_label:
 		if(menu_state == BUTTON_PRESSED)
-			/* Menu pressed when label is shown, exit */
 			return fsm_fail;
 		if(select_state == BUTTON_PRESSED){
-			/* Button pressed, enter alarm config menu */
-			curstate++;
+			curstate = fsm_alarm_end;
+			sub_curstate = fsm_alarm_substate_toggle;
 			return fsm_repeat;
 		}
 		display_puts(ledstrings[ledstrings_seta]);
 		break;
-	case fsm_alarm_pattern:
-		if(menu_state == BUTTON_LONG_PRESSED) {
-			alarm_buzzer_off();
-			curstate = fsm_alarm_label;
-			ds1302_calculate_CRC();
-			ds1302_write_SRAM();
-			return fsm_ok;
-		}
-		if(menu_state == BUTTON_PRESSED) {
-			alarm_buzzer_off();
-			curstate = fsm_alarm_end; /* avanza a A0 */
-		}
-		if(select_state == BUTTON_PRESSED || select_state == BUTTON_HELD_DOWN) {
-			if(++ALARM_PATTERN > 3) ALARM_PATTERN = 1;
-			alarm_bp = ALARM_PATTERN; /* actualiza ISR inmediatamente */
-			alarm_buzzer_on(); /* preview del patron */
-		}
-		/* Display: "bP 1" / "bP 2" / "bP 3" */
-		display_buffer[0] = ledfonts_numeric_normal['b'];
-		display_buffer[1] = ledfonts_numeric_normal['P'];
-		display_buffer[2] = ledfonts_numeric_flipped[' '];
-		display_buffer[3] = ledfonts_numeric_normal['0' + ALARM_PATTERN];
-		break;
+
 	default:
 		switch(sub_curstate){
+
+		/* List: "A1 on/oF" — S·S toggle, S·L edit, M·S next, M·L save+exit */
 		case fsm_alarm_substate_toggle:
-			if(menu_state == BUTTON_PRESSED){
-				if(++curstate == (fsm_alarm_end + NUM_ALARMS))
-					curstate = fsm_alarm_start;
-				break;
-			}
-			if(select_state == BUTTON_PRESSED){
-				alarms[(curstate - fsm_alarm_end)].dow_and_enable ^= 1;
-			}
-			if(select_state == BUTTON_LONG_PRESSED){
-				sub_curstate++;
-				break;
-			}
 			if(menu_state == BUTTON_LONG_PRESSED){
 				sub_curstate = fsm_alarm_substate_toggle;
+				display_flash = 0x00;
 				curstate = fsm_alarm_label;
+				ds1302_calculate_CRC();
+				ds1302_write_SRAM();
+				alarm_lastpoll = 0x60;
 				return fsm_ok;
 			}
+			if(menu_state == BUTTON_PRESSED){
+				if(++curstate == (fsm_alarm_end + NUM_ALARMS))
+					curstate = fsm_alarm_end;
+				break;
+			}
+			if(select_state == BUTTON_PRESSED)
+				alarms[(curstate - fsm_alarm_end)].dow_and_enable ^= 1;
+			if(select_state == BUTTON_LONG_PRESSED){
+				sub_curstate = fsm_alarm_substate_hh;
+				break;
+			}
 			display_buffer[0] = ledfonts_numeric_normal['A'];
-			display_buffer[1] = ledfonts_numeric_normal[(curstate - fsm_alarm_end) + 1]; /* display A1..A5 */
+			display_buffer[1] = ledfonts_numeric_normal[(curstate - fsm_alarm_end) + 1]; /* A1..A5 */
 			display_putbool(alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0x01);
 			display_colonon();
 			break;
+
+		/* Edit HH */
 		case fsm_alarm_substate_hh:
-		case fsm_alarm_substate_mm:
-			if(menu_state == BUTTON_PRESSED){
-				sub_curstate++;
-				display_flash = 0x00;
-				break;
-			}
 			if(menu_state == BUTTON_LONG_PRESSED){
-				sub_curstate = fsm_alarm_substate_toggle;
 				display_flash = 0x00;
+				sub_curstate = fsm_alarm_substate_toggle;
 				break;
 			}
-			if(sub_curstate == fsm_alarm_substate_hh){
-				alarms[(curstate - fsm_alarm_end)].hour = bcd_add(alarms[(curstate - fsm_alarm_end)].hour,alarm_temp);
-				if(alarms[(curstate - fsm_alarm_end)].hour > 0x23)
-					alarms[(curstate - fsm_alarm_end)].hour = 0x00;
-				display_flash = 0x03;
+			if(menu_state == BUTTON_PRESSED){
+				display_flash = 0x00;
+				sub_curstate = fsm_alarm_substate_mm;
+				break;
 			}
-			if(sub_curstate == fsm_alarm_substate_mm){
-				alarms[(curstate - fsm_alarm_end)].minute = bcd_add(alarms[(curstate - fsm_alarm_end)].minute,alarm_temp);
-				if(alarms[(curstate - fsm_alarm_end)].minute > 0x59)
-					alarms[(curstate - fsm_alarm_end)].minute = 0x00;
-				display_flash = 0x0c;
-			}
-			display_puttime(alarms[(curstate - fsm_alarm_end)].hour,alarms[(curstate - fsm_alarm_end)].minute);
+			alarms[(curstate - fsm_alarm_end)].hour = bcd_add(alarms[(curstate - fsm_alarm_end)].hour, alarm_temp);
+			if(alarms[(curstate - fsm_alarm_end)].hour > 0x23)
+				alarms[(curstate - fsm_alarm_end)].hour = 0x00;
+			display_flash = 0x03;
+			display_puttime(alarms[(curstate - fsm_alarm_end)].hour, alarms[(curstate - fsm_alarm_end)].minute);
 			display_colonon();
 			break;
+
+		/* Edit MM */
+		case fsm_alarm_substate_mm:
+			if(menu_state == BUTTON_LONG_PRESSED){
+				display_flash = 0x00;
+				sub_curstate = fsm_alarm_substate_toggle;
+				break;
+			}
+			if(menu_state == BUTTON_PRESSED){
+				display_flash = 0x00;
+				sub_curstate = fsm_alarm_substate_daly;
+				break;
+			}
+			alarms[(curstate - fsm_alarm_end)].minute = bcd_add(alarms[(curstate - fsm_alarm_end)].minute, alarm_temp);
+			if(alarms[(curstate - fsm_alarm_end)].minute > 0x59)
+				alarms[(curstate - fsm_alarm_end)].minute = 0x00;
+			display_flash = 0x0c;
+			display_puttime(alarms[(curstate - fsm_alarm_end)].hour, alarms[(curstate - fsm_alarm_end)].minute);
+			display_colonon();
+			break;
+
+		/* DALy: S·S toggle all days, S·L enter DOW, M·S skip to bP, M·L back to list */
+		case fsm_alarm_substate_daly:
+			if(menu_state == BUTTON_LONG_PRESSED){
+				sub_curstate = fsm_alarm_substate_toggle;
+				break;
+			}
+			if(menu_state == BUTTON_PRESSED){
+				sub_curstate = fsm_alarm_substate_bp;
+				break;
+			}
+			if(select_state == BUTTON_PRESSED){
+				if((alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0xfe) == 0xfe)
+					alarms[(curstate - fsm_alarm_end)].dow_and_enable &= 0x01;
+				else
+					alarms[(curstate - fsm_alarm_end)].dow_and_enable |= 0xfe;
+			}
+			if(select_state == BUTTON_LONG_PRESSED){
+				sub_curstate = fsm_alarm_substate_dow_mon;
+				break;
+			}
+			display_puts(ledstrings[ledstrings_daly]);
+			if((alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0xfe) == 0xfe)
+				display_ampmon();
+			else
+				display_ampmoff();
+			break;
+
+		/* DOW MON-SUN: S·S toggle day, M·S next, M·L back to DALy */
 		case fsm_alarm_substate_dow_mon:
 		case fsm_alarm_substate_dow_tue:
 		case fsm_alarm_substate_dow_wed:
@@ -409,27 +434,48 @@ enum fsm_return fsm_alarm_fn() {
 		case fsm_alarm_substate_dow_fri:
 		case fsm_alarm_substate_dow_sat:
 		case fsm_alarm_substate_dow_sun:
-			display_puts(ledstrings[sub_curstate - fsm_alarm_substate_mm -1]);
-			if(alarm_dow_state(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm)){
+			/* dow 1=MON..7=SUN = sub_curstate - fsm_alarm_substate_daly */
+			display_puts(ledstrings[(sub_curstate - fsm_alarm_substate_daly) - 1]);
+			if(alarm_dow_state(curstate - fsm_alarm_end, sub_curstate - fsm_alarm_substate_daly))
 				display_ampmon();
-			} else {
+			else
 				display_ampmoff();
-			}
 			if(alarm_temp)
-				alarm_dow_toggle(curstate - fsm_alarm_end,sub_curstate - fsm_alarm_substate_mm);
+				alarm_dow_toggle(curstate - fsm_alarm_end, sub_curstate - fsm_alarm_substate_daly);
 			if(menu_state == BUTTON_PRESSED){
-				if(++sub_curstate == fsm_alarm_substate_end){
-					sub_curstate = fsm_alarm_substate_start;
-				}
+				if(++sub_curstate == fsm_alarm_substate_bp)
+					sub_curstate = fsm_alarm_substate_bp;
 				break;
 			}
 			if(menu_state == BUTTON_LONG_PRESSED){
-				sub_curstate = fsm_alarm_substate_toggle;
+				sub_curstate = fsm_alarm_substate_daly;
 				break;
 			}
 			break;
-		}
 
+		/* bP: S·S cycle 1→2→3→1 with preview, M·S or M·L back to list */
+		case fsm_alarm_substate_bp:
+			if(menu_state == BUTTON_PRESSED || menu_state == BUTTON_LONG_PRESSED){
+				alarm_buzzer_off();
+				sub_curstate = fsm_alarm_substate_toggle;
+				break;
+			}
+			if(alarm_temp){
+				if(ALARM_PATTERNS[(curstate - fsm_alarm_end)] == 0)
+					ALARM_PATTERNS[(curstate - fsm_alarm_end)] = 1;
+				if(++ALARM_PATTERNS[(curstate - fsm_alarm_end)] > 3)
+					ALARM_PATTERNS[(curstate - fsm_alarm_end)] = 1;
+				alarm_bp = ALARM_PATTERNS[(curstate - fsm_alarm_end)];
+				alarm_buzzer_on();
+			}
+			if(ALARM_PATTERNS[(curstate - fsm_alarm_end)] == 0)
+				ALARM_PATTERNS[(curstate - fsm_alarm_end)] = 1;
+			display_buffer[0] = ledfonts_numeric_normal['b'];
+			display_buffer[1] = ledfonts_numeric_normal['P'];
+			display_buffer[2] = ledfonts_numeric_flipped[' '];
+			display_buffer[3] = ledfonts_numeric_normal['0' + ALARM_PATTERNS[(curstate - fsm_alarm_end)]];
+			break;
+		}
 		break;
 	}
 

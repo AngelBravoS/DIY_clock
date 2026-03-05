@@ -110,26 +110,27 @@ enum fsm_states_set {
 enum fsm_states_alarm {
 	fsm_alarm_label = 0,		 ///< Alarm state label display
 	fsm_alarm_start = 1,		 ///< FSM alarm state machine repetitive start location
-	fsm_alarm_pattern = 1,		 ///< Alarm beep pattern global (bP1/bP2/bP3)
-	fsm_alarm_end,				 ///< FSM alarm state machine repetitive end location
+	fsm_alarm_end   = 1,		 ///< Alarm list base (A1..A5 = curstate - fsm_alarm_end gives 0..4)
 };
 
 /*!
  * \brief Even lower level state machine states for the alarm state
  */
 enum fsm_substates_alarm {
-	fsm_alarm_substate_toggle = 0,  ///< Alarm toggle
-	fsm_alarm_substate_start = 1,   ///< FSM alarm sub-state machine start location
-	fsm_alarm_substate_hh 	 = 1,   ///< Alarm set hour
-	fsm_alarm_substate_mm 	 = 2,   ///< Alarm set minute
-	fsm_alarm_substate_dow_mon = 3, ///< Alarm set monday
-	fsm_alarm_substate_dow_tue = 4, ///< Alarm set tuesday
-	fsm_alarm_substate_dow_wed = 5, ///< Alarm set wednesday
-	fsm_alarm_substate_dow_thu = 6, ///< Alarm set thursday
-	fsm_alarm_substate_dow_fri = 7,	///< Alarm set friday
-	fsm_alarm_substate_dow_sat = 8, ///< Alarm set saturday
-	fsm_alarm_substate_dow_sun = 9,	///< Alarm set sunday
-	fsm_alarm_substate_end, 		///< FSM alarm sub-state machine end location
+	fsm_alarm_substate_toggle  = 0,  ///< Alarm list: on/off + S·L enter edit
+	fsm_alarm_substate_start   = 1,  ///< FSM alarm sub-state machine start location
+	fsm_alarm_substate_hh 	   = 1,  ///< Alarm set hour
+	fsm_alarm_substate_mm 	   = 2,  ///< Alarm set minute
+	fsm_alarm_substate_daly    = 3,  ///< Daily: S·S toggle all days, S·L enter DOW
+	fsm_alarm_substate_dow_mon = 4,  ///< Alarm set monday
+	fsm_alarm_substate_dow_tue = 5,  ///< Alarm set tuesday
+	fsm_alarm_substate_dow_wed = 6,  ///< Alarm set wednesday
+	fsm_alarm_substate_dow_thu = 7,  ///< Alarm set thursday
+	fsm_alarm_substate_dow_fri = 8,  ///< Alarm set friday
+	fsm_alarm_substate_dow_sat = 9,  ///< Alarm set saturday
+	fsm_alarm_substate_dow_sun = 10, ///< Alarm set sunday
+	fsm_alarm_substate_bp      = 11, ///< Beep pattern per alarm (1-3)
+	fsm_alarm_substate_end,          ///< FSM alarm sub-state machine end location
 };
 
 /*!

@@ -52,8 +52,14 @@ void main(void)
 		INT_IE_EA = 1;
 	}
 	/* Apply saved alarm beep pattern */
-	if(ALARM_PATTERN == 0 || ALARM_PATTERN > 3) ALARM_PATTERN = 1;
-	alarm_bp = ALARM_PATTERN;
+	/* Init per-alarm patterns (default 1 if unset) */
+	{
+		uint8_t i;
+		for(i = 0; i < NUM_ALARMS; i++)
+			if(ALARM_PATTERNS[i] == 0 || ALARM_PATTERNS[i] > 3)
+				ALARM_PATTERNS[i] = 1;
+	}
+	alarm_bp = 1;
 	fsm_home_auto = 0;
 	/* Run main state machine */
 	while(1){

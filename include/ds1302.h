@@ -37,7 +37,7 @@ __bit  __at(0x0f) DS1302_DATA_7;///< Bit 7 of bit addressable data byte used by 
 #define SC_1 	(ds1302_sram_data[0x03]) ///< Status and configuration register 1
 #define TEMP_OFFSET_MSB (ds1302_sram_data[DS1302_BBSRAM_SIZE - 0x01])
 #define BR_LEVEL            (ds1302_sram_data[0x19]) ///< Brightness level: 0=auto, 1-10=manual ///< Temperature offset MSB (BCD, packed)
-#define ALARM_PATTERN       (ds1302_sram_data[0x1a]) ///< Alarm beep pattern: 1-3
+#define ALARM_PATTERNS      (ds1302_sram_data + 0x13) ///< Per-alarm beep patterns[0..4] at 0x13-0x17 (freed by 5-alarm reduction)
 #define TEMP_OFFSET_LSB (ds1302_sram_data[DS1302_BBSRAM_SIZE - 0x02]) ///< Temperature offset LSB (BCD, packed)
 #define DATE_DISPLAY_MMDD (SC_1 >> 0x07)		///< Set if the date is to be displayed in MMDD format
 #define TIME_DISPLAY_12 ((SC_1 >> 0x06) & 0x01) ///< Set if time is to be displayed in 12h format

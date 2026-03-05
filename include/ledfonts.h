@@ -23,8 +23,8 @@ enum ledstrings_key {
 	ledstrings_brig,		///<  "br  " brightness menu
 	ledstrings_tcal,
 	ledstrings_disp,
-	ledstrings_bp,			///< "bP  " beep pattern menu
-	ledstrings_daly,		///< "dALY" daily repeat
+	ledstrings_bp   = 23,		///< "bP  " beep pattern (array index 0x17)
+	ledstrings_daly = 24,		///< "dALY" daily repeat  (array index 0x18)
 };
 
 #endif /* LEDFONTS_H_ */

@@ -68,8 +68,8 @@ CABS4                               00000000    0000007D =         125. bytes (A
       -----  --------------------------------   ------------------------
 C:   0000002A  l_GSINIT4                       
 C:   0000004A  l_GSINIT                        
-C:   00000058  s_OSEG                          
-C:   00000063  s_SSEG                          
+C:   0000005D  s_OSEG                          
+C:   00000068  s_SSEG                          
 C:   0000006B  l_HOME                          
 C:   0000006B  s_GSINIT0                       
 C:   0000006E  s_GSINIT1                       
@@ -77,8 +77,8 @@ C:   0000006E  s_GSINIT2
 C:   00000078  s_GSINIT3                       
 C:   0000007D  l_CABS4                         
 C:   00000080  l_DSEG                          
+C:   00000098  l_SSEG                          
 C:   0000009A  s_GSINIT4                       
-C:   0000009D  l_SSEG                          
 C:   000000C4  s_GSINIT                        
 C:   000000C4  s_GSINIT5                       
 C:   00000100  l_IRAM                          
@@ -86,9 +86,9 @@ C:   0000010E  s_GSFINAL
 C:   00000111  s_CSEG                          
 C:   000008A0  l_CABS2                         
 C:   000008AB  l_CABS3                         
-C:   00001A39  l_CSEG                          
-C:   00001B4A  s_CONST                         
-C:   00001B4B  s_XINIT                         
+C:   00001D2D  l_CSEG                          
+C:   00001E3E  s_CONST                         
+C:   00001E3F  s_XINIT                         
 C:   00003100  _ledstrings                        ledfonts
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
@@ -410,39 +410,39 @@ DSEG                                00000000    00000080 =         128. bytes (R
      0000003D  _ds1302                            ds1302
      00000045  _alarm_lastpoll                    fsm
      00000046  _transition_ticks                  fsm
-     00000056  _ticks_10ms                        timer
+     0000005B  _ticks_10ms                        timer
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 15.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-OSEG                                00000058    0000000B =          11. bytes (REL,OVR)
+OSEG                                0000005D    0000000B =          11. bytes (REL,OVR)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000058  ___memcpy_PARM_2                   __memcpy
-     00000058  __divsint_PARM_2                   _divuint
-     00000058  __divuint_PARM_2                   _divuint
-     00000058  __gptrput_PARM_2                   _gptrput
-     00000058  __modsint_PARM_2                   _moduint
-     00000058  __moduint_PARM_2                   _moduint
-     00000058  __mulint_PARM_2                    _mulint
-     00000058  _bcd_add_16_PARM_2                 ds1302
-     00000058  _bcd_add_PARM_2                    ds1302
-     00000058  _crcSlow_PARM_2                    crc
-     00000058  _display_putbcd_PARM_2             display
-     0000005B  ___memcpy_PARM_3                   __memcpy
+     0000005D  ___memcpy_PARM_2                   __memcpy
+     0000005D  __divsint_PARM_2                   _divuint
+     0000005D  __divuint_PARM_2                   _divuint
+     0000005D  __gptrput_PARM_2                   _gptrput
+     0000005D  __modsint_PARM_2                   _moduint
+     0000005D  __moduint_PARM_2                   _moduint
+     0000005D  __mulint_PARM_2                    _mulint
+     0000005D  _bcd_add_16_PARM_2                 ds1302
+     0000005D  _bcd_add_PARM_2                    ds1302
+     0000005D  _crcSlow_PARM_2                    crc
+     0000005D  _display_putbcd_PARM_2             display
+     00000060  ___memcpy_PARM_3                   __memcpy
 ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-SSEG                                00000063    0000009D =         157. bytes (REL,OVR)
+SSEG                                00000068    00000098 =         152. bytes (REL,OVR)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000063  __start__stack                     main
+     00000068  __start__stack                     main
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 17.
 Hexadecimal  [32-Bits]
@@ -522,62 +522,62 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000111    00001A39 =        6713. bytes (REL,CON,CODE)
+CSEG                                00000111    00001D2D =        7469. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000111  _main                              main
-C:   000002DF  _ISR_ADC                           adc
-C:   00000377  _ISR_T2                            alarm
-C:   00000421  _button_read_and_clear_select      button
-C:   0000044D  _button_read_and_clear_menu        button
-C:   00000478  _crcSlow                           crc
-C:   000004D9  _display_puts                      display
-C:   00000514  _display_putbcd                    display
-C:   00000558  _display_puttime                   display
-C:   000005A6  _display_putdate                   display
-C:   000005F3  _display_putbool                   display
-C:   00000619  _display_puttemp                   display
-C:   00000679  _ISR_PCA                           display
-C:   000006E9  _ds1302_reset                      ds1302
-C:   00000704  _ds1302_start                      ds1302
-C:   0000071F  _ds1302_read_byte_slow             ds1302
-C:   0000079D  _ds1302_write_byte_slow            ds1302
-C:   00000801  _ds1302_set_time                   ds1302
-C:   00000831  _ds1302_read_SRAM                  ds1302
-C:   0000085B  _ds1302_write_SRAM                 ds1302
-C:   00000879  _ds1302_check_SRAM                 ds1302
-C:   000008B4  _ds1302_calculate_CRC              ds1302
-C:   000008D3  _ds1302_power_loss_reset           ds1302
-C:   0000090F  _convert_24h_to_12h                ds1302
-C:   00000928  _bcd_add                           ds1302
-C:   00000938  _bcd_add_16                        ds1302
-C:   00000951  _fsm_home_fn                       fsm
-C:   000010E6  _fsm_set_fn                        fsm
-C:   00001271  _fsm_alarm_fn                      fsm
-C:   0000161D  _fsm_config_fn                     fsm
-C:   000018C5  _ISR_T0                            timer
-C:   000019AE  _centiseconds                      timer
-C:   000019B9  __divuint                          _divuint
-C:   000019E2  ___memcpy                          __memcpy
-C:   00001A37  __gptrput                          _gptrput
-C:   00001A52  __mulint                           _mulint
-C:   00001A52  __mulint_dummy                     _mulint
-C:   00001A6F  __moduint                          _moduint
-C:   00001ABC  __gptrget                          _gptrget
-C:   00001AD8  __modsint                          _modsint
-C:   00001B0E  __divsint                          _divsint
-C:   00001B46  __sdcc_external_startup            _startup
+C:   000002ED  _ISR_ADC                           adc
+C:   00000385  _ISR_T2                            alarm
+C:   0000042F  _button_read_and_clear_select      button
+C:   0000045B  _button_read_and_clear_menu        button
+C:   00000486  _crcSlow                           crc
+C:   000004E7  _display_puts                      display
+C:   00000522  _display_putbcd                    display
+C:   00000566  _display_puttime                   display
+C:   000005B4  _display_putdate                   display
+C:   00000601  _display_putbool                   display
+C:   00000627  _display_puttemp                   display
+C:   00000687  _ISR_PCA                           display
+C:   000006F7  _ds1302_reset                      ds1302
+C:   00000712  _ds1302_start                      ds1302
+C:   0000072D  _ds1302_read_byte_slow             ds1302
+C:   000007AB  _ds1302_write_byte_slow            ds1302
+C:   0000080F  _ds1302_set_time                   ds1302
+C:   0000083F  _ds1302_read_SRAM                  ds1302
+C:   00000869  _ds1302_write_SRAM                 ds1302
+C:   00000887  _ds1302_check_SRAM                 ds1302
+C:   000008C2  _ds1302_calculate_CRC              ds1302
+C:   000008E1  _ds1302_power_loss_reset           ds1302
+C:   0000091D  _convert_24h_to_12h                ds1302
+C:   00000936  _bcd_add                           ds1302
+C:   00000946  _bcd_add_16                        ds1302
+C:   0000095F  _fsm_home_fn                       fsm
+C:   00001114  _fsm_set_fn                        fsm
+C:   0000129F  _fsm_alarm_fn                      fsm
+C:   00001911  _fsm_config_fn                     fsm
+C:   00001BB9  _ISR_T0                            timer
+C:   00001CA2  _centiseconds                      timer
+C:   00001CAD  __divuint                          _divuint
+C:   00001CD6  ___memcpy                          __memcpy
+C:   00001D2B  __gptrput                          _gptrput
+C:   00001D46  __mulint                           _mulint
+C:   00001D46  __mulint_dummy                     _mulint
+C:   00001D63  __moduint                          _moduint
+C:   00001DB0  __gptrget                          _gptrget
+C:   00001DCC  __modsint                          _modsint
+C:   00001E02  __divsint                          _divsint
+C:   00001E3A  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               00001B4A    00000001 =           1. bytes (REL,CON,CODE)
+CONST                               00001E3E    00000001 =           1. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00001B4A  _ds1302_struct_addr                ds1302
+C:   00001E3E  _ds1302_struct_addr                ds1302
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 
