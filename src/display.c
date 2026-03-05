@@ -15,28 +15,46 @@ volatile uint8_t display_flash = 0x00;
 volatile uint16_t display_counts = 0xff00;
 
 void display_puts(__code const char* s) {
-	display_buffer[0] = ledfonts_numeric_normal[*s];
-	display_buffer[1] = ledfonts_numeric_normal[*(s+1)];
-	display_buffer[2] = ledfonts_numeric_flipped[*(s+2)];
-	display_buffer[3] = ledfonts_numeric_normal[*(s+3)];
+	/*
+	 * Precomputar en locales para minimizar el tiempo con interrupciones
+	 * deshabilitadas: los MOVC (lectura de flash) se hacen antes, solo
+	 * los 4 MOV a iRAM van dentro de la sección crítica.
+	 */
+	uint8_t b0 = ledfonts_numeric_normal[*s];
+	uint8_t b1 = ledfonts_numeric_normal[*(s+1)];
+	uint8_t b2 = ledfonts_numeric_flipped[*(s+2)];
+	uint8_t b3 = ledfonts_numeric_normal[*(s+3)];
+	INT_IE_EA = 0;
+	display_buffer[0] = b0;
+	display_buffer[1] = b1;
+	display_buffer[2] = b2;
+	display_buffer[3] = b3;
+	INT_IE_EA = 1;
 }
 
 void display_putbcd(uint8_t v1, uint8_t v2) {
-	display_buffer[0] = ledfonts_numeric_normal[(v1 >> 0x04)];
-	display_buffer[1] = ledfonts_numeric_normal[(v1 & 0x0f)];
-	display_buffer[2] = ledfonts_numeric_flipped[(v2 >> 0x04)];
-	display_buffer[3] = ledfonts_numeric_normal[(v2 & 0x0f)];
+	uint8_t b0 = ledfonts_numeric_normal[(v1 >> 0x04)];
+	uint8_t b1 = ledfonts_numeric_normal[(v1 & 0x0f)];
+	uint8_t b2 = ledfonts_numeric_flipped[(v2 >> 0x04)];
+	uint8_t b3 = ledfonts_numeric_normal[(v2 & 0x0f)];
+	INT_IE_EA = 0;
+	display_buffer[0] = b0;
+	display_buffer[1] = b1;
+	display_buffer[2] = b2;
+	display_buffer[3] = b3;
+	INT_IE_EA = 1;
 }
 
 void display_puttime(uint8_t hour, uint8_t minute) {
 	if(TIME_DISPLAY_12) {
 		display_putbcd(convert_24h_to_12h(hour),minute);
-		if(hour > 0x11)
+		if(hour >= 0x12)        /* 0x12 BCD = noon; noon and later are PM */
 			display_ampmon();
 	} else {
 		display_putbcd(hour,minute);
 	}
 
+	/* Single-byte write: atomico en 8051 (un MOV), no requiere seccion critica */
 	if(DISPLAY_REMOVE_LEADING_ZEROES &&
 			(display_buffer[0] == ledfonts_numeric_normal['0']))
 		display_buffer[0] = ledfonts_numeric_normal[' '];
@@ -68,10 +86,16 @@ void display_putbool(uint8_t v) {
 }
 
 void display_puttemp(uint16_t v) {
-	display_buffer[0] = ledfonts_numeric_normal[(v >> 0x08) & 0x0f];
-	display_buffer[1] = ledfonts_numeric_normal[(v >> 0x04) & 0x0f];
-	display_buffer[2] = ledfonts_numeric_flipped[v & 0x0f];
-	display_buffer[3] = ledfonts_numeric_normal['C'];
+	uint8_t b0 = ledfonts_numeric_normal[(v >> 0x08) & 0x0f];
+	uint8_t b1 = ledfonts_numeric_normal[(v >> 0x04) & 0x0f];
+	uint8_t b2 = ledfonts_numeric_flipped[v & 0x0f];
+	uint8_t b3 = ledfonts_numeric_normal['C'];
+	INT_IE_EA = 0;
+	display_buffer[0] = b0;
+	display_buffer[1] = b1;
+	display_buffer[2] = b2;
+	display_buffer[3] = b3;
+	INT_IE_EA = 1;
 	display_periodon();
 }
 

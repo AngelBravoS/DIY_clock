@@ -27,11 +27,13 @@
  * state when in any other fsm_home state except the alarm state
  *
  * \warning Cannot exceed 0xff00
+ * 0x0064 = 1 sec
+ * 0x00C8 = 2 sec
  * 0x012C = 3 sec
  * 0x01f4 = 5 sec
  * 0x03e8 = 10 sec
  */
-#define FSM_HOME_RESET_TICKS 0x012C
+#define FSM_HOME_RESET_TICKS 0x0064
 
 /*!
  * \brief Time (in centiseconds) before the display automatically scrolls to

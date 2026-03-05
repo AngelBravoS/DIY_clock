@@ -15,6 +15,7 @@
  * licensed under the beer-ware license.
  */
 #include <stdint.h>
+#include <stddef.h>  /* sizeof */
 __code __at (0x3000) const uint8_t ledfonts_numeric_normal[] = {
 		0b11000000,
 		0b11111001,
@@ -301,7 +302,7 @@ __code __at(0x3000+sizeof(ledfonts_numeric_normal)+sizeof(ledfonts_numeric_flipp
 		{'1','2',' ',' ','\0'},		//"12  " 0x14
 		{'N','D',' ',' ','\0'},		//"ND  " 0x15
 		{'R','0',' ',' ','\0'},		//"LZ  " 0x16
-		{'b','P',' ',' ','\0'},		//"bP  " beep pattern       0x17
+		{'8','I','P',' ','\0'},		//"biP " beep pattern       0x17
 		{'d','A','L','Y','\0'},		//"dALY" daily EN            0x18
 		{'L','A','n',' ','\0'},		//"LAn " language menu       0x19
 		{'L','-','E','n','\0'},		//"L-En" English             0x1a
@@ -314,6 +315,17 @@ __code __at(0x3000+sizeof(ledfonts_numeric_normal)+sizeof(ledfonts_numeric_flipp
 		{'S','A','b',' ','\0'},		//"SAb " ES Saturday (Sab)   0x21
 		{'0','o','N',' ','\0'},		//"doN " ES Sunday   (Dom)   0x22  N≈M flipped
 		{'A','L','L',' ','\0'},		//"ALL " EN all days         0x23
-		{'0','I','A',' ','\0'},		//"tod " ES all days (todos) 0x24
+		{'0','I','A','S','\0'},		//"tod " ES all days (todos) 0x24
 	};
+
+/*
+ * Verificacion en tiempo de compilacion: ledstrings no debe solaparse con
+ * ds1302_init que empieza en 0x3200.
+ * Margen actual: 70 bytes. Si se supera, aumentar la direccion de ds1302_init
+ * en ds1302.c o reducir el numero de entradas en ledstrings.
+ */
+_Static_assert(
+	(0x3100 + sizeof(ledstrings)) <= 0x3200,
+	"ledstrings desborda el area de ds1302_init en 0x3200"
+);
 

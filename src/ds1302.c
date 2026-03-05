@@ -6,7 +6,9 @@
  */
 
 #pragma disable_warning 85
- 
+
+#include <string.h>  /* memcpy */
+
 #define DS1302_C_
 #include "ds1302.h"
 #undef DS1302_C_
@@ -54,6 +56,20 @@ __code __at(0x3200 + sizeof(ds1302_init)) const uint8_t ds1302_sram_init[DS1302_
 		0x70,		//Temperature calibration LSB			0x1d
 		0x00,		//Temperature calibration MSB			0x1e
 };
+
+/*
+ * Verificacion en tiempo de compilacion: ledstrings (en ledfonts.c) termina en
+ * 0x3100 + sizeof(ledstrings). ds1302_init empieza en 0x3200.
+ * Si se anaden entradas a ledstrings y supera ese limite, el compilador lo detecta
+ * aqui antes de que los datos se sobreescriban silenciosamente en flash.
+ *
+ * sizeof(ledstrings) = 37 entradas x 5 bytes = 185 bytes -> termina en 0x31B9.
+ * Margen actual: 0x3200 - 0x31BA = 70 bytes.
+ */
+_Static_assert(
+	(0x3100 + (37 * 5)) <= 0x3200,
+	"ledstrings desborda el area de ds1302_init en 0x3200 - reducir numero de entradas o mover ds1302_init"
+);
 
 void ds1302_reset() {
 	DS1302_IO = 0;

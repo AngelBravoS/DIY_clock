@@ -8,6 +8,14 @@
 #include "fsm.h"
 #undef FSM_C_
 
+/* Valor invalido en BCD (> 0x59) usado para forzar la comparacion de alarmas
+ * en el proximo minuto despues de un commit de hora o despues de que suene. */
+#define ALARM_POLL_FORCE    0x60
+
+/* Offset en ds1302_sram_data del registro de configuracion 1 (SC1).
+ * Los bits [7:1] habilitan el autoscroll de cada estado home. */
+#define DS1302_SRAM_SC1     0x03
+
 uint8_t alarm_lastpoll = 0;					  ///< Time alarm was last polled (minutes)
 uint16_t transition_ticks = 0;				  ///< 10ms timer ticks at last transition
 
@@ -81,20 +89,17 @@ enum fsm_return fsm_home_fn() {
 				if(curstate == fsm_home_chrono) {
 					fsm_home_auto = 0;
 				} else if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_SCROLL_TICKS){
-					/* Perform automatic scrolling */
-					find_auto_target:
+					/* Buscar el siguiente estado con autoscroll habilitado */
 					while(++curstate != fsm_home_end){
-						if((ds1302_sram_data[0x03] >> curstate) & 0x01){
-							/* Automatic display is enabled - jump to next state */
+						if((ds1302_sram_data[DS1302_SRAM_SC1] >> curstate) & 0x01){
 							transition_ticks = centiseconds();
 							return fsm_repeat;
 						}
 					}
-					/* No other autoscroll targets found, break */
+					/* Ningun objetivo de autoscroll encontrado, volver al inicio */
 					transition_ticks = centiseconds();
 					fsm_home_auto = 0;
 					curstate = fsm_home_start;
-					//}
 				}
 			} else {
 				/* Manual display timeout — not applied to chrono */
@@ -110,9 +115,20 @@ enum fsm_return fsm_home_fn() {
 			 * the display in the automatic mode.
 			 */
 			if((centiseconds() - transition_ticks) > FSM_HOME_AUTO_ENABLE_TICKS) {
-				/* Enable automatic mode */
+				/* Enable automatic mode and immediately search for first target.
+				 * Duplicamos el loop de busqueda en lugar de usar goto para
+				 * evitar un salto cross-scope al interior de un bloque anidado. */
 				fsm_home_auto = 1;
-				goto find_auto_target;
+				while(++curstate != fsm_home_end){
+					if((ds1302_sram_data[DS1302_SRAM_SC1] >> curstate) & 0x01){
+						transition_ticks = centiseconds();
+						return fsm_repeat;
+					}
+				}
+				/* Ningun estado tiene autoscroll habilitado */
+				transition_ticks = centiseconds();
+				fsm_home_auto = 0;
+				curstate = fsm_home_start;
 			}
 		}
 	}
@@ -227,7 +243,7 @@ enum fsm_return fsm_set_fn() {
 			/* Menu long pressed when setting date and time values, commit */
 			display_flash = 0x00;
 			ds1302_set_time();		  //Set new time
-			alarm_lastpoll = 0x60;	  //Reset last poll time, force compare
+			alarm_lastpoll = ALARM_POLL_FORCE;	  //Reset last poll time, force compare
 			curstate = fsm_set_label; //Set state back to default
 			return fsm_ok;
 		}

@@ -3,6 +3,12 @@
  *
  *  Created on: 25 Jul 2017
  *      Author: shenghao
+ *
+ * NOTA: A pesar del nombre, las tablas de este modulo se almacenan en la flash
+ * de programa (__code), NO en la EEPROM/flash de datos del STC15W408AS.
+ * Son datos de solo lectura en tiempo de ejecucion; solo se pueden modificar
+ * reflasheando el firmware. El nombre del archivo viene del kit original y se
+ * mantiene por compatibilidad con el Makefile y el historial de git.
  */
 #define EEPROM_C_
 #include "eeprom.h"
