@@ -157,6 +157,15 @@ enum fsm_return fsm_home_fn() {
 		display_puttime(ds1302.hour,ds1302.minutes);
 		if(ds1302.seconds % 2)
 			display_colonon();
+		/* AM/PM dot: lit when any enabled alarm is set for today */
+		if(curstate == fsm_home_time) {
+			uint8_t ai;
+			uint8_t alarm_today = 0;
+			for(ai = 0; ai < NUM_ALARMS; ai++)
+				if((alarms[ai].dow_and_enable & 0x01) && alarm_dow_state(ai, ds1302.day))
+					alarm_today = 1;
+			if(alarm_today) display_ampmon(); else display_ampmoff();
+		}
 		break;
 	case fsm_home_chrono: /* Chronometer */
 	{
@@ -375,7 +384,7 @@ enum fsm_return fsm_alarm_fn() {
 			if(alarms[(curstate - fsm_alarm_end)].hour > 0x23)
 				alarms[(curstate - fsm_alarm_end)].hour = 0x00;
 			display_flash = 0x03;
-			display_puttime(alarms[(curstate - fsm_alarm_end)].hour, alarms[(curstate - fsm_alarm_end)].minute);
+			display_putbcd(alarms[(curstate - fsm_alarm_end)].hour, alarms[(curstate - fsm_alarm_end)].minute);
 			display_colonon();
 			break;
 
@@ -395,7 +404,7 @@ enum fsm_return fsm_alarm_fn() {
 			if(alarms[(curstate - fsm_alarm_end)].minute > 0x59)
 				alarms[(curstate - fsm_alarm_end)].minute = 0x00;
 			display_flash = 0x0c;
-			display_puttime(alarms[(curstate - fsm_alarm_end)].hour, alarms[(curstate - fsm_alarm_end)].minute);
+			display_putbcd(alarms[(curstate - fsm_alarm_end)].hour, alarms[(curstate - fsm_alarm_end)].minute);
 			display_colonon();
 			break;
 

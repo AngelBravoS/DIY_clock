@@ -86,9 +86,9 @@ C:   0000010E  s_GSFINAL
 C:   00000111  s_CSEG                          
 C:   000008A0  l_CABS2                         
 C:   000008AB  l_CABS3                         
-C:   00001D2D  l_CSEG                          
-C:   00001E3E  s_CONST                         
-C:   00001E3F  s_XINIT                         
+C:   00001D89  l_CSEG                          
+C:   00001E9A  s_CONST                         
+C:   00001E9B  s_XINIT                         
 C:   00003100  _ledstrings                        ledfonts
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
@@ -522,7 +522,7 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000111    00001D2D =        7469. bytes (REL,CON,CODE)
+CSEG                                00000111    00001D89 =        7561. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -553,31 +553,31 @@ C:   0000091D  _convert_24h_to_12h                ds1302
 C:   00000936  _bcd_add                           ds1302
 C:   00000946  _bcd_add_16                        ds1302
 C:   0000095F  _fsm_home_fn                       fsm
-C:   00001114  _fsm_set_fn                        fsm
-C:   0000129F  _fsm_alarm_fn                      fsm
-C:   00001911  _fsm_config_fn                     fsm
-C:   00001BB9  _ISR_T0                            timer
-C:   00001CA2  _centiseconds                      timer
-C:   00001CAD  __divuint                          _divuint
-C:   00001CD6  ___memcpy                          __memcpy
-C:   00001D2B  __gptrput                          _gptrput
-C:   00001D46  __mulint                           _mulint
-C:   00001D46  __mulint_dummy                     _mulint
-C:   00001D63  __moduint                          _moduint
-C:   00001DB0  __gptrget                          _gptrget
-C:   00001DCC  __modsint                          _modsint
-C:   00001E02  __divsint                          _divsint
-C:   00001E3A  __sdcc_external_startup            _startup
+C:   00001170  _fsm_set_fn                        fsm
+C:   000012FB  _fsm_alarm_fn                      fsm
+C:   0000196D  _fsm_config_fn                     fsm
+C:   00001C15  _ISR_T0                            timer
+C:   00001CFE  _centiseconds                      timer
+C:   00001D09  __divuint                          _divuint
+C:   00001D32  ___memcpy                          __memcpy
+C:   00001D87  __gptrput                          _gptrput
+C:   00001DA2  __mulint                           _mulint
+C:   00001DA2  __mulint_dummy                     _mulint
+C:   00001DBF  __moduint                          _moduint
+C:   00001E0C  __gptrget                          _gptrget
+C:   00001E28  __modsint                          _modsint
+C:   00001E5E  __divsint                          _divsint
+C:   00001E96  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               00001E3E    00000001 =           1. bytes (REL,CON,CODE)
+CONST                               00001E9A    00000001 =           1. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00001E3E  _ds1302_struct_addr                ds1302
+C:   00001E9A  _ds1302_struct_addr                ds1302
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
 
