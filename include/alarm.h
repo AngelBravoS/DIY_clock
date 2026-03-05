@@ -70,30 +70,7 @@ struct {
  */
 __xdata alarm __at(0x04) alarms[NUM_ALARMS];
 
-/*!
- * \brief Returns the state of the global alarm enable flag
- * @retval zero alarms are disabled globally
- * @retval non-zero alarms are enabled globally
- * \note This function returns the state of the 0th bit in the second status
- * and configuration flag area. This bit is used to indicate whether
- * the alarms are enabled or disabled globally. If the bit is not set,
- * all alarms will not sound. If the bit is set, alarms that are enabled that
- * are also configured to trigger on the same day that they are polled will then
- * trigger.
- */
-inline uint8_t alarm_global_state() {
-	return (ds1302_sram_data[3] & 0x01);
-}
 
-/*!
- * \brief Toggles the state of the global alarm enable flag
- * \note This function toggles the state of the 0th bit in the second status and
- * configuration flag area. This bit is used to indicate whether the alarms are
- * enabled or disabled globally.
- */
-inline void alarm_global_toggle() {
-	ds1302_sram_data[3] ^= 0x01;
-}
 
 /*!
  * \brief Returns whether the alarm is set for a specific day of the week

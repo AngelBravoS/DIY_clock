@@ -110,8 +110,7 @@ enum fsm_states_set {
 enum fsm_states_alarm {
 	fsm_alarm_label = 0,		 ///< Alarm state label display
 	fsm_alarm_start = 1,		 ///< FSM alarm state machine repetitive start location
-	fsm_alarm_global_toggle = 1, ///< Alarm state global disable / enable
-	fsm_alarm_pattern = 2,		 ///< Alarm beep pattern (bP1/bP2/bP3)
+	fsm_alarm_pattern = 1,		 ///< Alarm beep pattern global (bP1/bP2/bP3)
 	fsm_alarm_end,				 ///< FSM alarm state machine repetitive end location
 };
 

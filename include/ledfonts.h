@@ -24,6 +24,7 @@ enum ledstrings_key {
 	ledstrings_tcal,
 	ledstrings_disp,
 	ledstrings_bp,			///< "bP  " beep pattern menu
+	ledstrings_daly,		///< "dALY" daily repeat
 };
 
 #endif /* LEDFONTS_H_ */

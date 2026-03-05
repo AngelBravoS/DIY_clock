@@ -121,7 +121,7 @@ enum fsm_return fsm_home_fn() {
 	/* Perform state related actions - obtain the current time */
 	ds1302_get_time(); //Update time cache
 
-	if((alarm_lastpoll != ds1302.minutes) && alarm_global_state()){
+	if(alarm_lastpoll != ds1302.minutes){
 		/* Poll alarms if global alarm is set */
 		for(;alarm_index < NUM_ALARMS;alarm_index++){
 			if(alarm_dow_state(alarm_index,ds1302.day) && (
@@ -327,26 +327,6 @@ enum fsm_return fsm_alarm_fn() {
 		}
 		display_puts(ledstrings[ledstrings_seta]);
 		break;
-	case fsm_alarm_global_toggle:
-		if(menu_state == BUTTON_LONG_PRESSED){
-			curstate = fsm_alarm_label;
-			ds1302_calculate_CRC();
-			ds1302_write_SRAM();	  //Save data
-			alarm_lastpoll = 0x60;	  //Reset last poll time, force compare
-			return fsm_ok;
-		}
-		if(select_state == BUTTON_PRESSED)
-			alarm_global_toggle();
-		if(alarm_global_state())
-			display_puts(ledstrings[ledstrings_alon]);
-		else
-			display_puts(ledstrings[ledstrings_alof]);
-		display_colonon();
-
-		if(menu_state == BUTTON_PRESSED){
-			++curstate;
-		}
-		break;
 	case fsm_alarm_pattern:
 		if(menu_state == BUTTON_LONG_PRESSED) {
 			alarm_buzzer_off();
@@ -391,7 +371,7 @@ enum fsm_return fsm_alarm_fn() {
 				return fsm_ok;
 			}
 			display_buffer[0] = ledfonts_numeric_normal['A'];
-			display_buffer[1] = ledfonts_numeric_normal[(curstate - fsm_alarm_end)];
+			display_buffer[1] = ledfonts_numeric_normal[(curstate - fsm_alarm_end) + 1]; /* display A1..A5 */
 			display_putbool(alarms[(curstate - fsm_alarm_end)].dow_and_enable & 0x01);
 			display_colonon();
 			break;

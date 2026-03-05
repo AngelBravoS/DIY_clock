@@ -302,5 +302,6 @@ __code __at(0x3000+sizeof(ledfonts_numeric_normal)+sizeof(ledfonts_numeric_flipp
 		{'N','D',' ',' ','\0'},		//"ND  " 0x15
 		{'R','0',' ',' ','\0'},		//"LZ  " 0x16
 		{'b','P',' ',' ','\0'},		//"bP  " beep pattern
+		{'d','A','L','Y','\0'},		//"dALY" daily
 	};
 
