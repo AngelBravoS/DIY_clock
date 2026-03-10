@@ -66,13 +66,6 @@ void display_putdate(void) {
 	else
 		display_putbcd(ds1302.date,ds1302.month);
 	display_periodon();
-
-	if(DISPLAY_REMOVE_LEADING_ZEROES){
-		if(display_buffer[0] == ledfonts_numeric_normal['0'])
-			display_buffer[0] = ledfonts_numeric_normal[' '];
-		if(display_buffer[2] == ledfonts_numeric_flipped['0'])
-			display_buffer[2] = ledfonts_numeric_flipped[' '];
-	}
 }
 
 void display_putbool(uint8_t v) {
