@@ -73,7 +73,6 @@ enum fsm_states_highlevel {
 	fsm_set = 1,		///< Set state, set main clock
 	fsm_alarm = 2, 		///< Alarm state, set main alarm
 	fsm_config = 3,		///< Config state, configure alarm settings
-	fsm_reset = 4,		///< Reset state, propagate new changes
 };
 
 /*!
@@ -167,8 +166,6 @@ enum fsm_return fsm_set_fn();
 enum fsm_return fsm_alarm_fn();
 
 enum fsm_return fsm_config_fn();
-
-enum fsm_return fsm_reset_fn();
 
 /*!
  * \brief FSM state transition table

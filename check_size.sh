@@ -1,58 +1,88 @@
 #!/bin/bash
+#
+# check_size.sh — verifica el uso de flash del firmware para el IAP15W413AS.
+#
+# El IAP15W413AS tiene 13 312 bytes de flash de programa unificada (0x0000–0x33FF).
+# No existe partición hardware entre código e IAP: el único límite es el total.
+#
+# Fuente preferida: .ihx (Intel HEX). Fallback: .map (área CSEG/REL/CODE).
 
-FILE="Binary/DIY_Firmware_13k.ihx"
-#FILE="Binary/DIY_Firmware_4k.hex"
+IHX="Binary/DIY_Firmware_13k.ihx"
+MAP="Binary/DIY_Firmware_13k.map"
 
-MAX_TOTAL=13312      # 13 KB totales del IAP15W413AS
-TABLE_ADDR=8192      # Tu dirección __at(0x2000)
+MAX_TOTAL=13312   # Bytes de flash del IAP15W413AS (0x0000–0x33FF)
 
-if [ ! -f "$FILE" ]; then
-    echo "Error: No se encuentra $FILE"
-    exit 1
+# ── Parseo del IHX ────────────────────────────────────────────────────────────
+# Emite "addr size" para cada registro de datos (tipo 00).
+# Soporta registros de dirección extendida (tipo 02 y 04).
+parse_ihx() {
+    python3 - "$IHX" <<'PYEOF'
+import sys
+total = 0
+base  = 0
+with open(sys.argv[1]) as f:
+    for line in f:
+        line = line.strip()
+        if not line.startswith(':'): continue
+        count   = int(line[1:3],   16)
+        addr    = int(line[3:7],   16) + base
+        rectype = int(line[7:9],   16)
+        if rectype == 0:
+            # Clamp to flash range; bytes beyond MAX are a linker overflow error
+            end = addr + count
+            lo  = max(addr, 0)
+            hi  = min(end,  13312)
+            if hi > lo: total += hi - lo
+        elif rectype == 2: base = int(line[9:13], 16) * 16
+        elif rectype == 4: base = int(line[9:13], 16) * 65536
+print(total)
+PYEOF
+}
+
+# ── Parseo del MAP (fallback) ─────────────────────────────────────────────────
+# Suma solo las áreas REL CODE (excluye ABS/CABS cuya dirección base es 0x0000).
+parse_map() {
+    awk '
+        /^[A-Z][A-Z0-9_]*[[:space:]]+[0-9A-Fa-f]{8}[[:space:]]+[0-9A-Fa-f]{8}.*REL.*CODE/ {
+            size = strtonum("0x" $3)
+            total += size
+        }
+        END { print total }
+    ' "$MAP"
+}
+
+# ── Selección de fuente ───────────────────────────────────────────────────────
+if   [ -f "$IHX" ]; then SOURCE="ihx"; TOTAL=$(parse_ihx)
+elif [ -f "$MAP" ]; then SOURCE="map*"; TOTAL=$(parse_map)
+else echo "Error: no se encuentra $IHX ni $MAP"; exit 1
 fi
 
-# 1. Convertir a binario real para medir ocupación física en la Flash
-TEMP_BIN=$(mktemp).bin
-objcopy -I ihex -O binary "$FILE" "$TEMP_BIN"
+FREE=$((MAX_TOTAL - TOTAL))
+PCT=$((TOTAL * 100 / MAX_TOTAL))
 
-# 2. Medir hasta dónde llega el último byte de datos
-TOTAL_BYTES=$(stat -c%s "$TEMP_BIN")
-FREE_BYTES=$((MAX_TOTAL - TOTAL_BYTES))
-
-# 3. Calcular ocupación de la tabla específicamente
-# Si el archivo llega más allá de 0x2000, calculamos cuánto ocupa la tabla
-if [ $TOTAL_BYTES -gt $TABLE_ADDR ]; then
-    SIZE_BEFORE_TABLE=$TABLE_ADDR
-    SIZE_FROM_TABLE=$((TOTAL_BYTES - TABLE_ADDR))
-else
-    SIZE_BEFORE_TABLE=$TOTAL_BYTES
-    SIZE_FROM_TABLE=0
-fi
-
-# 4. Mostrar Reporte Visual
-echo "------------------------------------------------"
-echo "Estado de Memoria Flash: IAP15W413AS"
-echo "------------------------------------------------"
-echo -e "Código (hasta 0x1FFF):   $SIZE_BEFORE_TABLE bytes"
-echo -e "Tablas (desde 0x2000):   $SIZE_FROM_TABLE bytes"
-echo "------------------------------------------------"
-echo -e "OCUPACIÓN TOTAL:         $TOTAL_BYTES / $MAX_TOTAL bytes"
-
-# Barra de progreso simple
-PERCENT=$((TOTAL_BYTES * 100 / MAX_TOTAL))
-echo -n "Progreso: ["
-for i in {1..20}; do
-    if [ $((i * 5)) -le $PERCENT ]; then echo -n "#"; else echo -n "."; fi
+# ── Barra de progreso ─────────────────────────────────────────────────────────
+bar=""
+for i in $(seq 1 20); do
+    [ $((i * 5)) -le $PCT ] && bar="${bar}█" || bar="${bar}░"
 done
-echo "] $PERCENT%"
-echo "------------------------------------------------"
 
-rm "$TEMP_BIN"
+# ── Salida ────────────────────────────────────────────────────────────────────
+echo "┌─────────────────────────────┐"
+echo "│      IAP15W413AS 13 KB      │"
+printf "│    (0x0000–0x33FF) [%s]    │\n" "$SOURCE"
+echo "├─────────────────────────────┤"
+echo "│ Total                13312B │"
+printf "│ Usado                %5dB │\n" "$TOTAL"
+printf "│ Libre                %5dB │\n" "$FREE"
+echo "├─────────────────────────────┤"
+printf "│ [%s] %3d%% │\n" "$bar" "$PCT"
+echo "└─────────────────────────────┘"
 
-# 5. Verificación de seguridad
-if [ $TOTAL_BYTES -gt $MAX_TOTAL ]; then
-    echo "❌ ERROR: El firmware ($TOTAL_BYTES bytes) NO CABE en los 13KB."
+[ "$SOURCE" = "map*" ] && echo "Nota: fuente .map, solo se midió código REL (el .ihx no estaba disponible)."
+
+# ── Comprobación de límite ────────────────────────────────────────────────────
+if [ "$TOTAL" -gt "$MAX_TOTAL" ]; then
+    echo "ERROR: el firmware ($TOTAL B) supera los $MAX_TOTAL B del IAP15W413AS."
     exit 2
-else
-    echo "✅ ESPACIO DISPONIBLE: $FREE_BYTES bytes libres."
 fi
+echo "OK."

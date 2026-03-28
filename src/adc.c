@@ -35,7 +35,7 @@ void ISR_ADC(void) __interrupt(INT_ADC) __using(3) {
 		adc_ldr_reading = ADC_RES;
 		if(display_autobrightness) {
 			/* Perform brightness adjustment - IIR filter alpha=1/64, integer only */
-			uint16_t target = EEPROM_PWM_FROM_LDR_TABLE[adc_ldr_reading];
+			uint16_t target = EEPROM_PWM_FROM_LDR_TABLE[adc_ldr_reading >> 1];
 			if(target > display_counts)
 				display_counts_buffer = display_counts + ((target - display_counts) >> 6);
 			else

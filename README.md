@@ -2,7 +2,7 @@
 
 Firmware optimizado para relojes LED DIY basados en microcontroladores STC15, específicamente adaptado para el modelo **CAI-082-V4** con migración de STC15W408AS a **AP15W413AS**.
 
-![CAI-082-V4](CAI-082-V4m.jpg)
+![CAI-082-V4](./images/CAI-082-V4m.jpg)
 
 ---
 

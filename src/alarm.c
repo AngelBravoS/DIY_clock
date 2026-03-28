@@ -32,14 +32,7 @@ void ISR_T2() __interrupt(INT_T2) __using(0) {
 		return;
 	}
 
-	/*
-	 * Patrones a 30Hz (1 tick = ~33ms):
-	 *
-	 * bP1: beep(0-14) | silencio(15-104)                                              ciclo=105 (~3.5s)
-	 * bP2: beep(0-14) | gap(15-24) | beep(25-39) | silencio(40-99)                   ciclo=100 (~3.3s)
-	 * bP3: beep(0-14) | gap(15-19) | beep(20-34) | gap(35-39) | beep(40-54) | sil(55-104)
-	 *      triple bip estilo Casio                                                    ciclo=105 (~3.5s)
-	 */
+
 	switch(alarm_bp) {
 	case 2:
 		beep_on = (tick < 15) || (tick >= 20 && tick < 35);
