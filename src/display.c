@@ -92,8 +92,7 @@ void display_puttemp(uint16_t v) {
 	display_periodon();
 }
 
-void ISR_PCA(void) __interrupt(INT_PCA) __using(1)
-{
+void ISR_PCA(void) __interrupt(INT_PCA) __using(1) {
 	static uint8_t flash_prescaler = 0x10;
 	if(PCA_CF) {
 		/*

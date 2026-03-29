@@ -127,7 +127,6 @@ void ds1302_start(uint8_t command) {
 	ds1302_write_byte_slow(command);	 //Write command byte
 }
 
-
 uint8_t ds1302_read_byte_slow() {
 	DS1302_IO = 1;		//Stop driving I/O line
 
@@ -402,7 +401,6 @@ uint8_t convert_24h_to_12h(uint8_t h_24) {
 	if(h_24 > 0x12)  return bcd_add(h_24, 0x88);	//PM: subtract 12 in BCD
 	return h_24;							//AM 01-12 unchanged
 }
-
 
 uint8_t bcd_add(uint8_t v1,uint8_t v2) __naked {
 	__asm

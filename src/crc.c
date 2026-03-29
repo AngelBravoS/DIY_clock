@@ -39,18 +39,15 @@
  *
  *********************************************************************/
 crc
-crcSlow(const uint8_t message[], uint8_t nBytes)
-{
+crcSlow(const uint8_t message[], uint8_t nBytes) {
     crc            remainder = INITIAL_REMAINDER;
 	uint8_t            byte;
 	uint8_t			   bit;
 
-
     /*
      * Perform modulo-2 division, a byte at a time.
      */
-    for (byte = 0; byte < nBytes; ++byte)
-    {
+    for (byte = 0; byte < nBytes; ++byte) {
         /*
          * Bring the next byte into the remainder.
          */
@@ -59,17 +56,13 @@ crcSlow(const uint8_t message[], uint8_t nBytes)
         /*
          * Perform modulo-2 division, a bit at a time.
          */
-        for (bit = 8; bit > 0; --bit)
-        {
+        for (bit = 8; bit > 0; --bit) {
             /*
              * Try to divide the current data bit.
              */
-            if (remainder & TOPBIT)
-            {
+            if (remainder & TOPBIT) {
                 remainder = (remainder << 1) ^ POLYNOMIAL;
-            }
-            else
-            {
+            } else {
                 remainder = (remainder << 1);
             }
         }
