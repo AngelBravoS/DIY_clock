@@ -25,14 +25,17 @@
 #define EEPROM_TRIGGER_MAGIC1 0xa5			///< Second magic byte to be written into IAP_TRIG register. A write of this byte after writing the first byte to the IAP_TRIG register triggers the IAP operation as indicated in IAP_CMD
 
 #ifndef EEPROM_C_
-extern __code __at(0x2000) uint16_t EEPROM_PWM_FROM_LDR_TABLE[1024];
-extern __code __at(0x2000 + sizeof(EEPROM_PWM_FROM_LDR_TABLE)) uint16_t EEPROM_TEMP_FROM_THERMISTOR_TABLE[1024];
+/*!
+ * \brief Lookup table: ADC reading (10-bit, right-shifted once → index 0..511)
+ * to display PWM count. Stored in flash at 0x2000–0x23FF.
+ * Access as: EEPROM_PWM_FROM_LDR_TABLE[adc_ldr_reading >> 1]
+ */
+extern __code __at(0x2000) uint16_t EEPROM_PWM_FROM_LDR_TABLE[512];
+/*!
+ * \brief Lookup table: ADC reading (10-bit, index 0..1023) to temperature
+ * value in packed BCD. Fixed at 0x2800 independently of the LDR table size.
+ */
+extern __code __at(0x2800) uint16_t EEPROM_TEMP_FROM_THERMISTOR_TABLE[1024];
 #endif
 
-/*!
- * \brief Function called to start any sequence of EEPROM operations.
- *
- * Resets the EEPROM interface and sets up the appropriate wait states for
- * EEPROM operation.
- */
 #endif /* EEPROM_H_ */

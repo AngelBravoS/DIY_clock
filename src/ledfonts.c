@@ -279,51 +279,30 @@ __code __at(0x3000+sizeof(ledfonts_numeric_normal)) const uint8_t ledfonts_numer
 };
 
 __code __at(0x3000+sizeof(ledfonts_numeric_normal)+sizeof(ledfonts_numeric_flipped)) const char ledstrings[][5] = {
-		{'N','O','N',' ','\0'},		//"MON " 0x00
-		{'T','U','E',' ','\0'},		//"TUE " 0x01
-		{'U','E','D',' ','\0'},		//"WED " 0x02
-		{'T','H','U','R','\0'},		//"THUR" 0x03
-		{'F','R','I',' ','\0'},		//"FRI " 0x04
-		{'S','A','T',' ','\0'},		//"SAT " 0x05
-		{'S','U','N',' ','\0'},		//"SUN " 0x06
-		{'S','E','T','C','\0'},		//"SETC" 0x07
-		{'S','E','T','A','\0'},		//"SETA" 0x08
-		{'A','L','O','N','\0'},		//"ALON" 0x09
-		{'A','L','O','F','\0'},		//"ALOF" 0x0a
-		{'C','O','N','F','\0'},		//"CONF" 0x0b
-		{'B','R',' ',' ','\0'},		//"BR  " 0x0c
-		{'T','C','A','L','\0'},		//"TCAL" 0x0d
-		{'D','I','S','P','\0'},		//"DISP" 0x0e
-		{'N','S',' ',' ','\0'},		//"MS  " 0x0f
-		{'T','P',' ',' ','\0'},		//"TP  " 0x10
-		{'D','U',' ',' ','\0'},		//"DW  " 0x11
-		{'D','T',' ',' ','\0'},		//"DT  " 0x12
-		{'Y','R',' ',' ','\0'},		//"YR  " 0x13
-		{'1','2',' ',' ','\0'},		//"12  " 0x14
-		{'N','D',' ',' ','\0'},		//"ND  " 0x15
-		{'R','0',' ',' ','\0'},		//"LZ  " 0x16
-		{'8','I','P',' ','\0'},		//"biP " beep pattern       0x17
-		{'d','A','L','Y','\0'},		//"dALY" daily EN            0x18
-		{'L','A','n',' ','\0'},		//"LAn " language menu       0x19
-		{'L','-','E','n','\0'},		//"L-En" English             0x1a
-		{'L','-','E','S','\0'},		//"L-ES" Spanish             0x1b
-		{'L','u','n',' ','\0'},		//"Lun " ES Monday           0x1c
-		{'M','A','r',' ','\0'},		//"MAr " ES Tuesday  (Mar)   0x1d  M=∏
-		{'M','I','E',' ','\0'},		//"MiE " ES Wednesday (Mie)  0x1e  M=∏
-		{'J','U','E',' ','\0'},		//"JuE " ES Thursday (Jue)   0x1f
-		{'U','I','E',' ','\0'},		//"UiE " ES Friday   (Vie)   0x20
-		{'S','A','b',' ','\0'},		//"SAb " ES Saturday (Sab)   0x21
-		{'0','o','N',' ','\0'},		//"doN " ES Sunday   (Dom)   0x22  N≈M flipped
-		{'A','L','L',' ','\0'},		//"ALL " EN all days         0x23
-		{'0','I','A','S','\0'},		//"tod " ES all days (todos) 0x24
+		{'S','E','T','C','\0'},		//"SEtC" 0x00  set clock label
+		{'S','E','T','A','\0'},		//"SEtA" 0x01  set alarm label
+		{'A','L','O','N','\0'},		//"ALon" 0x02  alarm on
+		{'A','L','O','F','\0'},		//"ALoF" 0x03  alarm off
+		{'C','O','N','F','\0'},		//"ConF" 0x04  config label
+		{'B','R',' ',' ','\0'},		//"br  " 0x05  brightness
+		{'T','C','A','L','\0'},		//"tCAL" 0x06  thermistor calib
+		{'D','I','S','P','\0'},		//"diSP" 0x07  display config label
+		{'1','2',' ',' ','\0'},		//"12  " 0x08  12h/24h format
+		{'N','D',' ',' ','\0'},		//"nd  " 0x09  MMDD/DDMM date format
+		{'0','0',' ',' ','\0'},		//"L0  " 0x0a  remove leading zeroes
+		{'8','I','P',' ','\0'},		//"bP  " 0x0b  beep pattern
+		{'0','I','A','S','\0'},		//"Dias" 0x0c  cabecera seleccion dias
+		{'L','u','n',' ','\0'},		//"Lun " 0x0d  lunes
+		{'M','A','r',' ','\0'},		//"MAr " 0x0e  martes   M=∏
+		{'M','I','E',' ','\0'},		//"MiE " 0x0f  miercoles M=∏
+		{'J','U','E',' ','\0'},		//"JuE " 0x10  jueves
+		{'U','I','E',' ','\0'},		//"UiE " 0x11  viernes
+		{'S','A','b',' ','\0'},		//"SAb " 0x12  sabado
+		{'0','o','N',' ','\0'},		//"doN " 0x13  domingo  N≈M flipped
+		{'A','L','L',' ','\0'},		//"ALL " 0x14  todos los dias (seleccionar todos)
+		{'C','d',' ',' ','\0'},		//"Cd  " 0x15  cuenta regresiva
 	};
 
-/*
- * Verificacion en tiempo de compilacion: ledstrings no debe solaparse con
- * ds1302_init que empieza en 0x3200.
- * Margen actual: 70 bytes. Si se supera, aumentar la direccion de ds1302_init
- * en ds1302.c o reducir el numero de entradas en ledstrings.
- */
 _Static_assert(
 	(0x3100 + sizeof(ledstrings)) <= 0x3200,
 	"ledstrings desborda el area de ds1302_init en 0x3200"

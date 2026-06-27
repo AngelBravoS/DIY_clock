@@ -12,8 +12,7 @@
 #include "alarm.h"
 #include "fsm.h"
 
-void main(void)
-{
+void main(void) {
 	/* FSM variables */
 	enum fsm_states_highlevel fsm_curstate = fsm_home;
 	enum fsm_return (*fsm_fp)(void) = fsm_home_fn;
@@ -60,7 +59,6 @@ void main(void)
 				ALARM_PATTERNS[i] = 1;
 	}
 	alarm_bp = 1;
-	fsm_home_auto = 0;
 	/* Run main state machine */
 	while(1){
 		fsm_runstate = fsm_fp();

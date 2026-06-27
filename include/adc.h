@@ -96,32 +96,6 @@ inline uint16_t adc_get_result() {
 }
 
 /*!
- * \brief Triggers an ADC conversion of the LDR reading, and waits for
- * it to complete, before returning the result
- * @return ADC result in the range [0,1023]
- * \warning This function should only be used when the ADC is not running in
- * interrupt mode. The ADC interrupt enable bit must have been cleared!
- */
-inline uint16_t adc_read_ldr() {
-	adc_trigger_thermistor();  // PARCHE 3: Corregido
-	adc_wait_conversion();
-	return adc_get_result();
-}
-
-/*!
- * \brief Triggers an ADC conversion of the thermistor reading, and waits for
- * it to complete, before returning the result
- * @return ADC result in the range [0,1023]
- * \warning This function should only be used when the ADC is not running in
- * interrupt mode. The ADC interrupt enable bit must have been cleared!
- */
-inline uint16_t adc_read_thermistor() {
-	adc_trigger_thermistor();  // PARCHE 3: Corregido
-	adc_wait_conversion();
-	return adc_get_result();
-}
-
-/*!
  * \brief Obtains the most recently converted LDR reading
  * \return ADC reading for the LDR in the range of [0,1023]
  * \note For use when the LDR reading needs to be accessed outside of the

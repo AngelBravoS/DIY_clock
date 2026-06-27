@@ -12,7 +12,7 @@
 
 extern volatile uint16_t ticks_10ms;
 
-volatile uint16_t centiseconds();
+uint16_t centiseconds();
 
 inline void delay_centiseconds(uint16_t cs) __reentrant{
 	uint16_t ticks_now;

@@ -24,7 +24,7 @@
 
 /*!
  * \brief Time (in centiseconds) before the display returns to the HH:MM display
- * state when in any other fsm_home state except the alarm state
+ * state when in any other fsm_home state except alarm, chrono and countdown.
  *
  * \warning Cannot exceed 0xff00
  * 0x0064 = 1 sec
@@ -36,73 +36,55 @@
 #define FSM_HOME_RESET_TICKS 0x0064
 
 /*!
- * \brief Time (in centiseconds) before the display automatically scrolls to
- * the next home screen in the automatic mode
- *
- * \warning Cannot exceed 0xff00
+ * \brief Seconds preloaded into the countdown timer on reset. 59*60 = 3540.
  */
-#define FSM_HOME_AUTO_SCROLL_TICKS 0xc8
-
-/*!
- * \brief Time (in centiseconds) spent in the time display screen before the
- * display starts automatic home screen scroll mode.
- *
- * \warning Cannot exceed 0xff00
- */
-#define FSM_HOME_AUTO_ENABLE_TICKS 0x03e8
-
-/*!
- * \brief Indicates whether the display automatically scrolls through the
- * home screens in the home state
- */
-__bit __at(0x1e) fsm_home_auto;
+#define COUNTDOWN_PRESET 3540
 
 /*!
  * \brief FSM return states
  */
 enum fsm_return {
-	fsm_ok = 0,			///< Proceed to next state
-	fsm_repeat = 1,		///< Repeat state
-	fsm_fail = 2,		///< Fail, proceed to another predefined state
+	fsm_ok = 0,		///< Proceed to next state
+	fsm_repeat = 1,	///< Repeat state
+	fsm_fail = 2,	///< Fail, proceed to another predefined state
 };
+
 /*!
  * \brief High level clock state machine states
  */
 enum fsm_states_highlevel {
-	fsm_home = 0,		///< Home state, main clock display
-	fsm_set = 1,		///< Set state, set main clock
-	fsm_alarm = 2, 		///< Alarm state, set main alarm
-	fsm_config = 3,		///< Config state, configure alarm settings
-	fsm_reset = 4,		///< Reset state, propagate new changes
+	fsm_home = 0,	///< Home state, main clock display
+	fsm_set = 1,	///< Set state, set main clock
+	fsm_alarm = 2,	///< Alarm state, set main alarm
+	fsm_config = 3,	///< Config state, configure alarm settings
 };
 
 /*!
  * \brief Low level state machine states for the home state
  */
 enum fsm_states_home {
-	fsm_home_start = 0,	///< FSM home state machine repetitive start location
-	fsm_home_time = 0,	///< Home state displaying time (hour, minutes)
-	fsm_home_chrono = 1,	///< Home state displaying time (minutes, seconds)
-	fsm_home_temp = 2,	///< Home state displaying temperature
-	fsm_home_dow  = 3,	///< Home state displaying day of week
-	fsm_home_date = 4,	///< Home state displaying short date
-	fsm_home_yyyy = 5,	///< Home state displaying year
-	fsm_home_end,		///< FSM home state machine repetitive end location
-	fsm_home_alarm,		///< Home state displaying alarm notification
+	fsm_home_start     = 0,	///< FSM home state machine repetitive start location
+	fsm_home_time      = 0,	///< Home state displaying time (hour, minutes)
+	fsm_home_chrono    = 1,	///< Home state displaying chronometer (minutes, seconds)
+	fsm_home_countdown = 2,	///< Home state displaying countdown timer
+	fsm_home_temp      = 3,	///< Home state displaying temperature
+	fsm_home_dow       = 4,	///< Home state displaying day of week
+	fsm_home_date      = 5,	///< Home state displaying short date
+	fsm_home_end,			///< FSM home state machine repetitive end location
+	fsm_home_alarm,			///< Home state displaying alarm notification
 };
 
 /*!
  * \brief Low level state machine states for the set state
  */
 enum fsm_states_set {
-	fsm_set_label = 0, 	///< Set state label display
+	fsm_set_label = 0,	///< Set state label display
 	fsm_set_start = 1,	///< FSM set state machine repetitive start location
-	fsm_set_hh = 1,		///< Set state setting hh
-	fsm_set_mm = 2,		///< Set state setting mm
-	fsm_set_dd = 3,		///< Set state setting dd
+	fsm_set_hh    = 1,	///< Set state setting hh
+	fsm_set_mm    = 2,	///< Set state setting mm
+	fsm_set_dd    = 3,	///< Set state setting dd
 	fsm_set_month = 4,	///< Set state setting month
-	fsm_set_yyyy = 5,	///< Set state setting yyyy
-	fsm_set_dow = 6,	///< Set state setting dow
+	fsm_set_dow   = 5,	///< Set state setting day of week
 	fsm_set_end,		///< FSM set state machine repetitive end location
 };
 
@@ -110,30 +92,30 @@ enum fsm_states_set {
  * \brief Low level state machine states for the alarm state
  */
 enum fsm_states_alarm {
-	fsm_alarm_label = 0,		 ///< Alarm state label display
-	fsm_alarm_start = 1,		 ///< FSM alarm state machine repetitive start location
-	fsm_alarm_end   = 1,		 ///< Alarm list base (A1..A5 = curstate - fsm_alarm_end gives 0..4)
+	fsm_alarm_label = 0,	///< Alarm state label display
+	fsm_alarm_start = 1,	///< FSM alarm state machine repetitive start location
+	fsm_alarm_end   = 1,	///< Alarm list base (A1..A5 = curstate - fsm_alarm_end gives 0..4)
 };
 
 /*!
  * \brief Even lower level state machine states for the alarm state
  */
 enum fsm_substates_alarm {
-	fsm_alarm_substate_toggle  = 0,  ///< Alarm list: on/off + S·L enter edit
-	fsm_alarm_substate_start   = 1,  ///< FSM alarm sub-state machine start location
-	fsm_alarm_substate_hh 	   = 1,  ///< Alarm set hour
-	fsm_alarm_substate_mm 	   = 2,  ///< Alarm set minute
-	fsm_alarm_substate_daly    = 3,  ///< Daily: S·S toggle all days, S·L enter DOW
-	fsm_alarm_substate_dow_mon = 4,  ///< Alarm set monday
-	fsm_alarm_substate_dow_tue = 5,  ///< Alarm set tuesday
-	fsm_alarm_substate_dow_wed = 6,  ///< Alarm set wednesday
-	fsm_alarm_substate_dow_thu = 7,  ///< Alarm set thursday
-	fsm_alarm_substate_dow_fri = 8,  ///< Alarm set friday
-	fsm_alarm_substate_dow_sat = 9,  ///< Alarm set saturday
-	fsm_alarm_substate_dow_sun = 10, ///< Alarm set sunday
-	fsm_alarm_substate_tod     = 11, ///< tod/ALL after sunday in cycle
-	fsm_alarm_substate_bp      = 12, ///< Beep pattern per alarm (1-3)
-	fsm_alarm_substate_end,          ///< FSM alarm sub-state machine end location
+	fsm_alarm_substate_toggle  = 0,		///< Alarm list: on/off + S·L enter edit
+	fsm_alarm_substate_start   = 1,		///< FSM alarm sub-state machine start location
+	fsm_alarm_substate_hh      = 1,		///< Alarm set hour
+	fsm_alarm_substate_mm      = 2,		///< Alarm set minute
+	fsm_alarm_substate_dias    = 3,		///< DIAS: cabecera; S·L entra ciclo DOW
+	fsm_alarm_substate_dow_mon = 4,		///< Alarm set lunes
+	fsm_alarm_substate_dow_tue = 5,		///< Alarm set martes
+	fsm_alarm_substate_dow_wed = 6,		///< Alarm set miercoles
+	fsm_alarm_substate_dow_thu = 7,		///< Alarm set jueves
+	fsm_alarm_substate_dow_fri = 8,		///< Alarm set viernes
+	fsm_alarm_substate_dow_sat = 9,		///< Alarm set sabado
+	fsm_alarm_substate_dow_sun = 10,	///< Alarm set domingo
+	fsm_alarm_substate_all     = 11,	///< ALL — todos los dias
+	fsm_alarm_substate_bp      = 12,	///< Beep pattern per alarm (1-3)
+	fsm_alarm_substate_end,				///< FSM alarm sub-state machine end location
 };
 
 /*!
@@ -146,34 +128,21 @@ enum fsm_states_config {
 	fsm_config_thermistor_calib_label = 2,	///< Configuration: Thermistor calibration label
 	fsm_config_thermistor_calib = 3,		///< Configuration: Calibrate thermistor
 	fsm_config_display_label = 4,			///< Configuration: Display configuration label
-	fsm_config_auto_mmss = 5,				///< Configure automatic display of mmss
-	fsm_config_auto_temp = 6,				///< Configure automatic display of temperature
-	fsm_config_auto_dow = 7,				///< Configure automatic display of day-of-week
-	fsm_config_auto_date = 8,				///< Configure automatic display of date
-	fsm_config_auto_year = 9,				///< Configure automatic display of year
-	fsm_config_display_12h = 10,			///< Configure time display format (12h or 24h)
-	fsm_config_display_mmdd = 11,			///< Configure date display format (mmdd or ddmm)
-	fsm_config_display_remove_lzeroes = 12,	///< Configure whether to remove leading zeroes from display
-	fsm_config_language = 13,				///< Language setting (0=EN, 1=ES)
+	fsm_config_display_12h = 5,				///< Configure time display format (12h or 24h)
+	fsm_config_display_mmdd = 6,			///< Configure date display format (mmdd or ddmm)
+	fsm_config_display_remove_lzeroes = 7,	///< Configure whether to remove leading zeroes
 	fsm_config_end,							///< FSM configuration sub-state machine end location
-	};
+};
 
-/* FSM states */
-
+/* FSM function declarations */
 enum fsm_return fsm_home_fn();
-
 enum fsm_return fsm_set_fn();
-
 enum fsm_return fsm_alarm_fn();
-
 enum fsm_return fsm_config_fn();
-
-enum fsm_return fsm_reset_fn();
 
 /*!
  * \brief FSM state transition table
  */
-
 typedef enum fsm_return (*fsm_function)(void);
 
 #ifndef FSM_C_
