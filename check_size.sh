@@ -1,58 +1,104 @@
 #!/bin/bash
+#
 
-FILE="Binary/DIY_Firmware_13k.ihx"
-#FILE="Binary/DIY_Firmware_4k.hex"
+IHX="Binary/DIY_Firmware_13k.ihx"
+MAP="Binary/DIY_Firmware_13k.map"
 
-MAX_TOTAL=13312      # 13 KB totales del IAP15W413AS
-TABLE_ADDR=8192      # Tu dirección __at(0x2000)
+MAX_CODE=8192    # 0x0000–0x1FFF
+MAX_IAP=5120     # 0x2000–0x33FF
+MAX_TOTAL=13312
 
-if [ ! -f "$FILE" ]; then
-    echo "Error: No se encuentra $FILE"
-    exit 1
+# ── Funciones de parseo ───────────────────────────────────────────────────────
+
+# IHX: emite "addr size" para cada registro de datos (tipo 00).
+# Soporta registros de dirección extendida (tipo 02 y 04).
+parse_ihx() {
+    awk '
+        BEGIN { base = 0 }
+        /^:/ {
+            count   = strtonum("0x" substr($0, 2, 2))
+            addr    = strtonum("0x" substr($0, 4, 4)) + base
+            rectype = strtonum("0x" substr($0, 8, 2))
+            if      (rectype == 0) printf "%d %d\n", addr, count
+            else if (rectype == 2) base = strtonum("0x" substr($0,10,4)) * 16
+            else if (rectype == 4) base = strtonum("0x" substr($0,10,4)) * 65536
+        }
+    ' "$IHX"
+}
+
+# MAP fallback: emite "addr size" solo para áreas REL CODE.
+# Las áreas ABS/CABS tienen addr=0x0000 y se excluyen deliberadamente;
+# no son fiables para medir la región IAP.
+parse_map_code() {
+    awk '
+        /^[A-Z][A-Z0-9_]*[[:space:]]+[0-9A-Fa-f]{8}[[:space:]]+[0-9A-Fa-f]{8}.*REL.*CODE/ {
+            addr = strtonum("0x" $2)
+            size = strtonum("0x" $3)
+            if (size > 0) printf "%d %d\n", addr, size
+        }
+    ' "$MAP"
+}
+
+# ── Selección de fuente ───────────────────────────────────────────────────────
+
+if   [ -f "$IHX" ]; then SOURCE="ihx"; DATA=$(parse_ihx)
+elif [ -f "$MAP" ]; then SOURCE="map*"; DATA=$(parse_map_code)
+else echo "Error: no se encuentra $IHX ni $MAP"; exit 1
 fi
 
-# 1. Convertir a binario real para medir ocupación física en la Flash
-TEMP_BIN=$(mktemp).bin
-objcopy -I ihex -O binary "$FILE" "$TEMP_BIN"
+[ "${1}" = "--debug" ] && { echo "=== $SOURCE ==="; echo "$DATA"; echo "==="; }
 
-# 2. Medir hasta dónde llega el último byte de datos
-TOTAL_BYTES=$(stat -c%s "$TEMP_BIN")
-FREE_BYTES=$((MAX_TOTAL - TOTAL_BYTES))
+# ── Suma de bytes por región ──────────────────────────────────────────────────
+# overlap(addr, size, lo, hi): bytes de [addr, addr+size) que caen en [lo, hi)
 
-# 3. Calcular ocupación de la tabla específicamente
-# Si el archivo llega más allá de 0x2000, calculamos cuánto ocupa la tabla
-if [ $TOTAL_BYTES -gt $TABLE_ADDR ]; then
-    SIZE_BEFORE_TABLE=$TABLE_ADDR
-    SIZE_FROM_TABLE=$((TOTAL_BYTES - TABLE_ADDR))
-else
-    SIZE_BEFORE_TABLE=$TOTAL_BYTES
-    SIZE_FROM_TABLE=0
-fi
+SZ_CODE=0
+SZ_IAP=0
 
-# 4. Mostrar Reporte Visual
-echo "------------------------------------------------"
-echo "Estado de Memoria Flash: IAP15W413AS"
-echo "------------------------------------------------"
-echo -e "Código (hasta 0x1FFF):   $SIZE_BEFORE_TABLE bytes"
-echo -e "Tablas (desde 0x2000):   $SIZE_FROM_TABLE bytes"
-echo "------------------------------------------------"
-echo -e "OCUPACIÓN TOTAL:         $TOTAL_BYTES / $MAX_TOTAL bytes"
+while read -r addr size; do
+    # Contribución a CODE
+    s=$(( addr < 0         ? 0         : addr ))
+    e=$(( addr+size < $MAX_CODE  ? addr+size : $MAX_CODE ))
+    [ $e -gt $s ] && SZ_CODE=$((SZ_CODE + e - s))
 
-# Barra de progreso simple
-PERCENT=$((TOTAL_BYTES * 100 / MAX_TOTAL))
-echo -n "Progreso: ["
-for i in {1..20}; do
-    if [ $((i * 5)) -le $PERCENT ]; then echo -n "#"; else echo -n "."; fi
+    # Contribución a IAP
+    s=$(( addr < $MAX_CODE  ? $MAX_CODE  : addr ))
+    e=$(( addr+size < $MAX_TOTAL ? addr+size : $MAX_TOTAL ))
+    [ $e -gt $s ] && SZ_IAP=$((SZ_IAP + e - s))
+done <<< "$DATA"
+
+TOTAL=$((SZ_CODE + SZ_IAP))
+FREE=$((MAX_TOTAL - TOTAL))
+PCT=$((TOTAL * 100 / MAX_TOTAL))
+
+# ── Barra de progreso ─────────────────────────────────────────────────────────
+
+bar=""
+for i in $(seq 1 20); do
+    [ $((i * 5)) -le $PCT ] && bar="${bar}█" || bar="${bar}░"
 done
-echo "] $PERCENT%"
-echo "------------------------------------------------"
 
-rm "$TEMP_BIN"
+# ── Salida ────────────────────────────────────────────────────────────────────
 
-# 5. Verificación de seguridad
-if [ $TOTAL_BYTES -gt $MAX_TOTAL ]; then
-    echo "❌ ERROR: El firmware ($TOTAL_BYTES bytes) NO CABE en los 13KB."
-    exit 2
-else
-    echo "✅ ESPACIO DISPONIBLE: $FREE_BYTES bytes libres."
-fi
+echo "┌─────────────────────────────────────────────┐"
+printf "│         Flash IAP15W413AS       [%s]       │\n" "$SOURCE"
+echo "├──────────────────────────┬────────┬─────────┤"
+echo "│ Región                   │  Usado │  Límite │"
+echo "├──────────────────────────┼────────┼─────────┤"
+printf "│ Código  (0x0000–0x1FFF)  │%5d B │  8192 B │\n" $SZ_CODE
+printf "│ IAP/ROM (0x2000–0x33FF)  │%5d B │  5120 B │\n" $SZ_IAP
+echo "├──────────────────────────┼────────┼─────────┤"
+printf "│ Total                    │%5d B │ 13312 B │\n" $TOTAL
+printf "│ Libres                   │%5d B │         │\n" $FREE
+echo "├──────────────────────────┴────────┴─────────┤"
+printf "│  [%s] %3d%%                │\n" "$bar" $PCT
+echo "└─────────────────────────────────────────────┘"
+[ "$SOURCE" = "map*" ] && echo "Nota: solo se midió la región de código (el .ihx no estaba disponible)."
+
+# ── Comprobaciones de límite ──────────────────────────────────────────────────
+
+RC=0
+[ $SZ_CODE -gt $MAX_CODE  ] && { echo "ERROR: código ($SZ_CODE B) supera el límite de $MAX_CODE B.";  RC=2; }
+[ $SZ_IAP  -gt $MAX_IAP   ] && { echo "ERROR: IAP/ROM ($SZ_IAP B) supera el límite de $MAX_IAP B.";  RC=2; }
+[ $TOTAL   -gt $MAX_TOTAL ] && { echo "ERROR: total ($TOTAL B) supera el límite de $MAX_TOTAL B.";    RC=2; }
+[ $RC -eq 0 ] && echo "OK."
+exit $RC
